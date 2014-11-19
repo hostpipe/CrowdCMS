@@ -1,0 +1,140 @@
+﻿@model CMS.BL.Entity.tbl_Orders
+@if (Model == null)
+{
+    <div class="sectionHeader">Viewing Donation</div>
+    <div class="sectionWindow"><div class="btnToggleSection">Donation Details +</div>
+        <div class="sectionContent"><div><span>No such donation</span> </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="sectionHeader">Viewing Donation for @Model.BillingFirstnames @Model.BillingSurname,
+        Order No.@Model.OrderID</div>
+    <div class="sectionWindow"><div class="btnToggleSection">Donation Status +</div>
+        <div class="sectionContent"><div class="sectionColumn orderStatus">
+            <table class="hTable">
+                <thead>
+                    <tr>
+                        <td>Date</td>
+                        <td>Status</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var statHistory in Model.tbl_CustOrdStatus.OrderByDescending(cs => cs.CS_TimeStamp))
+                    {
+                        <tr>
+                            <td>@statHistory.CS_TimeStamp.ToString()</td>
+                            <td>@statHistory.tbl_OrderStatus.OS_Status</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        </div>
+    </div>
+    <div class="sectionWindow"><div class="btnToggleSection">Billing Address / Order Instructions
+        +</div>
+        <div class="sectionContent"><div class="sectionColumn">
+            <h2>Billing Address</h2>
+            <div class="tableContainer">
+                <table class="vTable">
+                    <tbody>
+                        <tr>
+                            <td>Name</td>
+                            <td>@Model.BillingFirstnames @Model.BillingSurname</td>
+                        </tr>
+                        <tr>
+                            <td>Address</td>
+                            <td>
+                                @(String.IsNullOrEmpty(Model.BillingAddress1) ? String.Empty : Model.BillingAddress1)
+                                @Html.Raw(String.IsNullOrEmpty(Model.BillingAddress2) ? String.Empty : " <br /> " + Model.BillingAddress2)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Town / City</td>
+                            <td>@Model.BillingCity</td>
+                        </tr>
+                        <tr>
+                            <td>County / State</td>
+                            <td>@Model.BillingState</td>
+                        </tr>
+                        <tr>
+                            <td>Postcode</td>
+                            <td>@Model.BillingPostCode</td>
+                        </tr>
+                        <tr>
+                            <td>Country</td>
+                            <td>@Model.BillingCountry</td>
+                        </tr>
+                        <tr>
+                            <td>Telephone</td>
+                            <td>@Model.BillingPhone</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="sectionWindow"><div class="btnToggleSection">Transaction Information +</div>
+        <div class="sectionContent"><div class="sectionColumn"><div class="tableContainer">
+            <table class="vTable">
+                <tbody>
+                    <tr>
+                        <td>Order ID</td>
+                        <td>@Model.OrderID</td>
+                    </tr>
+                    <tr>
+                        <td>Order Date</td>
+                        <td>@Model.O_Timestamp.ToString()</td>
+                    </tr>
+                    <tr>
+                        <td>GiftAid</td>
+                        <td>@(Model.GiftAid.GetValueOrDefault(false) ? "Yes" : "No")</td>
+                    </tr>
+                    <tr>
+                        <td>Amount</td>
+                        <td>@Model.GetPriceString()</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        </div>
+        </div>
+    </div>
+    <div class="sectionWindow"><div class="btnToggleSection">Order Details +</div>
+        <div class="sectionContent"><div class="tableContainer">
+            <table class="hTable">
+                <thead>
+                    <tr>
+                        <td>Product</td>
+                        <td>Quantity</td>
+                        <td>Price (@CultureInfo.CurrentCulture.NumberFormat.CurrencySymbol)</td>
+                        <td>Sub Total (@CultureInfo.CurrentCulture.NumberFormat.CurrencySymbol)</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var oContent in Model.tbl_OrderContent)
+                    {
+                        <tr>
+                            <td>
+                                @oContent.OC_Title
+                                <br />
+                                @oContent.OC_ProductAttributes
+                            </td>
+                            <td>@oContent.OC_Quantity</td>
+                            <td>@oContent.GetItemPriceString()</td>
+                            <td>@oContent.GetPriceString()</td>
+                        </tr>   
+                    }
+                    <tr>
+                        <td colspan="3">TOTAL</td>
+                        <td>@Model.GetPriceString()</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        </div>
+    </div>
+}

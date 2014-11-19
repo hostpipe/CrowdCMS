@@ -1,0 +1,50 @@
+﻿@model List<CMS.BL.Entity.tbl_ProdCategories>
+@{
+    ViewBag.Title = "Shop";
+    CMS.BL.Entity.tbl_Content categoryPage = ViewBag.CategoriesPage as CMS.BL.Entity.tbl_Content;
+}
+@section metatags {
+    @{ Html.RenderPartial("/Views/Partials/MetaTags.cshtml", new CMS.UI.Models.MetadataModel(categoryPage)); }
+}
+@section styles {
+    @Html.Raw(categoryPage != null ? categoryPage.tbl_SiteMap.SM_CSS : String.Empty)
+}
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.categoryTile').mouseenter(function () {
+                $(this).find('.catDesc').stop().animate({ height: '178px' }, { duration: 600, queue: false });
+            });
+            $('.categoryTile').mouseleave(function () {
+                $(this).find('.catDesc').stop().animate({ height: '0px' }, { duration: 600, queue: false });
+            });
+        });
+    </script>
+}
+@section sidebar {
+    @{
+        Html.RenderPartial("../Partials/SearchPanel");
+        Html.RenderAction("BasketSummary", "Website");
+        Html.RenderAction("ContactUsPartial", "Website");
+    }
+}
+@if (categoryPage != null && ViewBag.Content != null)
+{
+    <div class="siteContent">
+        @Html.Partial("~/Views/Partials/ContentPartial.cshtml", ViewBag.Content.HtmlElements as List<object>)
+    </div>
+}
+@if (Model.Any(m => m.PC_ProductTypeID == (int)CMS.BL.ProductType.Item))
+{
+    <h2>Product Categories</h2>
+    <div class="categories">
+        @Html.Partial("~/Views/Partials/ProdCategoriesPartial.cshtml", Model.Where(m => m.tbl_ProductTypes.PT_Name == CMS.BL.ProductType.Item.ToString()))
+    </div>
+}
+@if (Model.Any(m => m.PC_ProductTypeID == (int)CMS.BL.ProductType.Event))
+{
+    <h2>Event Categories</h2>
+    <div class="categories">
+        @Html.Partial("~/Views/Partials/ProdCategoriesPartial.cshtml", Model.Where(m => m.tbl_ProductTypes.PT_Name == CMS.BL.ProductType.Event.ToString()))
+    </div>
+}

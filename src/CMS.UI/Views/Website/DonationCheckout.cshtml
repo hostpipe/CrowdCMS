@@ -1,0 +1,173 @@
+﻿@model CMS.UI.Models.DonationCheckoutModel
+@{
+    ViewBag.Title = "Donate";
+}
+@section metatags {
+    @{Html.RenderPartial("/Views/Partials/MetaTags.cshtml", new CMS.UI.Models.MetadataModel());}
+}
+@section scripts {
+    @Scripts.Render("~/bundles/otherLibs")
+    @Scripts.Render("~/bundles/donationWebManager")
+}
+@section styles {
+    @Styles.Render("~/Content/themes/base/ui.css")
+}
+@section sidebar {
+    @{
+        Html.RenderPartial("../Partials/SearchPanel");
+        Html.RenderAction("ContactUsPartial", "Website");
+    }
+}
+
+<form id="Donation" method="post" 
+      data-isdirect="@ViewBag.IsDirect"
+      data-sagepay="@ViewBag.SagePay" class="col-sm-11">
+    <h2>I would like to make a @(Model != null ? Model.Type.ToString().ToUpperInvariant() : String.Empty) donation of</h2>
+    <div class="row">
+        @foreach (var donation in ViewBag.Donations as List<CMS.BL.Entity.tbl_DonationInfo>)
+        {
+            <div class="col-sm-3@(Model != null && donation.DI_Amount.ToString("F2") == Model.Amount ? " active" : string.Empty)">
+                <div class="donationTile" title="@donation.DI_Amount @donation.DI_Description">
+                    <label for="@donation.DonationInfoID" class="checkboxLabel">@donation.DI_Amount.ToString("C")</label> <br />
+                    <input id="@donation.DonationInfoID" type="radio" name="DonationAmount" value="@donation.DI_Amount.ToString("F2")"
+                           @(Model != null && donation.DI_Amount.ToString("F2") == Model.Amount ? "checked=\"checked\"" : string.Empty) data-bind="checked: donationAmount" />
+                </div>
+            </div>
+        }
+        <div class="col-sm-3 custom donationTile">
+            <label for="amount">Custom Amount @CultureInfo.CurrentCulture.NumberFormat.CurrencySymbol</label>
+            @Html.TextBoxFor(m => m.Amount, new { data_bind = "value: amount, event: { keyup: onUpdateValue }", @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Amount)
+        </div>
+        @Html.HiddenFor(m => m.Type)
+    </div>
+    <div class="divider"></div>
+    @if (Model != null && Model.Type == CMS.BL.DonationType.Monthly)
+    {
+        <div>
+            @Html.LabelFor(m => m.StartDate)
+            @Html.TextBoxFor(m => m.StartDate, new { data_input_type = "date" })
+        </div>
+    }
+    <div class="clearfix row">
+        <div id="donationDetails">
+            <div class="col-sm-12"><h2>Your details</h2></div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Title)
+                    @Html.TextBoxFor(m => m.Title, new {@class="form-control"})
+                    @Html.ValidationMessageFor(m => m.Title)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.FirstName)
+                    @Html.TextBoxFor(m => m.FirstName, new {@class="form-control"})
+                    @Html.ValidationMessageFor(m => m.FirstName)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Surname)
+                    @Html.TextBoxFor(m => m.Surname, new {@class="form-control"})
+                    @Html.ValidationMessageFor(m => m.Surname)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmailAddress)
+                    @Html.TextBoxFor(m => m.EmailAddress, new {@class="form-control"})
+                    @Html.ValidationMessageFor(m => m.EmailAddress)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Phone)
+                    @Html.TextBoxFor(m => m.Phone, new {@class="form-control"})
+                    @Html.ValidationMessageFor(m => m.Phone)
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Address1)
+                    @Html.TextBoxFor(m => m.Address1, new {@class="form-control"})
+                    @Html.ValidationMessageFor(m => m.Address1)
+                </div>
+                <div class="form-group">
+                    @Html.TextBoxFor(m => m.Address2, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Address2)
+                </div>
+                <div class="form-group">
+                    @Html.TextBoxFor(m => m.Address3, new { @class="form-control" })
+                    @Html.ValidationMessageFor(m => m.Address3)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Postcode)
+                    @Html.TextBoxFor(m => m.Postcode, new {@class="form-control"})
+                    @Html.ValidationMessageFor(m => m.Postcode)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.City)
+                    @Html.TextBoxFor(m => m.City, new {@class="form-control"})
+                    @Html.ValidationMessageFor(m => m.City)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.State)
+                    @Html.TextBoxFor(m => m.State, new {@class="form-control"})
+                    @Html.ValidationMessageFor(m => m.State)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.CountryID)
+                    @if ((ViewBag.Countries as SelectList).Count() == 1)
+                    {
+                        <span>@((ViewBag.Countries as SelectList).First().Text)</span>
+                        <input type="hidden" id="CountryID" name="CountryID" value="@((ViewBag.Countries as SelectList).First().Value)" />
+                    }
+                    else
+                    {
+                        @Html.DropDownListFor(m => m.CountryID, this.ViewBag.Countries as SelectList)
+                    }
+                    @Html.ValidationMessageFor(m => m.CountryID)
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="divider"></div>
+    <div class="row">
+        <div class="col-sm-8">
+            <h2>Gift aid</h2>
+            <p><b>If you are a UK taxpayer, the value of your gift can be increased by 25% under the Gift Aid scheme at no extra cost to you.</b></p>
+
+            <div class="checkbox">
+                <label for="chbGiftAid" > 
+                    <input id="chbGiftAid" type="checkbox" name="GiftAid"  value="true" @(Model != null && Model.GiftAid ? "checked=\"checked\"" : String.Empty) />
+                    Yes, I am a UK taxpayer and I would like
+                    Oxfam to treat all the donations I make from 1 April 2009, until I notify you otherwise,
+                    as Gift Aid donations.
+                </label>
+            </div>
+            <p>
+                Your donations are eligible for the scheme if you pay enough income tax and/or capital
+                gains tax to cover the amount of tax that all charities and Community Amateur Sports
+                Clubs you donate to will reclaim for each tax year (6 April to 5 April). Council
+                tax and VAT do not count.
+            </p>
+        </div>
+        <div id="orderSummaryForm" class="col-sm-4">
+            <h2>Payment type</h2>
+            <div>
+                @Html.LabelFor(m => m.PaymentDomainID, "Payment type")
+                @if ((ViewBag.PaymentTypes as List<SelectListItem>).Count == 1)
+                {
+                    <span><b>@((ViewBag.PaymentTypes as List<SelectListItem>).First().Text)</b></span>
+                    <input type="hidden" id="PaymentDomainID" name="PaymentDomainID" value="@((ViewBag.PaymentTypes as List<SelectListItem>).First().Value)" data-bind="value: paymentOption" />
+                }
+                else
+                {
+                    @Html.DropDownListFor(m => m.PaymentDomainID, ViewBag.PaymentTypes as List<SelectListItem>, new { @class = "short", data_bind = "value: paymentOption" })
+                }
+                @Html.ValidationMessageFor(m => m.PaymentDomainID)
+            </div>
+            @if (Model != null && Model.Type != CMS.BL.DonationType.Monthly && (bool)ViewBag.IsDirect)
+            {
+                <div class="formGroup" data-bind="visible: isCreditCard">
+                    @Html.Partial("~/Views/Partials/CreditCardView.cshtml", new CMS.UI.Models.CreditCardModel())
+                </div>
+            }
+            @Html.ValidationSummary(true)
+            <button type="submit"  class="btn btn-success">Donate Now</button>
+        </div>
+    </div>
+</form>

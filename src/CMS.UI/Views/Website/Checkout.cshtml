@@ -1,0 +1,230 @@
+﻿@model CMS.UI.Models.CheckoutModel
+@{
+    ViewBag.Title = "Checkout";
+}
+@section metatags {
+    @{Html.RenderPartial("/Views/Partials/MetaTags.cshtml", new CMS.UI.Models.MetadataModel());}
+}
+@section sidebar {
+    @{
+        Html.RenderPartial("../Partials/SearchPanel");
+        Html.RenderAction("ContactUsPartial", "Website");
+    }
+}
+<h1>Checkout</h1>
+@if (Model == null)
+{
+    <div>Your basket is currently empty</div>
+}
+else
+{
+    <form id="AddressForm" method="post" action="#"
+          data-getaddresslist-url="@Url.RouteUrl("GetAddressList")"
+          data-getselectedaddress-url="@Url.RouteUrl("GetSelectedAddress")">
+        @if (Model.IsDeliverable)
+        {
+            <h2>Delivery Address</h2>
+            <p>Please note completion of all fields marked with an asterisk (*) is mandatory</p>
+            if (!Request.IsAuthenticated)
+            {
+            <p>As a registered user you can store multiple addresses via the my account link so you do not have to enter them each and every time you order.</p> 
+            }
+            <div class="row">
+                <div class="col-sm-5">
+                    <div>@Html.HiddenFor(m => m.IsDeliverable)</div>
+                    @if (Request.IsAuthenticated)
+                    {
+                        <div data-bind="visible: addresses().length > 0">
+                            @Html.Label("Select address")
+                            <select data-bind="options: addresses, optionsText: 'Text', optionsValue: 'Value', optionsCaption: 'Select address', value: addressID, event: { change: onAddressSelected }" class="form-control"></select>
+                        </div>
+                    }
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.DeliveryTitle)
+                        @Html.TextBoxFor(m => m.DeliveryTitle, new { data_bind = "value: title", @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.DeliveryTitle)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.DeliveryFirstName)
+                        @Html.TextBoxFor(m => m.DeliveryFirstName, new { data_bind = "value: firstName", @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.DeliveryFirstName)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.DeliverySurname)
+                        @Html.TextBoxFor(m => m.DeliverySurname, new { data_bind = "value: surName", @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.DeliverySurname)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.DeliveryPhone)
+                        @Html.TextBoxFor(m => m.DeliveryPhone, new { data_bind = "value: phone", @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.DeliveryPhone)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.DeliveryAddress1)
+                        @Html.TextBoxFor(m => m.DeliveryAddress1, new { data_bind = "value: address1", @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.DeliveryAddress1)
+                    </div>
+                </div>
+                <div class="col-sm-5 col-sm-offset-1">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.DeliveryAddress2)
+                        @Html.TextBoxFor(m => m.DeliveryAddress2, new { data_bind = "value: address2", @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.DeliveryAddress2)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.DeliveryAddress3)
+                        @Html.TextBoxFor(m => m.DeliveryAddress3, new { data_bind = "value: address3", @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.DeliveryAddress3)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.DeliveryCity)
+                        @Html.TextBoxFor(m => m.DeliveryCity, new { data_bind = "value: town", @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.DeliveryCity)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.DeliveryState)
+                        @Html.TextBoxFor(m => m.DeliveryState, new { data_bind = "value: county", @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.DeliveryState)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.DeliveryPostcode)
+                        @Html.TextBoxFor(m => m.DeliveryPostcode, new { data_bind = "value: postCode", @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.DeliveryPostcode)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.DeliveryCountry)
+                        <span>@ViewBag.SelectedCountry</span>
+                        @Html.HiddenFor(m => m.DeliveryCountry)
+                        @Html.HiddenFor(m => m.DeliveryCountryID)
+                    </div>
+                </div>
+            </div>
+        }
+
+        <h2>Billing Address</h2>
+        <p>Please note completion of all fields marked with an asterisk (*) is mandatory</p>
+        @if (!Request.IsAuthenticated)
+        {
+        <p>As a registered user you can store multiple addresses via the my account link so you do not have to enter them each and every time you order.</p>
+        }
+        @if (!Request.IsAuthenticated && ViewBag.SubscriptionEnabled)
+        {
+            <p>
+                @Html.LabelFor(m => m.Subscription)
+                @Html.CheckBoxFor(m => m.Subscription)
+            </p>
+        }
+        @if (Model.IsDeliverable)
+        {
+            <div class="form-group">
+                @Html.LabelFor(m => m.BillingAddressTheSame)
+                @Html.CheckBoxFor(m => m.BillingAddressTheSame)
+            </div>
+        }
+        <div class="row">
+            <div class="col-sm-5">
+            @* @if (!Request.IsAuthenticated)
+                {
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Permission)
+                        @Html.CheckBoxFor(m => m.Permission)
+                    </div>
+                }*@
+                    <div class="form-group">
+                        @{
+                            if (Model.Email == null || Model.Email == "")
+                            {
+                                var user = (User as CMS.Utils.CustomPrincipal);
+                                Model.Email = user != null ? user.Email : "";
+                            }
+                            @Html.LabelFor(m => m.Email)
+                            @Html.TextBoxFor(m => m.Email, new {@class="form-control"})
+                            @Html.ValidationMessageFor(m => m.Email)
+                        }
+                    </div>
+               
+                    @if (Request.IsAuthenticated)
+                    {
+                        <div data-bind="visible: b_addresses().length > 0">
+                            @Html.Label("Select address")
+                            <select data-bind="options: b_addresses, optionsText: 'Text', optionsValue: 'Value', optionsCaption: 'Select billing address', value: billingAddressID, event: { change: onBillingAddressSelected }"></select>
+                        </div>
+                    }
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.BillingTitle)
+                        @Html.TextBoxFor(m => m.BillingTitle, new { data_bind = "value: b_title", @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.BillingTitle)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.BillingFirstName)
+                        @Html.TextBoxFor(m => m.BillingFirstName, new { data_bind = "value: b_firstName", @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.BillingFirstName)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.BillingSurname)
+                        @Html.TextBoxFor(m => m.BillingSurname, new { data_bind = "value: b_surName", @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.BillingSurname)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.BillingPhone)
+                        @Html.TextBoxFor(m => m.BillingPhone, new { data_bind = "value: b_phone", @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.BillingPhone)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.BillingAddress1)
+                        @Html.TextBoxFor(m => m.BillingAddress1, new { data_bind = "value: b_address1", @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.BillingAddress1)
+                    </div>
+                </div>
+                <div class="col-sm-5 col-sm-offset-1">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.BillingAddress2)
+                        @Html.TextBoxFor(m => m.BillingAddress2, new { data_bind = "value: b_address2", @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.BillingAddress2)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.BillingAddress3)
+                        @Html.TextBoxFor(m => m.BillingAddress3, new { data_bind = "value: b_address3", @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.BillingAddress3)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.BillingCity)
+                        @Html.TextBoxFor(m => m.BillingCity, new { data_bind = "value: b_town", @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.BillingCity)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.BillingState)
+                        @Html.TextBoxFor(m => m.BillingState, new { data_bind = "value: b_county", @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.BillingState)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.BillingPostcode)
+                        @Html.TextBoxFor(m => m.BillingPostcode, new { data_bind = "value: b_postCode", @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.BillingPostcode)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.BillingCountryID)
+                        @Html.DropDownListFor(m => m.BillingCountryID, this.ViewBag.Countries as SelectList, "Please select country.", new { data_bind = "value: b_countryID", @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.BillingCountryID)
+                    </div>
+
+                    <h2>Special Instructions</h2>
+                    <p>If you have any special instructions regarding your order then please enter them in the field below. If you would like to send a personal message with your order then please enter this in the field below.</p>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Instructions)
+                        @Html.TextAreaFor(m => m.Instructions, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        @Html.ValidationSummary(true)
+                    </div>
+                    <div class="form-group">
+                        @Html.HiddenFor(m => m.BasketID)
+                        <input type="submit" class="btn btn-warning pull-right" value="Proceed" />
+@*                            <input type="reset" class="btnViolet small" value="Reset" />*@
+                    </div>
+                </div>
+                
+        </div>
+    </form>
+}

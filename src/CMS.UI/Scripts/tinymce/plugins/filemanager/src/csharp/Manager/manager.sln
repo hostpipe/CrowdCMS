@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+# SharpDevelop 3.0.0.3437
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Manager", "Manager.csproj", "{6573E7D9-A1D9-496B-A61F-C46C5DD1CE73}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileManager", "..\FileManager\FileManager.csproj", "{0903D8E2-73A8-4524-B46E-77FEABF53EFD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageManager", "..\ImageManager\ImageManager.csproj", "{35A9DC2B-5175-48FD-A569-F5C43EA7AF5B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6573E7D9-A1D9-496B-A61F-C46C5DD1CE73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6573E7D9-A1D9-496B-A61F-C46C5DD1CE73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6573E7D9-A1D9-496B-A61F-C46C5DD1CE73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6573E7D9-A1D9-496B-A61F-C46C5DD1CE73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0903D8E2-73A8-4524-B46E-77FEABF53EFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0903D8E2-73A8-4524-B46E-77FEABF53EFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0903D8E2-73A8-4524-B46E-77FEABF53EFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0903D8E2-73A8-4524-B46E-77FEABF53EFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35A9DC2B-5175-48FD-A569-F5C43EA7AF5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35A9DC2B-5175-48FD-A569-F5C43EA7AF5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35A9DC2B-5175-48FD-A569-F5C43EA7AF5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35A9DC2B-5175-48FD-A569-F5C43EA7AF5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,9 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+@section sidebar {
+    @{
+        Html.RenderPartial("../Partials/SearchPanel");
+        Html.RenderAction("ContactUsPartial", "Website");
+    }
+}

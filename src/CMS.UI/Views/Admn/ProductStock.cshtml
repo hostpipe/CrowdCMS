@@ -1,0 +1,79 @@
+﻿@model CMS.BL.Entity.tbl_Products
+
+<div class="sectionHeader">Stock units for @Model.P_Title (@Model.P_ProductCode)</div>
+<div class="sectionInfo">
+    @((bool)ViewBag.TaxIncluded ? "Please provide every price with tax included." : "Please provide every price WITHOUT tax.")
+</div>
+<div class="sectionButtons">
+    <input type="button" id="btnAddAttr" name="AddAttr" class="btnGreyGreen" value="Add Attribute"
+        data-bind="click: onAddAttribute" />
+    <input type="button" id="btnNewStockUnit" name="NewStockUnit" class="btnGreyGreen"
+        value="Add New Stock Unit" data-bind="click: onNewStockUnit" />
+    <input type="button" id="btnStockMatrix" name="StockMatrix" class="btnGreyGreen"
+        value="Create Stock Unit Matrix" data-bind="click: onStockMartix" />
+    <input type="button" id="btnDeleteAllUnits" name="Cancel" class="btnGreyRed" value="Delete All Stock Units"
+        data-bind="click: onDeleteAllUnits" />
+</div>
+@if (Model.tbl_ProdAttLink.Count > 0)
+{
+    <div class="sectionWindow">
+        <div class="btnToggleSection">
+            Product Attributes +</div>
+        <div class="sectionContent">
+            <div>
+                <div class="checkBoxList withoutLabel">
+                    @foreach (var attributeLink in Model.tbl_ProdAttLink.OrderBy(pal => pal.tbl_ProdAttributes.A_Title))
+                    {
+                        <span><span>@attributeLink.tbl_ProdAttributes.A_Title</span> <span class="deleteLink" data-bind="click: onRemoveAttribute" data-attributeID="@attributeLink.tbl_ProdAttributes.AttributeID">
+                        </span></span>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@if (Model.tbl_ProductPrice.Count > 0)
+{
+    <div class="sectionWindow">
+        <div class="btnToggleSection">
+            Product Stock Unit +</div>
+        <div class="sectionContent">
+            @Html.Partial("PriceTable", Model)
+            <div>
+                <input type="button" id="btnSaveSelected" name="SaveSelected" class="btnGreyGreen"
+                    value="Save Selected" data-bind="click: onSaveSelected" />
+                <input type="button" id="btnDeleteSelected" name="DeleteSelected" class="btnGreyRed"
+                    value="Delete Selected" data-bind="click: onDeleteSelectedStockUnit" />
+            </div>
+        </div>
+    </div>
+}
+<div id="AddAttributeWindow" class="hidden">
+    <label for="ddlAttributes">Attribute</label>
+    <select id="ddlAttributes" data-bind="options: attributes, optionsText: 'Text', optionsValue: 'Value'"></select>
+    <input type="button" class="btnGreyGreen" value="Add" title="Add Attribute" data-bind="click: addAttribute" />
+</div>
+<div id="CreateMatrixWindow" class="hidden">
+    @if (Model.tbl_ProdAttLink.Count == 0)
+    {
+        <p>There are no attributes linked to this product.</p>
+    }
+    else
+    {
+        <div class="sectionContent">
+            @foreach (var attribute in Model.tbl_ProdAttLink.Select(pal => pal.tbl_ProdAttributes).OrderBy(pa => pa.A_Title))
+            {
+                <h2>@attribute.A_Title</h2>
+                foreach (var attrValue in attribute.tbl_ProdAttValue)
+                {
+                <div>
+                    <label for="@attrValue.AttributeValueID">@attrValue.AV_Value</label>
+                    <input type="checkbox" id="@attrValue.AttributeValueID" value="@attrValue.AttributeValueID" />
+                </div>
+                }
+                <hr />
+            }
+        </div>
+        <input type="button" class="btnGreyGreen" value="Create Stock Units" title="Create Stock Units" data-bind="click: createMatrix" />
+    }
+</div>

@@ -1,0 +1,38 @@
+﻿@model CMS.UI.Models.CountryModel
+
+<div class="sectionHeader" data-bind="text: sectionHeader"></div>
+<div class="sectionWindow">
+    <div class="btnToggleSection">Country Details +</div>
+    <form id="CountryForm" action="#" class="sectionContent">
+        @Html.HiddenFor(m => m.CountryID, new { data_bind = "value: countryID" })
+        <div>
+            @Html.LabelFor(m => m.Country)
+            @Html.TextBoxFor(m => m.Country, new { data_bind = "value: country" })
+            @Html.ValidationMessageFor(m => m.Country)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.Code)
+            @Html.TextBoxFor(m => m.Code, new { data_bind = "value: code", maxlength = "4" })
+            @Html.ValidationMessageFor(m => m.Code)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.DomainID)
+            @Html.DropDownListFor(m => m.DomainID, new List<SelectListItem>(), new { data_bind = "options: domains, optionsText: 'Text', optionsValue: 'Value', value: domainID, event: {change: onDomainChange}" })
+            @Html.ValidationMessageFor(m => m.DomainID)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.PostageZoneID)
+            @Html.DropDownListFor(m => m.PostageZoneID, new List<SelectListItem>(), new { data_bind = "options: zones, optionsText: 'Text', optionsValue: 'Value', optionsCaption: 'Select zone', value: zoneID" })
+        </div>
+        <div>
+            @Html.LabelFor(m => m.IsDefault)
+            <input id="IsDefault" name="IsDefault" type="checkbox" value="true" data-bind="checked: isDefault, disable: isDefault" />
+            <span class="fa fa-info-circle" title="Mark country as default, you can change it by setting another country as default."></span>
+        </div>
+        <div class="btnContainer">
+            <input type="button" class="btnGreen" data-bind="click: onSaveCountry, visible: isNewCountry" value="Add Country" />
+            <input type="button" class="btnGreen" data-bind="click: onSaveCountry, visible: !isNewCountry()" value="Update Country" />
+            <input type="button" class="btnRed" data-bind="click: onNewCountry" value="Cancel" />
+        </div>
+    </form>
+</div>

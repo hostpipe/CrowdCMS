@@ -1,0 +1,43 @@
+﻿@model CMS.BL.Entity.tbl_Tax
+@{
+    ViewBag.Title = "Tax Rates";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@section scripts {
+    @Scripts.Render("~/bundles/taxes")
+}
+
+<div id="TaxContent"
+     data-addtax-url="@Url.Action("AddTax", "Admn")"
+     data-deletetax-url="@Url.Action("DeleteTax", "Admn")"
+     data-gettax-url="@Url.Action("GetTax", "Admn")"
+     data-updatetax-url="@Url.Action("UpdateTax", "Admn")">
+    <div class="leftMenuContainer">
+        <div class="btnGreyMenu" data-bind="click: onNewTax">Add Tax Rate</div>
+        @Html.Action("LeftMenu", "Admn")
+    </div>
+    <div class="mainContainer">
+        <div class="sectionHeader" data-bind="text: sectionHeader"></div>
+        <div class="sectionWindow">
+            <div class="btnToggleSection">Tax Rate +</div>
+            <form id="TaxForm" action="#" class="sectionContent">
+                <div>
+                    @Html.LabelFor(m => m.TA_Title)
+                    @Html.TextBoxFor(m => m.TA_Title, new { data_bind = "value: title" })
+                    @Html.ValidationMessageFor(m => m.TA_Title)
+                    @Html.HiddenFor(m => m.TaxID, new { data_bind = "value: taxID" })
+                </div>
+                <div>
+                    @Html.LabelFor(m => m.TA_Percentage)
+                    @Html.TextBoxFor(m => m.TA_Percentage, new { data_bind = "value: percentage", type = "number", min = "0", max = "100", @class = "taxInput" })
+                    @Html.ValidationMessageFor(m => m.TA_Percentage)
+                </div>
+                <div class="btnContainer">
+                    <input type="button" id="btnNewTax" name="NewTax" class="btnGreen" value="Add Tax" data-bind="click: onSubmit, visible: !isEdit()" />
+                    <input type="button" id="btnSaveTax" name="SaveTax" class="btnGreen" value="Update Tax" data-bind="click: onSubmit, visible: isEdit" />
+                    <input type="button" id="btnCancel" name="Cancel" class="btnRed" value="Cancel" data-bind="click: onNewTax" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

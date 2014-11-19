@@ -1,0 +1,16 @@
+﻿<div class="testimonials-small">
+    <h2>Testimonials</h2>
+    <ul>
+        @foreach (var testimonial in Model)
+        {
+            <li>
+                <div class="text">
+                    @Html.Raw(@testimonial.TE_Content)
+                </div>
+                <div class="client">
+                    @testimonial.TE_Client, @testimonial.TE_Company
+                </div>
+            </li>
+        }
+    </ul>
+</div>

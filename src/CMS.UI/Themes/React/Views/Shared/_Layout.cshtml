@@ -1,0 +1,255 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section metatags {
+    @RenderSection("metatags", true)
+}
+@section scripts {
+    @Scripts.Render("~/bundles/jquery/web", "~/bundles/jqueryUI", "~/bundles/jqueryVal", "~/bundles/bootstrap", "~/bundles/web")
+    @RenderSection("scripts", false)
+    @if (!Request.IsAuthenticated && (ViewBag.SubscriptionEnabled ?? false))
+    {
+        @Scripts.Render("~/bundles/subscriptionManager")
+    }
+}
+@section analytics {
+    @if (ViewBag.IsGoogleAnalytics)
+    {
+        <script type="text/javascript">
+            @Html.Raw(ViewBag.GoogleAnalytics)
+        </script>
+    }
+}
+
+@section styles {
+    @Styles.Render("~/Content/web.css", "~/Content/themes/base/ui.css", String.Format("~/Theme/{0}/css", (string)this.ViewBag.Theme),"/Content/font-awesome/css/font-awesome.min.css")
+    @RenderSection("styles", false)
+	<!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300italic,300,400italic,500,500italic,700,700italic,900,900italic" rel="stylesheet" type="text/css" />
+    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic" rel="stylesheet" type="text/css" />
+    <link href="http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic" rel="stylesheet" type="text/css" />
+    <link href="http://fonts.googleapis.com/css?family=Merriweather:400,300italic,300,400italic,700,700italic" rel="stylesheet" type="text/css" />
+}
+
+
+<div id="home">
+	<header class="navbar navbar-inverse @(ViewBag.IsHomePage ? "hero" : "normal")" role="banner">
+  		<div class="container">
+    		<div class="navbar-header">
+		      	<button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+		      	</button>
+      			<a href="/" class="navbar-brand">React</a>
+    		</div>
+    		<nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+      			<ul class="nav navbar-nav navbar-right">
+      				@Html.Action("Menu", "Website")
+      			</ul>
+    		</nav>
+  		</div>
+	</header>
+
+    @RenderSection("slideshow", false)
+
+	<div id="content">
+		<div class="container">
+			<div class="row">
+				<div class="@((bool)ViewBag.IsHomePage ? "col-md-12" : "col-md-9")">
+                    @RenderBody()
+			    </div>
+                @RenderSection("sidebar", false)
+                
+            </div>
+		</div>		
+	</div>
+        @if ((bool)ViewBag.IsHomePage)
+    {
+
+	    <div id="pricing">
+		    <div class="container">
+			    <div class="row header">
+				    <div class="col-md-12">
+					    <h3>Free trial. No contract. Cancel when you want.</h3>
+					    <p>All plans include a 7-day free trial</p>
+				    </div>
+			    </div>
+			    <div class="row charts">
+				    <div class="col-md-4">
+					    <div class="chart first">
+						    <div class="quantity">
+							    <span class="dollar">$</span>
+							    <span class="price">29</span>
+							    <span class="period">/month</span>
+						    </div>
+						    <div class="plan-name">Freelance</div>
+						    <div class="specs">
+							    <div class="spec">
+								    <span class="variable">5</span>
+								    team members
+							    </div>
+							    <div class="spec">
+								    <span class="variable">Digital</span>
+								    recurring billing
+							    </div>
+							    <div class="spec">
+								    <span class="variable">Virtual</span>
+								    online terminal
+							    </div>
+							    <div class="spec">
+								    <span class="variable">10</span>
+								    total products
+							    </div>
+							    <div class="spec">
+								    <span class="variable">1.0%</span>
+								    Transaction fee
+							    </div>
+						    </div>
+						    <a class="btn-signup button-clear" href="signup.html">
+							    <span>Start free trial</span>
+						    </a>
+					    </div>
+				    </div>
+				    <div class="col-md-4">
+					    <div class="chart featured">
+						    <div class="popular">Most popular</div>
+						    <div class="quantity">
+							    <span class="dollar">$</span>
+							    <span class="price">79</span>
+							    <span class="period">/month</span>
+						    </div>
+						    <div class="plan-name">Profesional</div>
+						    <div class="specs">
+							    <div class="spec">
+								    <span class="variable">15</span>
+								    team members
+							    </div>
+							    <div class="spec">
+								    <span class="variable">Digital</span>
+								    recurring billing
+							    </div>
+							    <div class="spec">
+								    <span class="variable">Virtual</span>
+								    online terminal
+							    </div>
+							    <div class="spec">
+								    <span class="variable">15</span>
+								    total products
+							    </div>
+							    <div class="spec">
+								    <span class="variable">0.5%</span>
+								    Transaction fee
+							    </div>
+						    </div>
+						    <a class="btn-signup button-clear" href="signup.html">
+							    <span>Start free trial</span>
+						    </a>
+					    </div>
+				    </div>
+				    <div class="col-md-4">
+					    <div class="chart last">
+						    <div class="quantity">
+							    <span class="dollar">$</span>
+							    <span class="price">119</span>
+							    <span class="period">/month</span>
+						    </div>
+						    <div class="plan-name">Premium</div>
+						    <div class="specs">
+							    <div class="spec">
+								    <span class="variable">Unlimited</span>
+								    team members
+							    </div>
+							    <div class="spec">
+								    <span class="variable">Digital</span>
+								    recurring billing
+							    </div>
+							    <div class="spec">
+								    <span class="variable">Virtual</span>
+								    online terminal
+							    </div>
+							    <div class="spec">
+								    <span class="variable">25</span>
+								    total products
+							    </div>
+							    <div class="spec">
+								    <span class="variable">No</span>
+								    Transaction fee
+							    </div>
+						    </div>
+						    <a class="btn-signup button-clear" href="signup.html">
+							    <span>Start free trial</span>
+						    </a>
+					    </div>
+				    </div>
+			    </div>
+		    </div>
+	    </div>
+
+	    <div id="slider">
+		    <div class="container">
+			    <div class="row header">
+				    <div class="col-md-12">
+					    <h3>Includes all pages that a complete theme should have</h3>
+				    </div>
+			    </div>
+			    <div class="row">
+				    <div class="col-md-12 slide-wrapper">
+					    <div class="slideshow">
+						    <div class="btn-nav prev"></div>
+						    <div class="btn-nav next"></div>
+						    <div class="slide active">
+							    <img src="/Themes/React/img/slider/slide3.png" alt="slide3" />
+						    </div>
+						    <div class="slide">
+							    <img src="/Themes/React/img/slider/slide4.png" alt="slide4" />
+						    </div>
+						    <div class="slide">
+							    <img src="/Themes/React/img/slider/slide1.png" alt="slide1" />
+						    </div>
+						    <div class="slide">
+							    <img src="/Themes/React/img/slider/slide5.png" alt="slide5" />
+						    </div>
+						    <div class="slide">
+							    <img src="/Themes/React/img/slider/slide2.png" alt="slide2" />
+						    </div>
+					    </div>
+				    </div>	
+			    </div>
+		    </div>
+	    </div>
+
+       
+        @Html.Action("TestimonialsPartial", "Website");
+        
+
+	    <div id="cta">
+		    <p>Start your free 14 day trial!</p>
+		    <a href="#" title="Sign up for free">Sign up for free</a>
+	    </div>
+    
+	    <div id="clients">
+		    <div class="container">
+			    <div class="row">
+				    <div class="col-md-12">
+					    <h3>Our Customers</h3>
+					    <p>These are some of our customers who have helped us by using our product.</p>
+					    <div class="logos">
+						    <img src="/Themes/React/img/logos/google.png" alt="Google">
+						    <img src="/Themes/React/img/logos/facebook.png" alt="Facebook">
+						    <img src="/Themes/React/img/logos/apple.png" alt="Apple">
+						    <img src="/Themes/React/img/logos/stripe.png" alt="Stripe">
+						    <img src="/Themes/React/img/logos/yahoo.png" alt="yahoo">
+					    </div>
+				    </div>
+			    </div>
+		    </div>
+	    </div>
+        }
+    @{Html.RenderAction("Footer", "Website");}
+
+</div>
+
+

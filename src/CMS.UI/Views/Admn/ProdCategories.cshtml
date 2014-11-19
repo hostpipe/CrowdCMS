@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "Product Categories";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@section scripts {
+    <script type="text/javascript" src="/Scripts/tinymce/jquery.tinymce.min.js"></script>
+    @Scripts.Render("~/bundles/prodCategories")
+}
+
+<div id="ProdCategoriesContent"
+    data-approveCategory-url="@Url.Action("ApproveProdCategoryVersion", "Admn")"
+    data-deleteCategory-url="@Url.Action("DeleteProdCategory", "Admn")"
+    data-deleteCategoryImage-url="@Url.Action("DeleteCategoryImage", "Admn")"
+    data-deleteCategoryVersion-url="@Url.Action("DeleteProdCategoryVersion", "Admn")"
+    data-getCategory-url="@Url.Action("ProdCategoriesSettings", "Admn")"
+    data-getCategoryImage-url="@Url.Action("ProdCategoryImage", "Admn")"
+    data-getCategories-url="@Url.Action("GetProdCategoriesList", "Admn")"
+    data-getCustomEditorObjects-url="@Url.Action("CustomEditorObjects", "Website")"
+    data-getDomainsList-url="@Url.Action("GetDomainsList", "Admn")"
+    data-newCategory-url="@Url.Action("AddProdCategory", "Admn")"
+    data-previewCategoryVersion-url="@Url.Action("Preview", "Admn")"
+    data-saveCategoriesOrder-url="@Url.Action("SaveProdCategoriesOrder", "Admn")"
+    data-updateCategory-url="@Url.Action("UpdateProdCategory", "Admn")"
+    data-categoryCSSFiles="@ViewBag.CategoryCSSFile"
+    data-productType="Item"
+    >
+    <div class="leftMenuContainer fourBtns">
+        <div class="btnGreyMenu short" data-bind="click: onNewCategory">Add Category</div>
+        <div class="btnGreyMenu short" data-bind="click: onSaveOrder"><span id="orderIndicator" class="icon-ok"></span>Save Sort Order</div>        
+        <select data-bind="options: domains, optionsText: 'Text', optionsValue: 'Value', optionsCaption: 'All domains', value: lDomainID, event: {change: onLDomainChange}">
+        </select>
+        @Html.Partial("~/Views/Partials/Loader.cshtml")
+    </div>
+    <div class="mainContainer">
+        @Html.Action("ProdCategoriesSettings", "Admn")
+    </div>
+</div>

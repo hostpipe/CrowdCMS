@@ -1,0 +1,48 @@
+﻿@model CMS.UI.Models.DonationInfoModel
+@{
+    ViewBag.Title = "DonationInfoSettings";
+}
+<div class="sectionHeader" data-bind="text: sectionHeader"></div>
+<div class="sectionWindow">
+    <div class="btnToggleSection">Donation Info +</div>
+    <form id="DonationInfoForm" action="#" class="sectionContent">
+        @Html.HiddenFor(m => m.DonationInfoID, new { data_bind = "value: donationInfoID" })
+        <div>
+            @Html.LabelFor(m => m.DI_Amount)
+            @Html.TextBoxFor(m => m.DI_Amount, new { data_bind = "value: amount" })
+            @Html.ValidationMessageFor(m => m.DI_Amount)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.DI_Title)
+            @Html.TextBoxFor(m => m.DI_Title, new { data_bind = "value: title" })
+            @Html.ValidationMessageFor(m => m.DI_Title)
+        </div>
+        <div>
+            @Html.LabelFor(m=>m.DI_Description)
+            @Html.TextAreaFor(m=>m.DI_Description, new {data_bind = "value: description"})
+            @Html.ValidationMessageFor(m=>m.DI_Description)
+        </div>
+        <div>
+            @Html.LabelFor(m=>m.DI_Live)
+            @Html.CheckBoxFor(m=>m.DI_Live, new {data_bind = "checked: live"})
+            @Html.ValidationMessageFor(m=>m.DI_Live)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.DI_DomainID)
+            @Html.DropDownListFor(m => m.DI_DomainID, ViewBag.Domains as SelectList, new { data_bind = "value: domainID" })
+            @Html.ValidationMessageFor(m => m.DI_DomainID)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.DI_DonationTypeID)
+            @Html.DropDownListFor(m => m.DI_DonationTypeID, ViewBag.DonationTypes as SelectList, new { data_bind = "value: donationTypeID" })
+            @Html.ValidationMessageFor(m=>m.DI_DonationTypeID)
+        </div>
+        <div class="btnContainer">
+            <input type="button" class="btnGreen" data-bind="click: onSaveDonationInfo, visible: isNewDonationInfo"
+                value="Add Donation Info" />
+            <input type="button" class="btnGreen" data-bind="click: onSaveDonationInfo, visible: !isNewDonationInfo()"
+                value="Update Donation Info" />
+            <input type="button" class="btnRed" data-bind="click: onNewDonationInfo" value="Cancel" />
+        </div>
+    </form>
+</div>

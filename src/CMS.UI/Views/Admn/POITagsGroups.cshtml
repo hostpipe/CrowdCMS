@@ -1,0 +1,39 @@
+﻿@model CMS.UI.Models.POITagsGroupModel
+@{
+    ViewBag.Title = "POI Tags Groups";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@section scripts {
+    @Scripts.Render("~/bundles/poiTagsGroups")
+}
+
+<div id="POITagsGroupContent"
+    data-addTagsGroup-url="@Url.Action("AddPOITagsGroup", "Admn")"
+    data-deleteTagsGroup-url="@Url.Action("DeletePOITagsGroup", "Admn")"
+    data-getTagsGroup-url="@Url.Action("GetPOITagsGroup", "Admn")"
+    data-updateTagsGroup-url="@Url.Action("UpdatePOITagsGroup", "Admn")"
+    >
+    <div class="leftMenuContainer twoBtns">
+        <div class="btnGreyMenu" data-bind="click: onNewTagsGroup">Add Group</div>
+        @Html.Partial("~/Views/Partials/Loader.cshtml")
+    </div>
+    <div class="mainContainer">
+        <div class="sectionHeader" data-bind="text: sectionHeader"></div>
+        <div class="sectionWindow">
+            <div class="btnToggleSection">Group Details +</div>
+            <form id="DetailsForm" action="#" class="sectionContent">
+                <div>
+                    @Html.LabelFor(m => m.Title)
+                    @Html.TextBoxFor(m => m.Title, new { data_bind = "value: title" })
+                    @Html.ValidationMessageFor(m => m.Title)
+                    @Html.HiddenFor(m => m.POITagsGroupID, new { data_bind = "value: poiTagsGroupID" })
+                </div>
+                <div class="btnContainer">
+                    <input type="button" id="btnNewTagsGroup" name="NewTagsGroup" class="btnGreen" value="Add Tag Group" data-bind="click: onSubmit, visible: !isEdit()"/>
+                    <input type="button" id="btnSaveTagsGroup" name="SaveTagsGroup" class="btnGreen" value="Update Tag Group" data-bind="click: onSubmit, visible: isEdit"/>
+                    <input type="button" id="btnCancel" name="Cancel" class="btnRed" value="Cancel" data-bind="click: onNewTagsGroup" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

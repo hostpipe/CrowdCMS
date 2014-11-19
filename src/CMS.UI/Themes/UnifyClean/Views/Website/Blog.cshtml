@@ -1,0 +1,63 @@
+﻿@model List<CMS.BL.Entity.tbl_Content>
+@{
+    CMS.BL.Entity.tbl_Content blogPage = ViewBag.BlogPage as CMS.BL.Entity.tbl_Content;
+}
+@section metatags {
+    @{ Html.RenderPartial("MetaTags", new CMS.UI.Models.MetadataModel(blogPage)); }
+}
+@section styles {
+    @Html.Raw(blogPage != null ? blogPage.tbl_SiteMap.SM_CSS : String.Empty)
+}
+@section sidebar {
+    @{
+        Html.RenderPartial("NewsSearchPanel");
+        Html.RenderAction("BlogSideBar", "Website");
+    }
+}
+
+    <h1>@ViewBag.Header</h1>
+    @if (!string.IsNullOrEmpty(ViewBag.NoNewsFound))
+    {
+        <span class="no-results">@ViewBag.NoNewsFound</span>
+    }
+    @if (Model != null)
+    {
+        foreach (var blog in Model)
+        {
+                <h2><a href="@String.Format("/{0}/{1}", ViewBag.BlogUrl, blog.tbl_SiteMap.SM_URL.Trim('/'))" title="@blog.C_Title">@blog.C_Title</a></h2>
+                <span>@blog.tbl_SiteMap.SM_Date.GetValueOrDefault().ToLongDateString() at @blog.tbl_SiteMap.SM_Date.GetValueOrDefault().ToShortTimeString()</span>
+                    if (blog.tbl_SiteMap.tbl_Image.Count == 1)
+                    {
+                        <img class="blogImg" src="@(CMS.UI.SettingsManager.Images.PageImagesPath + blog.tbl_SiteMap.tbl_Image.First().I_Thumb)" alt="@blog.tbl_SiteMap.tbl_Image.First().I_Thumb" />
+                    }
+                    @Html.Raw(blog.C_Content)
+
+                    if (blog.tbl_SiteMap.tbl_Tags.Count > 0)
+                    {
+                        <p>
+                            Tags:
+                            @for (int n = 0; n < blog.tbl_SiteMap.tbl_Tags.Count; n++)
+                            {
+                                if (n != 0)
+                                { <text>|</text> }
+                                <a href="@(String.Format("/{0}/{1}/{2}", ViewBag.BlogUrl, CMS.UI.SettingsManager.Blog.TagUrl.Trim('/'), blog.tbl_SiteMap.tbl_Tags.ElementAt(n).TA_URL))" title="@blog.tbl_SiteMap.tbl_Tags.ElementAt(n).TA_Title">@blog.tbl_SiteMap.tbl_Tags.ElementAt(n).TA_Title</a>
+                            }
+                        </p>
+                    }
+                    <p>
+                        @if (blog.tbl_SiteMap.tbl_NewsCategories.Count > 0)
+                        {
+                        @:Posted in
+                        foreach (var cat in blog.tbl_SiteMap.tbl_NewsCategories)
+                        {
+                            <a href="@(String.Format("/{0}/{1}/{2}", ViewBag.BlogUrl, CMS.UI.SettingsManager.Blog.CategoryUrl.Trim('/'), cat.tbl_Categories.CA_URL))" title="@cat.tbl_Categories.CA_Title">@cat.tbl_Categories.CA_Title</a> @:|
+                    }
+                        }
+
+
+                        <a href="@String.Format("/{0}/{1}", ViewBag.BlogUrl, blog.tbl_SiteMap.SM_URL.Trim('/'))" title="View Comments">@(blog.tbl_SiteMap.tbl_Comments.Where(c => c.CO_Authorised).Count() == 0 ? "Add a Comment" : blog.tbl_SiteMap.tbl_Comments.Where(c => c.CO_Authorised).Count() + (blog.tbl_SiteMap.tbl_Comments.Where(c => c.CO_Authorised).Count() != 1 ? " Comments »" : " Comment »"))</a>
+                    </p>
+ 
+        }
+    }
+

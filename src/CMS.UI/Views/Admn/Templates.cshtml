@@ -1,0 +1,72 @@
+﻿@model CMS.UI.Models.TemplatesModel
+@{
+    ViewBag.Title = "Templates";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@section scripts {
+    <script type="text/javascript" src="/Scripts/tinymce/jquery.tinymce.min.js"></script>
+    @Scripts.Render("~/bundles/templates")
+}
+
+<div id="TemplatesContent"
+    data-addTemplate-url="@Url.Action("AddTemplate", "Admn")"
+    data-deleteTemplate-url="@Url.Action("DeleteTemplate", "Admn")"
+    data-getTemplate-url="@Url.Action("GetTemplate", "Admn")"
+    data-updateTemplate-url="@Url.Action("UpdateTemplate", "Admn")"
+    data-domainCSSFile="@ViewBag.DomainCSSFile"
+    data-getCustomEditorObjects-url="@Url.Action("CustomEditorObjects", "Website")"
+    >
+    <div class="leftMenuContainer">
+        <div class="btnGreyMenu" data-bind="click: onNewTemplate">New Template</div>
+        @Html.Partial("~/Views/Partials/Loader.cshtml")
+    </div>
+    <div class="mainContainer">
+        <div class="sectionHeader" data-bind="text: sectionHeader"></div>
+        <form id="TemplateForm" action="#">
+            <div class="sectionWindow">
+                <div class="btnToggleSection">Template Details +</div>
+                <div class="sectionContent"> 
+                    @Html.HiddenFor(m => m.TemplateID, new { data_bind = "value: templateID" })          
+                    <div>
+                        @Html.LabelFor(m => m.Name)
+                        @Html.TextBoxFor(m => m.Name, new { data_bind = "value: name" })
+                    </div>
+                    <div>
+                        @Html.LabelFor(m => m.Live)
+                        @Html.CheckBoxFor(m => m.Live, new { data_bind = "checked: live" })
+                        <span class="fa fa-info-circle" title="Only one template can be live at a time."></span>
+                    </div>
+                </div>
+            </div>
+            <div class="sectionWindow">
+                <div class="btnToggleSection">Footer Details +</div>
+                <div class="sectionContent">           
+                    <div>
+                        @Html.LabelFor(m => m.UseFooter)
+                        @Html.CheckBoxFor(m => m.UseFooter, new { data_bind = "checked: useFooter" })
+                    </div>
+                    <div>
+                        @Html.TextAreaFor(m => m.Footer, new { data_bind = "value: footer" })
+                    </div>
+                </div>
+            </div>
+            <div class="sectionWindow">
+                <div class="btnToggleSection">Header Details +</div>
+                <div class="sectionContent">           
+                    <div>
+                        @Html.LabelFor(m => m.UseHeader)
+                        @Html.CheckBoxFor(m => m.UseHeader, new { data_bind = "checked: useHeader" })
+                    </div>
+                    <div>
+                        @Html.TextAreaFor(m => m.Header, new { data_bind = "value: header" })
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div>
+            <input type="button" class="btnGreen" value="Add Template" data-bind="click: onSubmit, visible: !isEdit()"/>
+            <input type="button" class="btnGreen" value="Update Template" data-bind="click: onSubmit, visible: isEdit"/>
+            <input type="reset" name="Cancel" class="btnRed" value="Cancel" data-bind="click: onNewTemplate" />
+        </div>
+    </div>
+</div>

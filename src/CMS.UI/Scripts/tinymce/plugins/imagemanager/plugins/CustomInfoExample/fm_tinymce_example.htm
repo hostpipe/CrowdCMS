@@ -1,0 +1,36 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>FileManager TinyMCE example</title>
+<!-- TinyMCE -->
+<script language="javascript" type="text/javascript" src="../jscripts/tiny_mce/tiny_mce.js"></script>
+<script language="javascript" type="text/javascript">
+	tinyMCE.init({
+		mode : "textareas",
+		theme : "advanced",
+		plugins : "filemanager",
+		theme_advanced_buttons1_add_before : "insertfile",
+		filemanager_insert_template : '<a href="{$url}" mce_href="{$url}">{$custom.mycustomfield}</a>'
+	});
+</script>
+<!-- /TinyMCE -->
+</head>
+<body>
+
+<form method="post" action="http://tinymce.moxiecode.com/dump.php?example=true">
+	<h3>FileManager TinyMCE example</h3>
+	This example shows you how to insert a custom field passed from the CustomInfoPlugin and into TinyMCE.<br /><br />
+	<textarea id="elm1" name="elm1" rows="15" cols="80" style="width: 100%">
+		&lt;span class=&quot;example1&quot;&gt;Test header 1&lt;/span&gt;&lt;br /&gt;
+		&lt;span class=&quot;example2&quot;&gt;Test header 2&lt;/span&gt;&lt;br /&gt;
+		&lt;span class=&quot;example3&quot;&gt;Test header 3&lt;/span&gt;&lt;br /&gt;
+		Some &lt;b&gt;element&lt;/b&gt;, this is to be editor 1. &lt;br /&gt; This editor instance has a 100% width to it.
+		&lt;p&gt;Some paragraph. &lt;a href=&quot;http://www.sourceforge.net&quot;&gt;Some link&lt;/a&gt;&lt;/p&gt;
+		&lt;img src=&quot;logo.jpg&quot;&gt;
+	</textarea>
+	<br />
+	<input type="submit" name="save" value="Submit" />
+	<input type="reset" name="reset" value="Reset" />
+</form>
+
+</body>
+</html>

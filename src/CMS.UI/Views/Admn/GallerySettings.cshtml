@@ -1,0 +1,91 @@
+﻿@model CMS.BL.Entity.tbl_Content
+
+<div class="sectionHeader" data-bind="text: sectionHeader"></div>
+<div class="sectionWindow">
+    <div class="btnToggleSection">Gallery Item Details +</div>
+    <form id="DetailsForm" action="#" class="sectionContent">
+        <div>
+            @Html.Label("ddlDomain", "Domain")
+            @Html.DropDownListFor(m => m.tbl_SiteMap.SM_DomainID, ViewBag.Domains as SelectList, new { @class = "short", id = "ddlDomain", data_bind = "event: { change: onGetCustomers }" })
+            @Html.HiddenFor(m => m.ContentID)
+            @Html.HiddenFor(m => m.tbl_SiteMap.SiteMapID)
+            @Html.HiddenFor(m => m.tbl_SiteMap.tbl_Gallery.GalleryID, new {id="GalleryID" })
+        </div>
+        <div>
+            @Html.LabelFor(m => m.tbl_SiteMap.tbl_Gallery.G_Title, "Gallery Item Title")
+            @Html.TextBoxFor(m => m.tbl_SiteMap.tbl_Gallery.G_Title, new { @class = "short", id = "tbTitle" })
+            @Html.ValidationMessageFor(m => m.tbl_SiteMap.tbl_Gallery.G_Title)
+        </div>
+        <div>
+            @Html.LabelFor(model => model.tbl_SiteMap.tbl_Gallery.G_CustomerID,"Customer")
+            <input placeholder="start typing" type="text" data-bind="jqAuto: { autoFocus: true }, jqAutoSource: customers, jqAutoSourceValue: 'Value', jqAutoSourceLabel: 'Text', jqAutoValue: customerID, jqAutoSourceInputValue: 'Text'" />
+            @Html.TextBoxFor(model => model.tbl_SiteMap.tbl_Gallery.G_CustomerID, new { data_bind = "value: customerID", @class = "hidden", id="tbCustomerID" })
+            @Html.ValidationMessageFor(model => model.tbl_SiteMap.tbl_Gallery.G_CustomerID)
+            <input type="button" class="btnGreyGreen" value="Unlink from customer" data-bind="click: onUnlinkFromCustomer, visible: customerID() > 0" />
+            <span data-bind="text: dtitle"></span>
+            <span data-bind="text: dfirstname"></span>
+            <span data-bind="text: dsurname"></span>
+            <span data-bind="text: email"></span>
+        </div>
+        <div>
+            @Html.LabelFor(m => m.tbl_SiteMap.tbl_Gallery.G_GalleryCategoryID, "Category")
+            @Html.DropDownListFor(m => m.tbl_SiteMap.tbl_Gallery.G_GalleryCategoryID, ViewBag.GalleryCategories as SelectList, new { id = "ddCategory", data_bind = "options: galleryCategories, optionsText: 'Title', optionsValue: 'GalleryCategoryID', optionsCaption: 'Select Category', value: galleryCategoryID" })
+            <input type="button" class="btnGreyGreen" value="Add" data-bind="click: onEditGalleryCategory" />
+            <input type="button" class="btnGreyGreen" value="Edit" data-bind="click: onViewGalleryCategory, visible: galleryCategoryID() > 0" />
+            @Html.ValidationMessageFor(m => m.tbl_SiteMap.tbl_Gallery.G_GalleryCategoryID)
+        </div>
+
+        <div>
+            <label for="tbCategory">Gallery Tags</label>
+            
+                <input id="tbNewTag" name="newtag" type="text" />
+                <input type="button" class="btnGreyGreen" value="Add" title="Add Tag" data-bind="click: onAddTag" />
+            
+        </div>
+        <div>
+            <div class="checkBoxList" data-bind="foreach: tags">
+                <span>
+                    <input type="checkbox" name="tag" data-bind="click: $parent.onSaveNewsCategory, value: Value, checked: Selected, attr: { id: 'cat' + Value }" />
+                    <label data-bind="text: Text, attr: { 'for': 'tag' + Value }"></label>
+                    <span class="deleteLink" data-bind="click: $parent.onDeleteTag, attr: { 'data-tagID': Value, title: 'Delete ' + Text }"></span>
+                </span>
+            </div>
+        </div>
+
+        <div>
+            @Html.LabelFor(m => m.tbl_SiteMap.tbl_Gallery.G_Live, "Live Status")
+            @Html.RadioButton("G_Live", true, Model != null ? Model.tbl_SiteMap.tbl_Gallery.G_Live : false, new { id = "radioLiveYes" })
+            @Html.Label("LabelYes", "On", new { @for = "radioLiveYes", @class = "checkboxLabel" })
+            @Html.RadioButton("G_Live", false, Model != null ? !Model.tbl_SiteMap.tbl_Gallery.G_Live : true, new { id = "radioLiveNo" })
+            @Html.Label("LabelNo", "Off", new { @for = "radioLiveNo", @class = "checkboxLabel" })
+        </div>
+        <div>
+            @Html.LabelFor(m => m.tbl_SiteMap.SM_MenuDisplayTypeID, "How to display in menu")
+            @Html.RadioButton("rbDisplayType", 1, Model != null ? Model.tbl_SiteMap.SM_MenuDisplayTypeID == 1 : true, new { id = "radioDisplayParent" })
+            @Html.Label("LabelParent", "Under parent", new { @for = "radioDisplayParent", @class = "checkboxLabel" })
+            @Html.RadioButton("rbDisplayType", 2, Model != null ? Model.tbl_SiteMap.SM_MenuDisplayTypeID == 2 : false, new { id = "radioDisplayDirect" })
+            @Html.Label("LabelDirect", "Directly", new { @for = "radioDisplayDirect", @class = "checkboxLabel" })
+            @Html.RadioButton("rbDisplayType", 3, Model != null ? Model.tbl_SiteMap.SM_MenuDisplayTypeID == 3 : false, new { id = "radioDisplayBoth" })
+            @Html.Label("LabelBoth", "Both", new { @for = "radioDisplayBoth", @class = "checkboxLabel" })
+            <span class="fa fa-info-circle" title="Choose how this page should be displayed in menu."></span>
+        </div>
+    </form>
+    </div>
+
+@Html.Action("SEOCategoriesFields", "Admn", new { contentID = Model != null ? Model.ContentID : 0 })
+<div class="sectionWindow">
+    <div class="btnToggleSection">Page Content +</div>
+    <div class="sectionContent">
+        <div>
+            <textarea id="SEOContent" name="CategoriesContent" class="tinyMCEEditor" data-count="true" data-minwords="250">@(Model != null ? Model.C_Content : ViewBag.DefaultWyswigContent)</textarea>
+            <span data-for="SEOContent" class="counter"><span data-name="icon" title="Your Page Contents must be at least 250 words long, ideally approaching 400 words!"></span><span data-name="text"></span></span>
+        </div>
+    </div>
+</div>
+@Html.Action("CategoriesContentVersion", "Admn", new { sectionID = Model != null ? Model.tbl_SiteMap.SiteMapID : 0, contentID = Model != null ? Model.ContentID : 0 })
+<div>
+    <input type="button" id="btnAddGallery" name="AddGallery" class="btnGreen" value="Add Gallery" data-bind="click: onSubmit, visible: !isEdit()" />
+    <input type="button" id="btnSaveGallery" name="SaveGallery" class="btnGreen" value="Update Gallery" data-bind="click: onSubmit, visible: isEdit" />
+    <input type="button" id="btnApproveGallery" name="ApproveGallery" class="btnGrey" value="Approve Content" data-bind="click: onApprove, visible: isEdit" />
+    <input type="button" id="btnCancel" name="Cancel" class="btnRed" value="Cancel" data-bind="click: onNewGallery" />
+</div>

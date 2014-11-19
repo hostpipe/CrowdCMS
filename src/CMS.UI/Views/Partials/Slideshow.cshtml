@@ -1,0 +1,74 @@
+﻿@model List<CMS.BL.Entity.tbl_Image>
+<div id="carousel-main" class="carousel slide" data-ride="carousel">
+
+    @{
+        List<CMS.BL.Entity.tbl_Image> images;
+        int i = 0;
+        if (Model.Count > 0)
+        {
+            images = Model;
+        }
+        else
+        { //get homepage images
+            CMS.Services.WebContent WebContentService = new CMS.Services.WebContent();
+            CMS.BL.Entity.tbl_Content homepagecontent = WebContentService.GetContentBySitemapID(ViewBag.HomepageID);
+            images = homepagecontent.tbl_SiteMap.SitemapImages.ToList();
+        }
+        if (images.Count > 0)
+        {
+            if ((bool)ViewBag.IsHomePage){
+                if (images.Count > 1)
+                {
+            <ol class="carousel-indicators">
+                @foreach (CMS.BL.Entity.tbl_Image image in images)
+                {
+                        
+                    <li data-target="#carousel-main" data-slide-to="@(i)"@(i == 0 ? " class=\"active\"" : String.Empty)></li>
+                    i++;
+                }
+            </ol>
+                }
+                i = 0;
+            <div class="carousel-inner">
+                @foreach (CMS.BL.Entity.tbl_Image image in images)
+                {
+                    <div class="item@(i == 0 ? " active" : String.Empty)" >
+                        @if (image.tbl_SiteMap != null)
+                        {
+                            <img src="@Html.ImageProvider(CMS.BL.ImageVersionName.large, image.I_Thumb, String.Empty)" />
+                            <div class="slide-text">
+                                <p class="h1">@(Html.Raw(image.I_Heading))</p>
+                                <p>@(Html.Raw(image.I_Description))</p>
+                                <a href="@image.SitemapLink.SM_URL" class="btn btn-lg btn-default">@image.SitemapLink.SM_MenuText</a>
+                            </div>
+                        }
+                    </div>
+                    i++;
+                }
+            </div>
+                if (Model.Count > 1)
+                {
+            <a class="left carousel-control" href="#carousel-main" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
+            <a class="right carousel-control" href="#carousel-main" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+            </a>
+                }
+            }
+            else
+            {
+            var image = images.Take(1).FirstOrDefault();
+	        <div class="carousel-inner">
+                <div class="item active" >
+
+                    <img src="@Html.ImageProvider(CMS.BL.ImageVersionName.medium, image.I_Thumb, String.Empty)" />
+                    <div class="slide-text">
+                        <p><span>//</span> @ViewBag.Title</p>
+                    </div>
+                </div>
+	        </div>
+            }
+        }
+    }
+</div>

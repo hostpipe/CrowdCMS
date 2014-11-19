@@ -1,0 +1,54 @@
+﻿@model CMS.UI.Models.SEOFieldsModel
+
+<div class="sectionWindow">
+    <div class="btnToggleSection">SEO Fields +</div>
+    <form id="SEOForm" action="#" class="sectionContent">
+        <div>
+            @Html.LabelFor(m => m.Title)
+            @Html.TextBoxFor(m => m.Title, new { @class = "long", data_count = "true", data_minChars = "25", data_maxChars = "65" })
+            <span class="fa fa-info-circle" title="Write a title for this page."></span>
+            <span data-for="Title" class="counter"><span data-name="icon" title="The SEO Title must be between 25 and 65 characters long!"></span><span data-name="text"></span></span>
+            @Html.ValidationMessageFor(m => m.Title)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.Desc)
+            @Html.TextAreaFor(m => m.Desc, new { @class = "long", data_count = "true", data_minChars = "65", data_maxChars = "160" })
+            <span class="fa fa-info-circle" title="Describe what the page is about, this will show in search engine results."></span>
+            <span data-for="Desc" class="counter"><span data-name="icon" title="The SEO Description must be between 65 and 160 characters long! Don't forget graceful truncation either!"></span><span data-name="text"></span></span>
+        </div>
+        <div>
+            @Html.LabelFor(m => m.Keywords)
+            @Html.TextBoxFor(m => m.Keywords, new { @class = "long", data_count = "true", data_minWords = "10", data_maxWords = "35" })
+            <span class="fa fa-info-circle" title="choose keywords that relate to the content of this page. seperate keywords with comma. example bread, milk, tea"></span>
+            <span data-for="Keywords" class="counter"><span data-name="icon" title="The SEO Keywords must contain between 10 and 35 keywords!"></span><span data-name="text"></span></span>
+        </div>
+        <div>
+            @Html.LabelFor(m => m.R301)
+            @Html.TextAreaFor(m => m.R301, new { @class = "long" })
+            <span class="fa fa-info-circle" title="If a page has been moved or replaced, use this area to list the old URLs to ensure search enginesd and users will automatically be redirected to the new page. Place each URL on a separate line."></span>
+        </div>
+        <div>
+                @Html.LabelFor(m => m.MetaData)
+                @Html.TextAreaFor(m => m.MetaData, new { @class = "long" })
+                @Html.ValidationMessageFor(m => m.MetaData)
+        </div>
+        @if (Model != null && Model.IsPageContent)
+        {
+            <hr />
+            <div>
+                @Html.LabelFor(m => m.SiteMap)
+                @Html.RadioButtonFor(m => m.SiteMap, true, new { id = "radioSitemapYes" })
+                @Html.Label("LabelYes", "Yes", new { @for = "radioSitemapYes", @class = "checkboxLabel" })
+                @Html.RadioButtonFor(m => m.SiteMap, false, new { id = "radioSitemapNo" })
+                @Html.Label("LabelNo", "No", new { @for = "radioSitemapNo", @class = "checkboxLabel" })
+                <span class="fa fa-info-circle" title="Show this page on the sitemap of the website."></span>
+            </div>
+            <hr />
+            <div>
+                @Html.LabelFor(m => m.Priority, "Xml Sitemap Priority")
+                @Html.DropDownListFor(m => m.Priority, this.ViewBag.Priorities as List<SelectListItem>, new { @class = "tiny" })
+                <span class="fa fa-info-circle" title="Choose the importance of this page, 1.0 high, 0.1 low."></span>
+            </div>
+        }
+    </form>
+</div>

@@ -1,0 +1,26 @@
+﻿@model CMS.BL.Entity.tbl_EventTypes
+@{
+    ViewBag.Title = "Event Types";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@section scripts {
+    @Scripts.Render("~/bundles/eventTypes")
+}
+
+<div id="EventTypesContent" 
+    data-addEventType-Url="@Url.Action("AddEventType", "Admn")"
+    data-deleteEventType-Url="@Url.Action("DeleteEventType", "Admn")"
+    data-deleteEventTypeImage-Url="@Url.Action("DeleteEventTypeImage", "Admn")"
+    data-getEventType-Url="@Url.Action("EventTypesSettings", "Admn")"
+    data-getEventTypeImage-Url="@Url.Action("EventTypeImage", "Admn")"
+    data-saveEventTypeImage-Url="@Url.Action("SaveEventTypeImage", "Admn")"
+    data-updateEventType-Url="@Url.Action("UpdateEventType", "Admn")"
+    >
+    <div class="leftMenuContainer">
+        <div class="btnGreyMenu" data-bind="click: onNewEventType">Add Event Type</div>
+        @Html.Action("LeftMenu", "Admn")
+    </div>
+    <div class="mainContainer">
+        @Html.Action("EventTypesSettings", "Admn")
+    </div>
+</div>

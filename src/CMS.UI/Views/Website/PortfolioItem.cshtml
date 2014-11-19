@@ -1,0 +1,38 @@
+﻿@model CMS.BL.Entity.tbl_Content
+@{
+    ViewBag.Title = Model != null ? Model.C_Title : String.Empty;
+    CMS.BL.Entity.tbl_Portfolio portfolio = Model.tbl_SiteMap.tbl_Portfolio;
+}
+@section metatags {
+    @{ Html.RenderPartial("/Views/Partials/MetaTags.cshtml", new CMS.UI.Models.MetadataModel(Model)); }
+}
+@section styles {
+    @Html.Raw(Model != null ? Model.tbl_SiteMap.SM_CSS : String.Empty)
+}
+@section scripts {
+   
+}
+@section sidebar {
+    @{
+        Html.RenderPartial("../Partials/SearchPanel");
+        Html.RenderAction("BasketSummary", "Website");
+        Html.RenderAction("ContactUsPartial", "Website");
+    }
+}
+<h1>@portfolio.PO_Title</h1>
+
+<div class="fl">
+    <img src="@CMS.Utils.Drawing.ScreenGrab.url2png_v6(CMS.UI.SettingsManager.Url2Png.Key, CMS.UI.SettingsManager.Url2Png.Secret,portfolio.PO_Link,"png",400)" alt="Screenshot of @portfolio.PO_Link" />
+</div>
+
+@if (portfolio.tbl_PortfolioImage != null)
+{
+    foreach(var portfolioImage in portfolio.tbl_PortfolioImage.OrderBy(pi => pi.PI_Order))
+    {
+        <img src="@Html.ImageProvider(CMS.BL.ImageVersionName.portfolio, portfolioImage.tbl_Image.I_Thumb,String.Empty)" />
+    }
+}
+
+<div>
+    @Html.Raw(Model.C_Content)
+</div>

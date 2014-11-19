@@ -1,0 +1,17 @@
+﻿@model List<CMS.BL.Entity.tbl_ProdCategories>
+@if (Model != null && Model.Count() > 0)
+{
+    <h3>Featured Categories</h3>
+    foreach (CMS.BL.Entity.tbl_ProdCategories category in Model)
+    {
+        <a href="@String.Format("/{0}/{1}", ViewBag.ShopUrl, category.tbl_SiteMap.SM_URL.Trim('/'))" title="@category.PC_Title">
+            @if (category.tbl_ProductImages != null)
+            {
+                    <img alt="@category.tbl_ProductImages.I_View" src="@Html.ImageProvider(CMS.BL.ImageVersionName.productThumb, category.tbl_ProductImages.I_Name, String.Empty)" />
+            }
+            <p>@category.PC_Title</p>
+        </a>
+    }
+}
+
+

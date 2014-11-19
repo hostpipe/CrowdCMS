@@ -1,0 +1,24 @@
+﻿@model CMS.BL.Entity.tbl_EventTypes
+
+<div class="sectionHeader" data-bind="text: sectionHeader"></div>
+<div class="sectionWindow">
+    <div class="btnToggleSection">Event Type Details +</div>
+    <form id="EventTypeForm" action="#" class="sectionContent">
+        <div>
+            @Html.LabelFor(et => et.ET_Title)
+            @Html.TextBoxFor(et => et.ET_Title, new { maxlength = "100" })
+            @Html.ValidationMessageFor(et => et.ET_Title)
+            @Html.HiddenFor(et => et.EventTypeID, new { data_bind = "value: eventTypeID" })
+        </div>
+        <div>
+            @Html.LabelFor(et => et.ET_Description)
+            @Html.TextBoxFor(et => et.ET_Description)
+            @Html.ValidationMessageFor(et => et.ET_Description)
+        </div>
+        <div class="btnContainer">
+            <input type="button" id="btnNewEventType" name="NewEventType" class="btnGreen" value="Add Event Type" data-bind="click: onSubmit, visible: !isEdit()"/>
+            <input type="button" id="btnSaveEventType" name="SaveEventType" class="btnGreen" value="Update Event Type" data-bind="click: onSubmit, visible: isEdit"/>
+            <input type="button" id="btnCancel" name="Cancel" class="btnRed" value="Cancel" data-bind="click: onNewEventType" />
+        </div>
+    </form>
+</div>

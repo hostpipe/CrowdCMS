@@ -1,0 +1,53 @@
+﻿@model CMS.BL.Entity.tbl_Products
+
+<div class="sectionHeader">Upload Product Images For @(Model != null ? Model.P_Title : String.Empty)</div>
+<div class="sectionWindow">
+    <div class="btnToggleSection">Upload Image +</div>
+    <form id="ImagesUpload" class="sectionContent" action="@Url.Action("SaveProductImage", "Admn")" method="post" enctype="multipart/form-data" >
+        <div>
+            <label>Image File</label>
+            <input type="file" name="file" accept="image/*" />
+            @Html.HiddenFor(m => m.ProductID)
+            <span class="fa fa-info-circle" title="You can upload only images."></span>
+        </div>
+        <div>
+            <label>Description</label>
+            <input type="text" name="description" />
+        </div>
+        <div>
+            <label>Alt Text</label>
+            <input type="text" name="altText" />
+        </div>
+        <div class="btnContainer">
+            <button type="submit" class="btnGreen" >Upload Image</button>
+        </div>
+    </form>
+</div>
+<div class="sectionWindow">
+    <div class="btnToggleSection">Images Uploaded +</div>
+    <div class="sectionContent">
+        @if (Model != null)
+        {
+        <div class="imagesGallery">
+        @if (Model.tbl_ProductImageLink.Count > 0)
+        {
+            foreach (var image in Model.tbl_ProductImageLink.Select(pi => pi.tbl_ProductImages))
+            {
+            <span>
+                <img src="@Html.ImageProvider(CMS.BL.ImageVersionName.thumb, image.I_Name, String.Empty)" alt="@image.I_View" />
+                <input type="button" value="Delete" class="btnRed" data-imageID="@image.ImageID" data-bind="click: onDeleteImage"/>
+            </span>
+            }
+        }
+        else
+        {
+            <span>No images have been uploaded.</span>
+        }
+        </div>
+        }
+    </div>
+</div>
+<div id="UploadWindow">
+    <div>Image is being uploaded.</div>
+    <div id="Progressbar"></div>
+</div>

@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<project name="MCImageManager" default="build">
+	<target name="build">
+		<mkdir dir="../../../bin/safe" />
+		<delete file="../../../bin/safe/MCImageManager.dll" />
+		<delete file="../../../bin/MCImageManager.dll" />
+
+		<!-- Build unsafe version -->
+		<csc target="library" define="UNSAFE" unsafe="true" output="../../../bin/MCImageManager.dll" debug="${debug}" doc="../../../bin/MCImageManager.xml">
+			<sources>
+				<include name="**/*.cs" />
+			</sources>
+
+			<references>
+				<include name="System.Web.dll" />
+				<include name="../../../bin/MCManager.dll" />
+				<include name="../../../bin/Moxiecode.ICSharpCode.SharpZipLib.dll" />
+			</references>
+		</csc>
+
+		<!-- Build safe version -->
+		<csc target="library" output="../../../bin/safe/MCImageManager.dll" debug="${debug}" doc="../../../bin/safe/MCImageManager.xml">
+			<sources>
+				<include name="**/*.cs" />
+			</sources>
+
+			<references>
+				<include name="System.Web.dll" />
+				<include name="../../../bin/safe/MCManager.dll" />
+				<include name="../../../bin/Moxiecode.ICSharpCode.SharpZipLib.dll" />
+			</references>
+		</csc>
+	</target>
+
+	<target name="clean">
+		<delete dir="tmp" failonerror="false" />
+	</target>
+
+	<target name="ndoc">
+		<ndoc verbose="true">
+			<assemblies basedir="${build.dir}">
+				<include name="../../../bin/MCImageManager.dll" />
+			</assemblies>
+
+			<summaries basedir="${build.dir}">
+				<include name="NamespaceSummaries.xml" />
+			</summaries>
+
+			<documenters>
+				<documenter name="MSDN">
+					<property name="OutputDirectory" value="tmp/docs" />
+					<property name="HtmlHelpName" value="ImageManager_API" />
+					<property name="HtmlHelpCompilerFilename" value="hhc.exe" />
+					<property name="IncludeFavorites" value="False" />
+					<property name="Title" value="${title} classes" />
+					<property name="SplitTOCs" value="False" />
+					<property name="DefaulTOC" value="" />
+					<property name="ShowVisualBasic" value="False" />
+					<property name="ShowMissingSummaries" value="False" />
+					<property name="ShowMissingRemarks" value="False" />
+					<property name="ShowMissingParams" value="False" />
+					<property name="ShowMissingReturns" value="False" />
+					<property name="ShowMissingValues" value="False" />
+					<property name="DocumentInternals" value="False" />
+					<property name="DocumentProtected" value="True" />
+					<property name="DocumentPrivates" value="False" />
+					<property name="DocumentEmptyNamespaces" value="False" />
+					<property name="IncludeAssemblyVersion" value="False" />
+					<property name="CopyrightText" value="" />
+					<property name="CopyrightHref" value="" />
+				</documenter>
+			</documenters>
+		</ndoc>
+
+		<!-- Clean up some, just keep the chm file -->
+		<copy file="tmp/docs/ImageManager_API.chm" tofile="../../../docs/ImageManager_API.chm" />
+	</target>
+</project>

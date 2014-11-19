@@ -1,0 +1,79 @@
+﻿@{
+    ViewBag.Title = (ViewBag.ProductType == CMS.BL.ProductType.Item ? "Product" : "Event");
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@section scripts {
+    <script type="text/javascript" src="/Scripts/tinymce/jquery.tinymce.min.js"></script>
+    @Scripts.Render("~/bundles/products")
+}
+
+<div id="ProductsContent"
+     data-addattrbiute-url="@Url.Action("AddAttributeToProduct", "Admn")"
+     data-addproduct-url="@Url.Action("AddProduct", "Admn")"
+     data-addnewtimewindow-url="@Url.Action("AddTimeWindowToProductPrice", "Admn")"
+     data-addstockunit-url="@Url.Action("AddStockUnitToProduct", "Admn")"
+     data-approveproduct-url="@Url.Action("ApproveProductVersion", "Admn")"
+     data-creatematrix-url="@Url.Action("CreateProductStockMatrix", "Admn")"
+     data-deleteallstockunits-url="@Url.Action("DeleteAllStockUnits", "Admn")"
+     data-deleteselectedstockunits-url="@Url.Action("DeleteSelectedStockUnits", "Admn")"
+     data-deleteproduct-url="@Url.Action("DeleteProduct", "Admn")"
+     data-deleteproductassociation-url="@Url.Action("DeleteProductAssociation", "Admn")"
+     data-deleteproductimage-url="@Url.Action("DeleteProductImage", "Admn")"
+     data-deleteproductprice-url="@Url.Action("RemoveStockUnitFromProduct", "Admn")"
+     data-deleteproductversion-url="@Url.Action("DeleteProductVersion", "Admn")"
+     data-deletetimewindow-url="@Url.Action("DeleteTimeWindow", "Admn")"
+     data-getattributes-url="@Url.Action("GetAttributesList", "Admn")"
+     data-getcategorieslist-url="@Url.Action("GetCategoriesList", "Admn")"
+     data-geteventtypes-url="@Url.Action("GetEventTypes", "Admn")"
+     data-geteventtype-url="@Url.Action("GetEventType", "Admn")"
+     data-getproduct-url="@Url.Action("ProductSettings", "Admn")"
+     data-getproductassociations-url="@Url.Action("ProductAssociations", "Admn")"
+     data-getproductimages-url="@Url.Action("ProductImages", "Admn")"
+     data-getproductstock-url="@Url.Action("ProductStock", "Admn")"
+     data-getcustomeditorobjects-url="@Url.Action("CustomEditorObjects", "Website")"
+     data-getsaledates-url="@Url.Action("GetSaleDates", "Admn")"
+     data-gettimewindow-url="@Url.Action("GetTimeWindow", "Admn")"
+     data-previewcontent-url="@Url.Action("Preview", "Admn")"
+     data-removeattribute-url="@Url.Action("RemoveAttributeFromProduct", "Admn")"
+     data-saveproductassociation-url="@Url.Action("SaveProductAssociation", "Admn")"
+     data-saveproductsorder-url="@Url.Action("SaveProductsOrder", "Admn")"
+     data-searchproduct-url="@Url.Action("ProductsLeftMenu", "Admn")"
+     data-updateproduct-url="@Url.Action("UpdateProduct", "Admn")"
+     data-updateproductprice-url="@Url.Action("UpdateProductStockUnit", "Admn")"
+     data-updatetimewindow-url="@Url.Action("UpdateTimeWindowToProductPrice", "Admn")"
+     data-saveeventtype-url="@Url.Action("SaveEventType","Admn")"
+     data-productcssfile="@ViewBag.ProductCSSFile"
+     data-producttype="@ViewBag.ProductType.ToString()">
+    <div class="leftMenuContainer fourBtns">
+        <div class="searchPanel" data-bind="visible: !isSearch()">
+            <input type="text" placeholder="Search" class="short" id="tbSearch" data-bind="event: { keyup: onSearchKeyUp }" />
+            <div class="btnGreyMenu" data-bind="click: onSearch">Search</div>
+        </div>
+        <div class="btnGreyMenu" data-bind="click: onFullList, visible: isSearch">Full @(ViewBag.ProductType == CMS.BL.ProductType.Item ? "Product" : "Event") List</div>
+        <div class="btnGreyMenu short" data-bind="click: onNewProduct">Add @(ViewBag.ProductType == CMS.BL.ProductType.Item ? "Product" : "Event")</div>
+        <div class="btnGreyMenu short" data-bind="click: onSaveOrder"><span id="orderIndicator" class="icon-ok"></span>Save Sort Order</div>
+        @Html.Action("ProductsLeftMenu", "Admn", new { type = ViewBag.ProductType })
+    </div>
+    <div class="mainContainer">
+        @Html.Action("ProductSettings", "Admn", new { type = ViewBag.ProductType })
+    </div>
+    <div id="EventTypeDialog" class="sectionContent hidden">
+        <form id="EventTypeForm" data-bind="with: currentEventType">
+            <input type="hidden" name="EventTypeID" data-bind="value: EventTypeID" />
+            <div>
+                <label for="dTitle">Title</label>
+                <input id="dTitle" name="Title" type="text" data-bind="value: Title" />
+            </div>
+            <div>
+                <label for="dDescription">Description</label>
+                <input id="dDescription" name="Description" type="text" data-bind="value: Description" />
+            </div>
+            <div class="btnContainer">
+                <input type="button" id="btnNewEventType" name="NewEventType" class="btnGreen" value="Add Event Type" data-bind="click: $root.onSubmitEventType, visible: EventTypeID() == 0" />
+                <input type="button" id="btnSaveEventType" name="SaveEventType" class="btnGreen" value="Update Event Type" data-bind="click: $root.onSubmitEventType, visible: EventTypeID() > 0" />
+                <input type="button" id="btnCancel" name="Cancel" class="btnRed" value="Cancel" data-bind="click: $root.onCloseEventTypeDialog" />
+            </div>
+        </form>
+    </div>
+</div>
+

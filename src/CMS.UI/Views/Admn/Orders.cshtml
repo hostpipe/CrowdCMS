@@ -1,0 +1,93 @@
+﻿@{
+    ViewBag.Title = "Orders";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@section scripts {
+    @Scripts.Render("~/bundles/orders")
+}
+
+<div id="OrdersContent" 
+    data-addCustomerInfo-url="@Url.Action("SaveCustomerInfoForOrder", "Admn")"
+    data-addDiscount-url="@Url.Action("AddDiscountToBasket", "Admn")"
+    data-addNewCustomer-url="@Url.Action("AddNewCustomer", "Admn")"
+    data-addProduct-url="@Url.Action("AddProductToOrder", "Admn")"
+    data-addOrder-url="@Url.Action("SaveNewOrder", "Admn")"
+    data-cancelOrder-url="@Url.Action("CancelOrder", "Admn")"
+    data-createBasket-url="@Url.Action("CreateBasket", "Admn")"
+    data-deleteOldBaskets-url="@Url.Action("DeleteOldBaskets", "Admn")"
+    data-deleteProduct-url="@Url.Action("DeleteProductFromOrder", "Admn")"
+    data-getAddress-url="@Url.Action("GetAddressByID", "Admn")"
+    data-getCustomer-url="@Url.Action("GetCustomerInfo", "Admn")"
+    data-getCategories-url="@Url.Action("GetProductCategoriesByDomainID", "Admn")"
+    data-getCountriesAsSelectList-url="@Url.Action("GetCountriesAsSelectList", "Admn")"
+    data-getDomains-url="@Url.Action("GetDomainsList", "Admn")"
+    data-getEmailsAsCSV-url="@Url.Action("GetEmailsAsCSV", "Admn")"
+    data-getOrder-url="@Url.Action("OrderDetails", "Admn")"
+    data-getOrdersSummary-url="@Url.Action("OrdersSummary", "Admn")"
+    data-getPostages-url="@Url.Action("GetPostages", "Admn")"
+    data-getPrices-url="@Url.Action("GetPricesByProduct", "Admn")"
+    data-getProducts-url="@Url.Action("GetProductsByCategory", "Admn")"
+    data-getDeliveryuDetails-url="@Url.Action("OrderDeliveryDetails", "Admn")"
+    data-getStatuses-url="@Url.Action("GetOrderStatuses", "Admn")"
+    data-newCustomer-Url="@Url.Action("NewCustomer", "Admn")"
+    data-newOrder-Url="@Url.Action("NewOrder", "Admn")"
+    data-removeDiscount-url="@Url.Action("RemoveDiscountFromBasket", "Admn")"
+    data-saveNewMethod-url="@Url.Action("SaveNewDespatchMethod", "Admn")"
+    data-saveOrderTracking-url="@Url.Action("UpdateOrderTracking", "Admn")"
+    data-savePostage-url="@Url.Action("SavePostageForOrder", "Admn")"
+    data-searchOrders-url="@Url.Action("OrdersLeftMenu", "Admn")"
+    data-updateOrderStatus-url="@Url.Action("UpdateOrderStatus", "Admn")"
+    data-getOrderSummaryAsCSV-url="@Url.Action("GetOrderSummaryAsCSV","Admn")"
+    data-getOrderTypes-url="@Url.Action("GetOrderTypesList", "Admn")"
+    >
+    <div class="leftMenuContainer sixBtns">
+        <select data-bind="options: statuses, optionsText: 'Text', optionsValue: 'Value', optionsCaption: 'All statuses', value: statusID, event: {change: onStatusChanged}"></select>
+        <select data-bind="options: domains, optionsText: 'Text', optionsValue: 'Value', optionsCaption: 'All domains', value: lDomainID, event: {change: onLDomainChange}"></select>
+        
+        <div class="btnGreyMenu short" data-bind="click: onNewOrder">Add Order</div>
+        <div class="btnGreyMenu short" data-bind="click: onNewCustomer">Add Customer</div>
+        <select id="selOrderType" data-bind="options: orderType, optionsText: 'Text', optionsValue: 'Value', value: orderTypeID, event: {change: onTypeChange}"></select>
+        
+        @Html.Partial("~/Views/Partials/Loader.cshtml")
+    </div>
+    <div class="mainContainer">
+        <div class="sectionButtons">
+            <input type="button" id="btnSearchDialog" name="SearchDialog" class="btnGreyGreen" value="Search Orders" data-bind="click: onSearch" />
+            <input type="button" id="btnFullList" name="FullList" class="btnGreyRed" value="Full Orders List" data-bind="click: onFullList" />
+            <input type="button" id="btnOrdersSummary" name="OrdersSummary" class="btnGreyGreen" value="Show Orders Summary" data-bind="click: onOrdersSummary" />
+            <input type="button" id="btnDeleteBaskets" name="DeleteBaskets" class="btnGreyRed" value="Delete Old Baskets" data-bind="click: onDeleteOldBaskets" />
+        </div>
+        <div id="OrdersView">
+
+        </div>
+    </div>
+    <div id="SearchDialog" class="sectionContent hidden">
+        <div>
+            <label for="tbSearch">Search In All Fields:</label>
+            <input id="tbSearch" type="text" data-bind="event: { keyup: onSearchKeyUp }, value: search" />
+        </div>
+        <div>
+            <label for="tbFromDate">Dates Range:</label>
+            <input id="tbFromDate" type="text" class="short" data-input-type="date" data-bind="value: startDate" placeholder="start date"/>
+            <input id="tbToDate" type="text" class="short" data-input-type="date" data-bind="value: endDate" placeholder="end date"/>
+        </div>
+        <div class="btnContainer">
+            <input id="tbAllDates" type="checkbox" value="true" data-bind="checked: allDates" />
+            <label for="tbAllDates" class="checkboxLabel">All Dates</label>
+        </div>
+        <div>
+            <label for="ddlCategories">Products Categories</label>
+            <select id="ddlCategories" data-bind="options: searchCategories, optionsText: 'Text', optionsValue: 'Value', optionsCaption: 'Select Category', value: searchCategoryID"></select>
+        </div>
+        <div>
+            <label for="ddlProducts">Products</label>
+            <select id="ddlProducts" data-bind="options: searchProducts, optionsText: 'Text', optionsValue: 'Value', optionsCaption: 'Select Product', value: searchProductID"></select>
+        </div>
+        <div class="btnContainer">
+            <button class="btnGreen" id="btnSearch" data-bind="click: onSearchOrders">Search</button>
+        </div>
+    </div>
+    <div id="DialogConfirm" class="hidden" title="Cancel Confirmation">
+        <div>Are you sure you wish to cancel this order? This action cannot be undone.</div>
+    </div>
+</div>

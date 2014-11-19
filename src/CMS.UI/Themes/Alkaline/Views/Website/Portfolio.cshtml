@@ -1,0 +1,48 @@
+﻿@model List<CMS.BL.Entity.tbl_Portfolio>
+@{
+    ViewBag.Title = "Portfolio";
+    CMS.BL.Entity.tbl_Content portfolioPage = ViewBag.PortfolioPage as CMS.BL.Entity.tbl_Content;
+}
+@section metatags {
+    @{ Html.RenderPartial("/Views/Partials/MetaTags.cshtml", new CMS.UI.Models.MetadataModel(portfolioPage)); }
+}
+@section styles {
+    @Html.Raw(portfolioPage != null ? portfolioPage.tbl_SiteMap.SM_CSS : String.Empty)
+}
+@section sidebar {
+    @{
+    //Html.RenderPartial("../Partials/SearchPanel");
+    //Html.RenderAction("BasketSummary", "Website");
+    //Html.RenderAction("ContactUsPartial", "Website");
+    }
+}
+@if (portfolioPage != null && ViewBag.Content != null)
+{
+    <div class="siteContent">
+        @Html.Partial("~/Views/Partials/ContentPartial.cshtml", ViewBag.Content.HtmlElements as List<object>)
+    </div>
+}
+@{string lastPortfolioCatTitle = "";}
+<ul id="da-thumbs" class="sf-da-isotope da-thumbs">
+    @foreach (var portfolio in Model)
+    {
+        <li class="sf-da-item">
+            <a href="@(ViewBag.PortfolioUrl + portfolio.tbl_SiteMap.SM_URL)">
+                @if (portfolio.tbl_PortfolioImage != null){
+                    foreach (var portfolioImage in portfolio.tbl_PortfolioImage.OrderBy(pi => pi.PI_Order).Take(1))
+                    {
+                    <img src="@Html.ImageProvider(CMS.BL.ImageVersionName.portfolio, portfolioImage.tbl_Image.I_Thumb, String.Empty)" alt="@portfolio.PO_Title"  />
+                    }
+                }
+                <div>
+                    <span>@portfolio.PO_Title</span>
+                </div>
+            </a>
+        </li>
+        lastPortfolioCatTitle = portfolio.tbl_PortfolioCategory.POC_Title;
+    }
+</ul>
+<script type="text/javascript" src="/Themes/Alkaline/js/jquery.isotope.min.js"></script>
+<script type="text/javascript" src="/Themes/Alkaline/js/jquery.hoverdir.js"></script>
+<script type="text/javascript" src="/Themes/Alkaline/js/jquery.bxslider.min.js"></script>
+

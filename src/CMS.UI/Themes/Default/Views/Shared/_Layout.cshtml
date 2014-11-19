@@ -1,0 +1,96 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section metatags {
+    @RenderSection("metatags", true)
+}
+
+@section scripts {
+    @Html.Partial("_ScriptsSection")
+    @RenderSection("scripts", false)
+}
+
+@section analytics {
+    @Html.Partial("_AnalyticsSection")
+    @RenderSection("analytics", false)
+}
+
+@section styles {
+    @Html.Partial("_StylesSection")
+    @RenderSection("styles", false)
+}
+
+
+<a class="accessible" href="#content">[Skip to Content]</a>
+
+<header>
+    <div class="container">
+        <div class="logo col-xs-8 col-sm-3">
+            <h1><a href="/" title="Return to Home Page">CMS Template</a></h1>
+        </div>
+        <div class="col-xs-4 visible-xs menu-icon">
+            <div class="navbar-default hidden-md">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-9">
+            <nav class="navbar-collapse collapse">
+                <div class="menu">
+                    <ul>
+                        @Html.Action("Menu", "Website")
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <div class="clear"></div>
+    </div>
+</header>
+@RenderSection("slideshow", false)
+<div class="container content" id="content">   
+    <div class="col-sm-9">
+        @Html.Action("Breadcrumbs", "Website")
+        <div class="row">
+            <div class="col-sm-12">
+                @Html.Action("SubMenu", "Website", new { sitemapID=ViewBag.PageID })
+            </div>
+        </div>
+                <div class="row">
+            <div class="col-sm-12">
+                @Html.Action("GetAllSubCats", "Website")
+            </div>
+        </div>
+        @RenderBody()
+        @Html.Action("FeaturedProducts", "Website")
+        @Html.Action("FeaturedCategories", "Website")
+    </div>
+    <div class="col-sm-3">
+        @RenderSection("sidebar", false)
+        @if (!Request.IsAuthenticated && ViewBag.SubscriptionEnabled ?? false)
+        {
+            @Html.Partial("~/Views/Partials/Subscribe.cshtml")
+        }
+    </div>
+</div>
+@{Html.RenderAction("Footer", "Website");}
+
+@*<div class="account col-sm-2">
+    @if (Request.IsAuthenticated)
+    {
+        <a href="@Url.RouteUrl("Account")">Your account</a>
+        <ul>
+            <li><a href="@Url.RouteUrl("EditMyDetails")">Edit My Details</a></li>
+            <li><a href="@Url.RouteUrl("OrderHistory")">Your order history</a></li>
+        </ul>
+        <a href="@Url.RouteUrl("Logout")">Logout</a>
+    }
+    else
+    {
+        <a href="@Url.RouteUrl("Login")">Login</a>
+        <a href="@Url.RouteUrl("Registration")">Register</a>
+    }
+</div> *@
+

@@ -1,0 +1,17 @@
+﻿<div class="row">
+    <div class="promotionContainer col-sm-7">
+        <div data-bind="visible: isDiscount">
+            <span>Promotional code: <span data-bind="text: promotionalCode"></span></span>
+            <button type="button" class="btn btn-warning data-bind="click: onRemoveDiscount">Remove</button>
+        </div>
+        <div data-bind="visible: !isDiscount()">
+            <label for="tbDiscount">Enter promotional code</label>
+            <div class="input-group">
+                <input type="text" id="tbDiscount" name="DiscountCode" data-bind="value: promotionalCode" class="form-control"/>
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-success" data-bind="click: onAddDiscount">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

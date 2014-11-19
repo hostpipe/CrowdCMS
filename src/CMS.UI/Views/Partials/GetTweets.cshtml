@@ -1,0 +1,10 @@
+﻿@model List<string>
+@if (Model != null && Model.Count > 0)
+{
+    <ul>
+        @foreach (var tweet in Model)
+        {
+            <li>@Html.Raw(tweet)</li>
+        }
+    </ul>
+}

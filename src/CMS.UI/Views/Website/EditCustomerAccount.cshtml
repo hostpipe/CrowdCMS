@@ -1,0 +1,79 @@
+﻿@model CMS.UI.Models.EditCustomerModel
+@{
+    ViewBag.Title = "Edit My Details";
+}
+@section metatags {
+    @{Html.RenderPartial("/Views/Partials/MetaTags.cshtml", new CMS.UI.Models.MetadataModel());}
+}
+@section sidebar {
+    @{
+        Html.RenderPartial("../Partials/SearchPanel");
+        Html.RenderAction("ContactUsPartial", "Website");
+    }
+}
+<h1>
+    Edit My Details
+</h1>
+<form id="LoginForm" class="webForm" method="post">
+    <div class="noLabel">
+        @Html.ValidationSummary(true)
+    </div>
+    <div>
+        @Html.LabelFor(model => model.Title)
+        @Html.EditorFor(model => model.Title)
+        @Html.ValidationMessageFor(model => model.Title)
+    </div>
+    <div>
+        @Html.LabelFor(model => model.FirstName)
+        @Html.EditorFor(model => model.FirstName)
+        @Html.ValidationMessageFor(model => model.FirstName)
+    </div>
+    <div>
+        @Html.LabelFor(model => model.Surname)
+        @Html.EditorFor(model => model.Surname)
+        @Html.ValidationMessageFor(model => model.Surname)
+    </div>
+    <div>
+        @Html.LabelFor(model => model.Email)
+        @Html.EditorFor(model => model.Email)
+        @Html.ValidationMessageFor(model => model.Email)
+    </div>
+    <div>
+        @Html.LabelFor(model => model.Phone)
+        @Html.EditorFor(model => model.Phone)
+        @Html.ValidationMessageFor(model => model.Phone)
+    </div>
+    @if (ViewBag.SubscriptionEnabled ?? false)
+    {
+        <div>
+            @Html.LabelFor(model => model.SubscribeNewsletter)
+            @Html.EditorFor(model => model.SubscribeNewsletter)
+        </div>
+    }
+    <div>
+        @Html.LabelFor(model => model.DetailsFor3rdParties)
+        @Html.EditorFor(model => model.DetailsFor3rdParties)
+    </div>
+    <div class="noLabel">
+        If you do not wish to change your password then you can leave the following fields
+        blank.
+    </div>
+    <div>
+        @Html.LabelFor(model => model.CurrentPassword)
+        @Html.PasswordFor(model => model.CurrentPassword)
+        @Html.ValidationMessageFor(model => model.CurrentPassword)
+    </div>
+    <div>
+        @Html.LabelFor(model => model.Password)
+        @Html.PasswordFor(model => model.Password)
+        @Html.ValidationMessageFor(model => model.Password)
+    </div>
+    <div>
+        @Html.LabelFor(model => model.ConfirmPassword)
+        @Html.PasswordFor(model => model.ConfirmPassword)
+        @Html.ValidationMessageFor(model => model.ConfirmPassword)
+    </div>
+    <div class="noLabel">
+        <input type="submit" value="Save" />
+    </div>
+</form>

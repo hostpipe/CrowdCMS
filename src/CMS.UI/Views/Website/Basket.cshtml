@@ -1,0 +1,152 @@
+﻿@{
+    ViewBag.Title = "Shopping Basket";
+}
+@section metatags {
+    @{Html.RenderPartial("/Views/Partials/MetaTags.cshtml", new CMS.UI.Models.MetadataModel());}
+}
+@section scripts {
+    @Scripts.Render("~/bundles/otherLibs")
+    @Scripts.Render("~/bundles/basketManager")
+}
+@section sidebar {
+    @{
+        Html.RenderPartial("../Partials/SearchPanel");
+        Html.RenderAction("ContactUsPartial", "Website");
+    }
+}
+<div id="Basket" class="basket"
+     data-adddiscount-url="@Url.Action("AddDiscount", "Website")"
+     data-canproceedtocheckout-url="@Url.Action("CanProceedToCheckout", "Website")"
+     data-getavailablepostage-url="@Url.Action("GetAvailablePostage", "Website")"
+     data-getbasketdata-url="@Url.Action("GetBasketData", "Website")"
+     data-getcountrieslist-url="@Url.Action("GetCountries", "Website")"
+     data-getprices-url="@Url.Action("GetBasketPrices", "Website")"
+     data-proceed-url="@Url.RouteUrl("Checkout")"
+     data-removediscount-url="@Url.Action("RemoveDiscount", "Website")"
+     data-removefrombasket-url="@Url.Action("RemoveFromBasket", "Website")"
+     data-updatebasketpostage-url="@Url.Action("UpdateBasketPostage", "Website")"
+     data-updateproductamount-url="@Url.Action("UpdateProductAmount", "Website")">
+    <h1>Shopping Basket</h1>
+    <div data-bind="visible: !isBasket()">
+        <p>Your basket is currently empty</p>
+    </div>
+    <div data-bind="visible: isBasket">
+        @Html.Partial("~/Views/Partials/PromotionalCode.cshtml")
+        <div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Item</th>
+                        <th>Price</th>
+                        @if (ViewBag.DisplayTax)
+                        {
+                            <th>VAT</th>
+                        }
+                        <th class="border">Quantity</th>
+                        <th>Sub Total</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach: basketItems">
+                    <tr data-bind="attr: { 'data-contentID': BasketContentID }">
+                        <td><span data-bind="text: CategoryTitle"></span></td>
+                        <td>
+                            <span data-bind="text: ProductTitle"></span>
+                            <br />
+                            <span data-bind="html: Attributes"></span>
+                        </td>
+                        <td><span data-bind="text: ItemSinglePrice"></span></td>
+                        @if (ViewBag.DisplayTax)
+                        {
+                            <td><span data-bind="text: TaxValue"></span></td> }
+                        <td class="border">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <input name="tbAmount" type="number" class="form-control" data-bind="value: Quantity, event: { change: $root.onAmountChanged }, attr: { min: Min, max: Max }" />
+                                </div>
+                            </div>
+                        </td>
+                        <td><span data-bind="text: ItemPrice"></span></td>
+                        <td>
+                            <button name="btnRemove" class="btn btn-danger" data-bind="click: $root.onRemoveItem">Remove</button>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr data-bind="visible: isDiscount">
+
+                        <td class="border text-right" colspan="@(ViewBag.DisplayTax ? "5" : "4")"><b>Discount</b></td>
+                        <td colspan="2">
+                            - <span data-bind="text: discountAmount"></span>
+                        </td>
+                    </tr>
+                    <tr data-bind="visible: isDeliverable">
+
+                        <td class="border text-right" colspan="@(ViewBag.DisplayTax ? "5" : "4")"><b>Select Delivery Country</b></td>
+                        <td colspan="2">
+                            <!-- ko ifnot: isSingleCountry -->
+                            <select class="basketFooterInput" data-bind="options: countries, optionsText: 'Text', optionsValue: 'Value', value: countryID"></select>
+                            <!-- /ko -->
+                            <!-- ko if: isSingleCountry -->
+                            <span data-bind="text: countries()[1].Text"></span>
+                            <!-- /ko -->
+                        </td>
+                    </tr>
+                    <tr data-bind="visible: isDeliverable">
+
+                        <td class="border text-right" colspan="@(ViewBag.DisplayTax ? "5" : "4")"><b>Select Delivery Option</b></td>
+                        <td colspan="2">
+                            <!-- ko ifnot: isSinglePostage -->
+                            <select class="basketFooterInput" data-bind="options: postages, optionsText: 'Text', optionsValue: 'Value', value: postageID" class="form-control"></select>
+                            <!-- /ko -->
+                            <!-- ko if: isSinglePostage -->
+                            <span data-bind="text: postages()[1].Text"></span>
+                            <!-- /ko -->
+                        </td>
+                    </tr>
+                    <tr data-bind="visible: isDeliverable">
+
+                        <td class="border text-right" colspan="@(ViewBag.DisplayTax ? "5" : "4")"><b>Delivery Cost</b></td>
+                        <td colspan="2">
+                            <span data-bind="text: deliveryCost"></span>
+                        </td>
+                    </tr>
+                    <tr>
+
+                        <td class="border text-right" colspan="@(ViewBag.DisplayTax ? "5" : "4")"><b>EU Member</b></td>
+                        <td colspan="2">
+                            <input type="text" class="basketFooterInput form-control" placeholder="EU VAT Number" data-bind="value: euVAT" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="border text-right" colspan="@(ViewBag.DisplayTax ? "5" : "4")"><b>Total Tax</b></td>
+                        <td colspan="2">
+                            <span data-bind="text: totalTax"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="border text-right" colspan="@(ViewBag.DisplayTax ? "5" : "4")"><h3>Total</h3></td>
+                        <td colspan="2">
+                            <h3 data-bind="text: totalPrice"></h3>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <div class="buttons pull-right">
+        <a href="/" class="btn btn-default">Continue Shopping</a>
+        @*@if ((bool)this.ViewBag.ProductSaleEnabled)
+            {
+                <a href="@ViewBag.ProductUrl" class="btnViolet small">Continue Shopping For
+                    Products</a>
+            }
+            @if ((bool)this.ViewBag.EventSaleEnabled)
+            {
+                <a href="@ViewBag.EventUrl" class="btnViolet small">Continue Shopping For
+                    Events</a>
+            }*@
+        <a href="#" class="btn btn-warning" data-bind="click: onProceed, visible: isBasket">Proceed to checkout</a>
+    </div>
+</div>

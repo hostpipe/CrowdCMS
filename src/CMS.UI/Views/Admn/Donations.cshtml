@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "Donation";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@section scripts {
+    @Scripts.Render("~/bundles/donation")
+}
+<div id="DonationContent"
+    data-getDomainsList-url="@Url.Action("GetDomainsList", "Admn")"
+    data-getDonation-url="@Url.Action("DonationDetails", "Admn")"
+    data-searchDonations-url="@Url.Action("DonationLeftMenu", "Admn")">
+    <div class="leftMenuContainer fourBtns">
+        <div class="btnGreyMenu short" data-bind="click: onSearch">Search Donations</div>
+        <div class="btnGreyMenu short" data-bind="click: onFullList">Full Donation List</div>
+        <select data-bind="options: domains, optionsText: 'Text', optionsValue: 'Value', optionsCaption: 'All domains', value: lDomainID, event: {change: onLDomainChange}">
+        </select>
+    </div>
+    <div class="mainContainer">
+    </div>
+    <div id="SearchDialog" class="classicForm hidden">
+        <div>
+            <label>Search in all fields:</label>
+            <input id="tbSearch" type="text" data-bind="event: { keyup: onSearchKeyUp }, value: search" />
+        </div>
+        <div>
+            <label>From:</label>
+            <input id="tbFromDate" type="text" data-input-type="date" data-bind="value: startDate" />
+        </div>
+        <div>
+            <label>To:</label>
+            <input id="tbToDate" type="text" data-input-type="date" data-bind="value: endDate" />
+        </div>
+        <div>
+            <label>All Dates:</label>
+            <input id="tbAllDates" type="checkbox" value="true" data-bind="checked: allDates" />
+        </div>
+        <div class="buttons">
+            <button class="btnGreen" id="btnSearch" data-bind="click: onSearchDonation">Search</button>
+        </div>
+    </div>
+</div>

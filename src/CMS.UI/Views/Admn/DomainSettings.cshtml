@@ -1,0 +1,588 @@
+﻿@model CMS.UI.Models.DomainModel
+@{
+    int count = 0;
+
+    var list = Model.SettingsValues.Where(m => m.Settings.SE_Category == (int)CMS.BL.SettingsCategory.Ecommerce).ToList();
+    var eCommerceCount = count;
+    var eCommerceList = list;
+
+    count += list.Count;
+    var payPalCount = count;
+    list = Model.SettingsValues.Where(m => m.Settings.SE_Category == (int)CMS.BL.SettingsCategory.Paypal).ToList();
+    var payPalList = list;
+
+    count += list.Count;
+    var sagePayCount = count;
+    list = Model.SettingsValues.Where(m => m.Settings.SE_Category == (int)CMS.BL.SettingsCategory.SagePay).ToList();
+    var sagePaylist = list;
+
+    count += list.Count;
+    var secureTradingCount = count;
+    list = Model.SettingsValues.Where(m => m.Settings.SE_Category == (int)CMS.BL.SettingsCategory.SecureTrading).ToList();
+    var secureTradingList = list;
+
+    count += list.Count;
+    var donationCount = count;
+    list = Model.SettingsValues.Where(m => m.Settings.SE_Category == (int)CMS.BL.SettingsCategory.Donation).ToList();
+    var donationList = list;
+
+    count += list.Count;
+    var commonCount = count;
+    list = Model.SettingsValues.Where(m => m.Settings.SE_Category == (int)CMS.BL.SettingsCategory.Common).ToList();
+    var commonList = list;
+
+    count += list.Count;
+    var cookieCount = count;
+    list = Model.SettingsValues.Where(m => m.Settings.SE_Category == (int)CMS.BL.SettingsCategory.CookieConsent).ToList();
+    var cookieList = list;
+
+    count += list.Count;
+    var stripeCount = count;
+    list = Model.SettingsValues.Where(m => m.Settings.SE_Category == (int)CMS.BL.SettingsCategory.Stripe).ToList();
+    var stripeList = list;
+}
+<div class="sectionHeader" data-bind="text: sectionHeader"></div>
+<form id="DomainForm" action="#" method="post" data-bind="submit: onSubmit">
+
+    <div class="dynamic">
+        <div class="tilesBackground">
+            <div class="serviceTile">
+                <img src="~/Content/admin/images/crowdcms_words.png" />
+                <div class="toggleSection">
+                    <div class="configureAnchor">settings</div>
+                </div>
+            </div>
+            <div class="dialogTile">
+                <div>
+                    <div class="closingX"><span class="glyphicon glyphicon-remove"></span></div>
+                    <div class="imageAndConfigureContainer">
+                        <img src="~/Content/admin/images/crowdcms_words.png" />
+                        <div class="configureTxt">
+                            settings
+                        </div>
+                        <div class="clear" />
+                    </div>
+                    <div class="tileContent">
+                        <div>
+                            @Html.LabelFor(m => m.DO_Domain)
+                            @Html.TextBoxFor(m => m.DO_Domain)
+                            @Html.ValidationMessageFor(m => m.DO_Domain)
+                            @Html.HiddenFor(m => m.DomainID)
+                        </div>
+                        <div>
+                            @Html.LabelFor(m => m.DO_DevelopmentMode)
+                            @Html.RadioButton("DO_DevelopmentMode", true, Model != null ? Model.DO_DevelopmentMode : true, new { id = "radioDevYes" })
+                            @Html.Label("LabelYes", "Yes", new { @for = "radioDevYes", @class = "checkboxLabel" })
+                            @Html.RadioButton("DO_DevelopmentMode", false, Model != null ? !Model.DO_DevelopmentMode : false, new { id = "radioDevNo" })
+                            @Html.Label("LabelNo", "No", new { @for = "radioDevNo", @class = "checkboxLabel" })
+                            <span class="fa fa-info-circle" title="Switch on to keep your dev domain out of the search engines. Live domains must have this option disabled to maximise proper indexing by search engines"></span>
+                        </div>
+                        <div>
+                            @Html.LabelFor(m => m.DO_Email)
+                            @Html.TextBoxFor(m => m.DO_Email)
+                        </div>
+                        <div>
+                            @Html.LabelFor(m => m.DO_CompanyName)
+                            @Html.TextBoxFor(m => m.DO_CompanyName)
+                        </div>
+                        <div>
+                            @Html.LabelFor(m => m.DO_CompanyAddress)
+                            @Html.TextBoxFor(m => m.DO_CompanyAddress, new { @class = "long" })
+                        </div>
+                        <div>
+                            @Html.LabelFor(m => m.DO_CompanyTelephone)
+                            @Html.TextBoxFor(m => m.DO_CompanyTelephone, new { @class = "short" })
+                        </div>
+                        <div>
+                            @Html.LabelFor(m => m.DO_Theme)
+                            @Html.DropDownListFor(m => m.DO_Theme, ViewBag.Themes as SelectList)
+                        </div>
+                        <div>
+                            @Html.LabelFor(m => m.DO_HomePageID)
+                            <select id="DO_HomePageID" name="DO_HomePageID">
+                                <option value="0">...</option>
+                                @foreach (var item in this.ViewBag.Pages as List<CMS.Utils.Extension.ExtendedSelectListItem>)
+                                {
+                                    <option value="@item.Value" @(item.Selected ? "selected=\"selected\"" : String.Empty)>
+                                        @while (item.Level-- != 1)
+                                        { <text>&nbsp;&nbsp;</text> }@item.Text
+                                    </option>
+                                }
+                            </select>
+                        </div>
+                        <div>
+                            @Html.LabelFor(m => m.DO_CustomRouteHandler)
+                            @Html.CheckBoxFor(m => m.DO_CustomRouteHandler)
+                        </div>
+                        <div>
+                            @Html.LabelFor(m => m.DO_ShareThis)
+                            @Html.TextBoxFor(m => m.DO_ShareThis, new { @class = "long" })
+                        </div>
+                        <div>
+                            @Html.LabelFor(m => m.DO_LaunchYear)
+                            @Html.TextBoxFor(m => m.DO_LaunchYear, new { @class = "tiny" })
+                        </div>
+                        <div>
+                            @Html.LabelFor(m => m.DO_CSS)
+                            @Html.TextBoxFor(m => m.DO_CSS)
+                        </div>
+                        @Html.Partial("../Partials/DomainSettingList", new CMS.UI.Models.SettingsListModel() { list = commonList, startCountAt = commonCount })
+                    </div>
+                    <div class="centerButton">
+                        <button class="closingBttn" type="button">OK</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="serviceTile">
+                <img src="~/Content/admin/images/ecommerce.png" />
+                <div class="toggleSection">
+                    <div class="configureAnchor">settings</div>
+                </div>
+            </div>
+            <div class="dialogTile">
+                <div>
+                    <div class="closingX"><span class="glyphicon glyphicon-remove"></span></div>
+                    <div class="imageAndConfigureContainer">
+                        <img src="~/Content/admin/images/ecommerce.png" />
+                        <div class="configureTxt">
+                            settings
+                        </div>
+                        <div class="clear" />
+                    </div>
+                    <div class="tileContent">
+                        <div>
+                            @Html.LabelFor(m => m.EnableEventSale)
+                            @Html.CheckBoxFor(m => m.EnableEventSale)
+                        </div>
+                        <div>
+                            @Html.LabelFor(m => m.EnableProductSale)
+                            @Html.CheckBoxFor(m => m.EnableProductSale)
+                        </div>
+                        <div>
+                            @Html.LabelFor(m => m.EventViewType)
+                            @Html.DropDownListFor(m => m.EventViewType, ViewBag.EventViewTypes as List<SelectListItem>)
+                        </div>
+                        <div>
+                            @Html.Partial("../Partials/DomainSettingList", new CMS.UI.Models.SettingsListModel() { list = eCommerceList, startCountAt = eCommerceCount })
+                        </div>
+                        <div>
+                            @Html.Partial("../Partials/DomainSettingList", new CMS.UI.Models.SettingsListModel() { list = donationList, startCountAt = donationCount })
+                        </div>
+                    </div>
+                    <div class="centerButton">
+                        <button class="closingBttn" type="button">OK</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="serviceTile">
+                <img src="~/Content/admin/images/twitter.png" />
+                <div class="hidden">
+                    @Html.CheckBoxFor(m => m.DO_UpdateTwitter, new { data_bind = "checked: isTwitter" })
+                </div>
+                <div class="toggleSection">
+                    <div class="toggleBtn" data-bind="click: toggleTwitter">
+                        <div class="toggleBtnONOFF toggleBtnON">ON</div>
+                        <div class="toggleBtnONOFF toggleBtnOFF">OFF</div>
+                        <div class="toggleBtnSlider" data-bind="css: { toggleBtnSliderRight: isTwitter }"></div>
+                    </div>
+                    <div class="configureAnchor" data-bind="css: {greyedOut : !isTwitter()}">configure</div>
+                </div>
+            </div>
+            <div class="dialogTile">
+                <div>
+                    <div class="closingX"><span class="glyphicon glyphicon-remove"></span></div>
+                    <div class="imageAndConfigureContainer">
+                        <img src="~/Content/admin/images/twitter.png" />
+                        <div class="configureTxt">
+                            configure
+                        </div>
+                        <div class="clear" />
+                    </div>
+                    <div class="tileContent">
+                        <div>
+                            @Html.LabelFor(m => m.DO_ConsumerSecret)
+                            @Html.TextBoxFor(m => m.DO_ConsumerSecret, new { @class = "long" })
+                        </div>
+                        <div>
+                            @Html.LabelFor(m => m.DO_ConsumerKey)
+                            @Html.TextBoxFor(m => m.DO_ConsumerKey, new { @class = "long" })
+                        </div>
+                        <div>
+                            @Html.LabelFor(m => m.DO_TwitterToken)
+                            @Html.TextBoxFor(m => m.DO_TwitterToken, new { @class = "long" })
+                        </div>
+                        <div>
+                            @Html.LabelFor(m => m.DO_TwitterSecret)
+                            @Html.TextBoxFor(m => m.DO_TwitterSecret, new { @class = "long" })
+                        </div>
+                    </div>
+                    <div class="centerButton">
+                        <button class="closingBttn" type="button">OK</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="serviceTile">
+                <img src="~/Content/admin/images/crowdcms_words.png" />
+                <div class="toggleSection">
+                    <div class="configureAnchor" data-bind="click: onUpdateIcons">social media</div>
+                </div>
+            </div>
+            <div class="dialogTile">
+                <div>
+                    <div class="closingX"><span class="glyphicon glyphicon-remove"></span></div>
+                    <div class="imageAndConfigureContainer">
+                        <img src="~/Content/admin/images/crowdcms_words.png" />
+                        <div class="configureTxt">
+                            social media
+                        </div>
+                        <div class="clear" />
+                    </div>
+                    <div class="tileContent"  style="overflow:auto;height:400px;">
+                        @for (var i = 0; i < Model.Social.Count(); i++)
+                        {
+                            <div class="icon_container">
+                                <h2>
+                                    @Model.Social.ElementAt(i).Title <br />
+                                    <span class="@Model.Social.ElementAt(i).IconClass demo_icon" id="demo_@i"></span>
+                                </h2>
+                                <a href="#" class="reset" id="Reset_@i">Reset to Default</a>
+                            </div>
+                            <div class="icon_data">
+                                @Html.Hidden(String.Format("Social[{0}].SocialID", i), Model.Social.ElementAt(i).SocialID, new { id = "SocialID" + i })
+                                @Html.Hidden(String.Format("Social[{0}].IconClass", i), Model.Social.ElementAt(i).IconClass, new { id = "IconClass" + i })
+                                @Html.Hidden(String.Format("Social[{0}].Title", i), Model.Social.ElementAt(i).Title, new { id = "Title" + i })
+                                @Html.Hidden(String.Format("Social[{0}].DefaultBackColour", i), Model.Social.ElementAt(i).DefaultBackColour, new { id = "DefaultBackColour" + i })
+                                @Html.Hidden(String.Format("Social[{0}].DefaultForeColour", i), Model.Social.ElementAt(i).DefaultForeColour, new { id = "DefaultForeColour" + i })
+                                @Html.Hidden(String.Format("Social[{0}].DefaultBorderRadius", i), Model.Social.ElementAt(i).DefaultBorderRadius, new { id = "DefaultBorderRadius" + i })
+
+                                @Html.Label("Live" + i, "Enable", new { @class = "inline" })
+                                @Html.CheckBox(String.Format("Social[{0}].Live", i), Model.Social.ElementAt(i).Live, new { id = "Live" + i, @class = "updateicon" })
+                                <br />
+                                @Html.Label("URL" + i, "URL")
+                                @Html.TextBox(String.Format("Social[{0}].URL", i), Model.Social.ElementAt(i).URL, new { id = "URL" + i })
+                                <br />
+                                @Html.Label("BackColour" + i, "Background Colour")
+                                @Html.TextBox(String.Format("Social[{0}].BackColour", i), Model.Social.ElementAt(i).BackColour, new { id = "BackColour" + i, @class = "updateicon short" })
+
+                                @Html.Label("ForeColour" + i, "Foreground Colour")
+                                @Html.TextBox(String.Format("Social[{0}].ForeColour", i), Model.Social.ElementAt(i).ForeColour, new { id = "ForeColour" + i, @class = "updateicon short" })
+
+                                @Html.Label("BorderRadius" + i, "Border Radius")
+                                @Html.TextBox(String.Format("Social[{0}].BorderRadius", i), Model.Social.ElementAt(i).BorderRadius, new { id = "BorderRadius" + i, @class = "updateicon veryshort" })%
+                                 
+                            </div>
+                        }
+                    </div>
+                    <div class="centerButton">
+                        <button class="closingBttn" type="button">OK</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="serviceTile">
+                <img src="~/Content/admin/images/googleanalytics.png" />
+                <div class="hidden">
+                    @Html.CheckBoxFor(m => m.DO_GoogleAnalyticsVisible, new { data_bind = "checked: isGoogleAnalytics" })
+                </div>
+                <div class="toggleSection">
+                    <div class="toggleBtn" data-bind="click: toggleGoogleAnalytics">
+                        <div class="toggleBtnONOFF toggleBtnON">ON</div>
+                        <div class="toggleBtnONOFF toggleBtnOFF">OFF</div>
+                        <div class="toggleBtnSlider" data-bind="css: { toggleBtnSliderRight: isGoogleAnalytics }"></div>
+                    </div>
+                    <div class="configureAnchor" data-bind="css: {greyedOut : !isGoogleAnalytics()}">configure</div>
+                </div>
+            </div>
+            <div class="dialogTile">
+                <div class="wider">
+                    <div class="closingX"><span class="glyphicon glyphicon-remove"></span></div>
+                    <div class="imageAndConfigureContainer">
+                        <img src="~/Content/admin/images/googleanalytics.png" />
+                        <div class="configureTxt">
+                            configure
+                        </div>
+                        <div class="clear" />
+                    </div>
+                    <div class="tileContent">
+                        <div>
+                            @Html.LabelFor(m => m.DO_GoogleAnalyticsCode)
+                            @Html.TextAreaFor(m => m.DO_GoogleAnalyticsCode, new { @class = "verylong" })
+                        </div>
+                        <div>
+                            @Html.LabelFor(m => m.DO_Robots)
+                            @Html.TextAreaFor(m => m.DO_Robots, new { @class = "verylong" })
+                        </div>
+                    </div>
+                    <div class="centerButton">
+                        <button class="closingBttn" type="button">OK</button>
+                    </div>
+                </div>
+            </div>
+            <div class="serviceTile">
+                <img src="~/Content/admin/images/mailchimp.png" />
+                <div class="hidden">
+                    @Html.CheckBoxFor(m => m.DO_EnableMailChimp, new { data_bind = "checked: isMailChimp" })
+                </div>
+                <div class="toggleSection">
+                    <div class="toggleBtn" data-bind="click: toggleMailChimp">
+                        <div class="toggleBtnONOFF toggleBtnON">ON</div>
+                        <div class="toggleBtnONOFF toggleBtnOFF">OFF</div>
+                        <div class="toggleBtnSlider" data-bind="css: { toggleBtnSliderRight: isMailChimp }"></div>
+                    </div>
+                    <div class="configureAnchor" data-bind="css: {greyedOut : !isMailChimp()}">configure</div>
+                </div>
+            </div>
+            <div class="dialogTile">
+                <div>
+                    <div class="closingX"><span class="glyphicon glyphicon-remove"></span></div>
+                    <div class="imageAndConfigureContainer">
+                        <img src="~/Content/admin/images/mailchimp.png" />
+                        <div class="configureTxt">
+                            configure
+                        </div>
+                        <div class="clear" />
+                    </div>
+                    <div class="tileContent">
+                        <div>
+                            @Html.LabelFor(m => m.DO_MailChimpAPIKey)
+                            @Html.TextBoxFor(m => m.DO_MailChimpAPIKey, new { @class = "long" })
+                        </div>
+                        <div>
+                            @Html.LabelFor(m => m.DO_MailChimpListID)
+                            @Html.TextBoxFor(m => m.DO_MailChimpListID)
+                        </div>
+                    </div>
+                    <div class="centerButton">
+                        <button class="closingBttn" type="button">OK</button>
+                    </div>
+                </div>
+            </div>
+            <div class="serviceTile">
+                <img src="~/Content/admin/images/communiGator.png" />
+                <div class="hidden">
+                    @Html.CheckBoxFor(m => m.DO_EnableCommuniGator, new { data_bind = "checked: isCommuniGator" })
+                </div>
+                <div class="toggleSection">
+                    <div class="toggleBtn" data-bind="click: toggleCommuniGator">
+                        <div class="toggleBtnONOFF toggleBtnON">ON</div>
+                        <div class="toggleBtnONOFF toggleBtnOFF">OFF</div>
+                        <div class="toggleBtnSlider" data-bind="css: { toggleBtnSliderRight: isCommuniGator }"></div>
+                    </div>
+                    <div class="configureAnchor" data-bind="css: {greyedOut : !isCommuniGator()}">configure</div>
+                </div>
+            </div>
+            <div class="dialogTile">
+                <div>
+                    <div class="closingX"><span class="glyphicon glyphicon-remove"></span></div>
+                    <div class="imageAndConfigureContainer">
+                        <img src="~/Content/admin/images/communiGator.png" />
+                        <div class="configureTxt">
+                            configure
+                        </div>
+                        <div class="clear" />
+                    </div>
+                    <div class="tileContent">
+                        <div>
+                            @Html.LabelFor(m => m.DO_CommuniGatorUserName)
+                            @Html.TextBoxFor(m => m.DO_CommuniGatorUserName)
+                        </div>
+                        <div>
+                            @Html.LabelFor(m => m.DO_CommuniGatorPassword)
+                            @Html.TextBoxFor(m => m.DO_CommuniGatorPassword)
+                        </div>
+                    </div>
+                    <div class="centerButton">
+                        <button class="closingBttn" type="button">OK</button>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <div class="serviceTile">
+                <img src="~/Content/admin/images/paypal.png" />
+                <div class="hidden">
+                    @Html.CheckBoxFor(m => m.IsPaypalPayment, new { data_bind = "checked: isPaypalPayment" })
+                </div>
+                <div class="toggleSection">
+                    <div class="toggleBtn" data-bind="click: togglePaypalPayment">
+                        <div class="toggleBtnONOFF toggleBtnON">ON</div>
+                        <div class="toggleBtnONOFF toggleBtnOFF">OFF</div>
+                        <div class="toggleBtnSlider" data-bind="css: { toggleBtnSliderRight: isPaypalPayment }"></div>
+                    </div>
+                    <div class="configureAnchor" data-bind="css: {greyedOut : !isPaypalPayment()}">configure</div>
+                </div>
+            </div>
+            <div class="dialogTile">
+                <div>
+                    <div class="closingX"><span class="glyphicon glyphicon-remove"></span></div>
+                    <div class="imageAndConfigureContainer">
+                        <img src="~/Content/admin/images/paypal.png" />
+                        <div class="configureTxt">
+                            configure
+                        </div>
+                        <div class="clear" />
+                    </div>
+                    <div class="tileContent">
+                        @Html.Partial("../Partials/DomainSettingList", new CMS.UI.Models.SettingsListModel() { list = payPalList, startCountAt = payPalCount })
+                    </div>
+                    <div class="centerButton">
+                        <button class="closingBttn" type="button">OK</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="serviceTile">
+                <img style="height:80px" src="~/Content/admin/images/sagePayLarge.png" />
+                <div class="hidden">
+                    @Html.CheckBoxFor(m => m.IsSagePayPayment, new { data_bind = "checked: isSagePayPayment" })
+                </div>
+                <div class="toggleSection">
+                    <div class="toggleBtn" data-bind="click: toggleSagePayPayment">
+                        <div class="toggleBtnONOFF toggleBtnON">ON</div>
+                        <div class="toggleBtnONOFF toggleBtnOFF">OFF</div>
+                        <div class="toggleBtnSlider" data-bind="css: { toggleBtnSliderRight: isSagePayPayment }"></div>
+                    </div>
+                    <div class="configureAnchor" data-bind="css: {greyedOut : !isSagePayPayment()}">configure</div>
+                </div>
+            </div>
+            <div class="dialogTile">
+                <div>
+                    <div class="closingX"><span class="glyphicon glyphicon-remove"></span></div>
+                    <div class="imageAndConfigureContainer">
+                        <img style="height:80px" src="~/Content/admin/images/sagePayLarge.png" />
+
+                        <div class="configureTxt">
+                            configure
+                        </div>
+                        <div class="clear" />
+                    </div>
+                    <div class="tileContent">
+                        @Html.Partial("../Partials/DomainSettingList", new CMS.UI.Models.SettingsListModel() { list = sagePaylist, startCountAt = sagePayCount })
+                    </div>
+                    <div class="centerButton">
+                        <button class="closingBttn" type="button">OK</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="serviceTile">
+                <img src="~/Content/admin/images/securetrading.png" />
+                <div class="hidden">
+                    @Html.CheckBoxFor(m => m.IsSecureTradingPayment, new { data_bind = "checked: isSecureTradingPayment" })
+                </div>
+                <div class="toggleSection">
+                    <div class="toggleBtn" data-bind="click: toggleSecureTrading">
+                        <div class="toggleBtnONOFF toggleBtnON">ON</div>
+                        <div class="toggleBtnONOFF toggleBtnOFF">OFF</div>
+                        <div class="toggleBtnSlider" data-bind="css: { toggleBtnSliderRight: isSecureTradingPayment }"></div>
+                    </div>
+                    <div class="configureAnchor" data-bind="css: {greyedOut : !isSecureTradingPayment()}">configure</div>
+                </div>
+            </div>
+            <div class="dialogTile">
+                <div>
+                    <div class="closingX"><span class="glyphicon glyphicon-remove"></span></div>
+                    <div class="imageAndConfigureContainer">
+                        <img src="~/Content/admin/images/securetrading.png" />
+
+                        <div class="configureTxt">
+                            configure
+                        </div>
+                        <div class="clear" />
+                    </div>
+                    <div class="tileContent">
+                        @Html.Partial("../Partials/DomainSettingList", new CMS.UI.Models.SettingsListModel() { list = secureTradingList, startCountAt = secureTradingCount })
+                    </div>
+                    <div class="centerButton">
+                        <button class="closingBttn" type="button">OK</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="serviceTile">
+                <img src="~/Content/admin/images/cookie.jpg" />
+                <div class="hidden">
+                    @Html.CheckBoxFor(m => m.IsCookieConsentEnabled, new { data_bind = "checked: isCookieConsentEnabled" })
+                </div>
+                <div class="toggleSection">
+                    <div class="toggleBtn" data-bind="click: toggleCookieConsent">
+                        <div class="toggleBtnONOFF toggleBtnON">ON</div>
+                        <div class="toggleBtnONOFF toggleBtnOFF">OFF</div>
+                        <div class="toggleBtnSlider" data-bind="css: { toggleBtnSliderRight: isCookieConsentEnabled }"></div>
+                    </div>
+                    <div class="configureAnchor" data-bind="css: {greyedOut : !isCookieConsentEnabled()}">configure</div>
+                </div>
+            </div>
+            <div class="dialogTile">
+                <div>
+                    <div class="closingX"><span class="glyphicon glyphicon-remove"></span></div>
+                    <div class="imageAndConfigureContainer">
+                        <img src="~/Content/admin/images/cookie.jpg" />
+
+                        <div class="configureTxt">
+                            configure
+                        </div>
+                        <div class="clear" />
+                    </div>
+                    <div class="tileContent">
+                        @Html.Partial("../Partials/DomainSettingList", new CMS.UI.Models.SettingsListModel() { list = cookieList, startCountAt = cookieCount })
+                    </div>
+                    <div class="centerButton">
+                        <button class="closingBttn" type="button">OK</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="serviceTile">
+                <img src="~/Content/admin/images/stripe.jpeg" />
+                <div class="hidden">
+                    @Html.CheckBoxFor(m => m.IsStripePayment, new { data_bind = "checked: isStripePayment" })
+                </div>
+                <div class="toggleSection">
+                    <div class="toggleBtn" data-bind="click: toggleStripe">
+                        <div class="toggleBtnONOFF toggleBtnON">ON</div>
+                        <div class="toggleBtnONOFF toggleBtnOFF">OFF</div>
+                        <div class="toggleBtnSlider" data-bind="css: { toggleBtnSliderRight: isStripePayment }"></div>
+                    </div>
+                    <div class="configureAnchor" data-bind="css: {greyedOut : !isStripePayment()}">configure</div>
+                </div>
+            </div>
+            <div class="dialogTile">
+                <div>
+                    <div class="closingX"><span class="glyphicon glyphicon-remove"></span></div>
+                    <div class="imageAndConfigureContainer">
+                        <img src="~/Content/admin/images/stripe.jpeg" />
+
+                        <div class="configureTxt">
+                            configure
+                        </div>
+                        <div class="clear" />
+                    </div>
+                    <div class="tileContent">
+                        @Html.Partial("../Partials/DomainSettingList", new CMS.UI.Models.SettingsListModel() { list = stripeList, startCountAt = stripeCount })
+                    </div>
+                    <div class="centerButton">
+                        <button class="closingBttn" type="button">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="btnContainer">
+            <button type="submit" class="btnGreen" data-bind="visible: isNewDomain">
+                Add New Domain
+            </button>
+            <button type="submit" class="btnGreen" data-bind="visible: !isNewDomain()">
+                Update Domain
+            </button>
+            <button type="button" class="btnRed" data-bind="click: onNewDomain">
+                Cancel
+            </button>
+        </div>
+    </div>
+</form>

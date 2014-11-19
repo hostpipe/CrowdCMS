@@ -1,0 +1,96 @@
+﻿@model CMS.UI.Models.RegistrationModel
+@{
+    ViewBag.Title = "Registration";
+}
+@section metatags {
+    @{Html.RenderPartial("/Views/Partials/MetaTags.cshtml", new CMS.UI.Models.MetadataModel());}
+}
+@section sidebar {
+    @Html.Partial("../Partials/SearchPanel")
+    @Html.Action("ContactUsPartial", "Website")
+}
+<form id="RegisterForm" class="webForm" method="post">
+    <h1>Registration</h1>
+    <div>
+        @Html.LabelFor(m => m.FirstName)
+        @Html.TextBoxFor(m => m.FirstName)
+        @Html.ValidationMessageFor(m => m.FirstName)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.Surname)
+        @Html.TextBoxFor(m => m.Surname)
+        @Html.ValidationMessageFor(m => m.Surname)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.Email)
+        @Html.TextBoxFor(m => m.Email)
+        @Html.ValidationMessageFor(m => m.Email)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.ConfEmail)
+        @Html.TextBoxFor(m => m.ConfEmail)
+        @Html.ValidationMessageFor(m => m.ConfEmail)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.Password)
+        @Html.PasswordFor(m => m.Password)
+        @Html.ValidationMessageFor(m => m.Password)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.ConfPassword)
+        @Html.PasswordFor(m => m.ConfPassword)
+        @Html.ValidationMessageFor(m => m.ConfPassword)
+    </div>
+    @if (ViewBag.SubscriptionEnabled ?? false)
+    {
+        <div>
+            @Html.LabelFor(m => m.Newsletter)
+            @Html.EditorFor(m => m.Newsletter)
+        </div>
+    }
+    <div>
+        @Html.LabelFor(m => m.DetailsFor3rdParties)
+        @Html.EditorFor(m => m.DetailsFor3rdParties)
+    </div>
+    <h3>Address</h3>
+    <div>
+        @Html.LabelFor(m => m.Address1)
+        @Html.TextBoxFor(m => m.Address1)
+        @Html.ValidationMessageFor(m => m.Address1)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.Address2)
+        @Html.TextBoxFor(m => m.Address2)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.Address3)
+        @Html.TextBoxFor(m => m.Address3)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.Town)
+        @Html.TextBoxFor(m => m.Town)
+        @Html.ValidationMessageFor(m => m.Town)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.Postcode)
+        @Html.TextBoxFor(m => m.Postcode)
+        @Html.ValidationMessageFor(m => m.Postcode)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.County)
+        @Html.TextBoxFor(m => m.County)
+        @Html.ValidationMessageFor(m => m.County)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.CountryID)
+        @Html.DropDownListFor(m => m.CountryID, this.ViewBag.Countries as SelectList)
+        @Html.ValidationMessageFor(m => m.CountryID)
+    </div>
+    <div class="noLabel">
+        @Html.ValidationSummary(true)
+    </div>
+    <div class="noLabel">
+        <input type="submit" value="Register" />
+        <input type="reset" value="Reset" />
+    </div>
+</form>

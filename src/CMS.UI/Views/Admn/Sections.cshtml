@@ -1,0 +1,45 @@
+﻿@{
+    ViewBag.Title = "Sections";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@section scripts {
+    <script type="text/javascript" src="/Scripts/tinymce/jquery.tinymce.min.js"></script>
+    @Scripts.Render("~/bundles/sections")
+}
+
+<div id="SectionContent"
+    data-sectionID="@ViewBag.SectionID"
+    data-domainCSSFile="@ViewBag.DomainCSSFile"
+    data-addSection-url="@Url.Action("AddSection", "Admn")"
+    data-approveContent-url="@Url.Action("ApprovePageVersion", "Admn")"
+    data-deleteSection-url="@Url.Action("DeleteSection", "Admn")"
+    data-deleteImage-url="@Url.Action("DeletePageImage", "Admn")"
+    data-deleteVersion-url="@Url.Action("DeletePageVersion", "Admn")"
+    data-getParentUrl-url="@Url.Action("GetParentURL", "Admn")"
+    data-getSection-url="@Url.Action("SectionSettings", "Admn")"
+    data-getSections-url="@Url.Action("GetSitemapList", "Admn")"
+    data-getDomainsList-url="@Url.Action("GetDomainsList", "Admn")"
+    data-getImagesSection-url="@Url.Action("SectionImages", "Admn")"
+    data-saveSectionOrder-url="@Url.Action("SaveSectionOrder", "Admn")"
+    data-previewContent-url="@Url.Action("Preview", "Admn")"
+    data-updateSection-url="@Url.Action("UpdateSection", "Admn")"
+    data-getCustomEditorObjects-url="@Url.Action("CustomEditorObjects", "Website")"
+    data-updateCaption-url="@Url.Action("SavePageImageCaption", "Admn")"
+    >
+    <div class="leftMenuContainer fourBtns">        
+        @if ((User as CMS.Utils.CustomPrincipal).HasPermission(CMS.BL.Permission.AddContent))
+        {
+        <div class="btnGreyMenu short" data-bind="click: onNewSection">Add Page</div>
+        }
+        @if ((User as CMS.Utils.CustomPrincipal).HasPermission(CMS.BL.Permission.EditContent))
+        {
+        <div class="btnGreyMenu short" data-bind="click: onSaveOrder"><span id="orderIndicator" class="icon-ok"></span>Save Sort Order</div>
+        }
+        <select data-bind="options: domains, optionsText: 'Text', optionsValue: 'Value', optionsCaption: 'All domains', value: lDomainID, event: {change: onLDomainChange}">
+        </select>
+        @Html.Partial("~/Views/Partials/Loader.cshtml")
+    </div>
+    <div class="mainContainer">
+        @Html.Action("SectionSettings", "Admn", new { sectionID = ViewBag.SectionID })
+    </div>
+</div>

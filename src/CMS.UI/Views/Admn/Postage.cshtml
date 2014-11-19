@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "Postage";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@section scripts {
+    @Scripts.Render("~/bundles/postage")
+}
+<div id="PostageContent"
+    data-getPostage-url="@Url.Action("PostageSettings", "Admn")"
+    data-getPostageData-url="@Url.Action("GetPostageData", "Admn")"
+    data-addPostage-url="@Url.Action("AddPostage", "Admn")"
+    data-updatePostage-url="@Url.Action("UpdatePostage", "Admn")"
+    data-getDomainsList-url="@Url.Action("GetDomainsList", "Admn")"
+    data-getPostageSelectors-url="@Url.Action("GetPostageSelectors", "Admn")"
+    data-getPostageAttributes-url="@Url.Action("PostageAttributes", "Admn")"
+    data-getPostageAttributesSelectors-url="@Url.Action("GetPostageAttributesSelectors", "Admn")"
+    data-deletePostage-url="@Url.Action("DeletePostage", "Admn")"
+    data-deleteBand-url="@Url.Action("DeleteBand", "Admn")"
+    data-deleteWeight-url="@Url.Action("DeleteWeight", "Admn")"
+    data-deleteZone-url="@Url.Action("DeleteZone", "Admn")"
+    data-saveBand-Url="@Url.Action("SaveBand", "Admn")"
+    data-saveWeight-Url="@Url.Action("SaveWeight", "Admn")"
+    data-saveZone-Url="@Url.Action("SaveZone", "Admn")"
+    >
+    <div class="leftMenuContainer fourBtns">
+        <div class="btnGreyMenu short" data-bind="click: onNewPostage">
+            Add Postage</div>
+        <div class="btnGreyMenu short" data-bind="click: onPostageAttributes">
+            Postage Attributes</div>
+        <select data-bind="options: domains, optionsText: 'Text', optionsValue: 'Value', optionsCaption: 'All domains', value: lDomainID, event: {change: onLDomainChange}"
+            >
+        </select>
+       @Html.Partial("~/Views/Partials/Loader.cshtml")
+    </div>
+    <div class="mainContainer">
+        @Html.Action("PostageSettings", "Admn")
+    </div>
+</div>

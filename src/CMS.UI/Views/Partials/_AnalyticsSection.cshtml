@@ -1,0 +1,6 @@
+﻿    @if (ViewBag.IsGoogleAnalytics && !(bool)this.ViewBag.NoIndex)
+    {
+        <script type="text/javascript">
+            @Html.Raw(ViewBag.GoogleAnalytics)
+        </script>
+    }

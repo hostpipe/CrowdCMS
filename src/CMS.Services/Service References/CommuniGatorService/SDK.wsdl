@@ -1,0 +1,3609 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/SDK/SDK" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/SDK/SDK" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">The SDK is available to clients to interface with sending campaings, adding contacts and reporting other collected information</wsdl:documentation>
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/SDK/SDK">
+      <s:element name="ReturnAllGroups">
+        <s:complexType />
+      </s:element>
+      <s:element name="ReturnAllGroupsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReturnAllGroupsResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AuthHeader" type="tns:AuthHeader" />
+      <s:complexType name="AuthHeader">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+        </s:sequence>
+        <s:anyAttribute />
+      </s:complexType>
+      <s:element name="AddGroupInclusionExclusionContact">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GroupId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="ContactId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="Include" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddGroupInclusionExclusionContactResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="ReturnGroupCount">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GroupId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReturnGroupCountResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ReturnGroupCountResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CopyEvent">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="EventCopyId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CopyEventResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CopyEventResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateEvent">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="EventId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="IsActive" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="StartDate" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="EndDate" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="LocationId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="ShortDescription" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="LongDescription" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateEventResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UpdateEventResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReturnEventLocations">
+        <s:complexType />
+      </s:element>
+      <s:element name="ReturnEventLocationsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReturnEventLocationsResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReturnAllEvents">
+        <s:complexType />
+      </s:element>
+      <s:element name="ReturnAllEventsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReturnAllEventsResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReturnActiveEvents">
+        <s:complexType />
+      </s:element>
+      <s:element name="ReturnActiveEventsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReturnActiveEventsResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AuthenticationCheck">
+        <s:complexType />
+      </s:element>
+      <s:element name="AuthenticationCheckResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AuthenticationCheckResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="InsertContact">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="contactXML" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="InsertContactResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="InsertContactResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="InsertContactUsingUniqueIdentifier">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="contactXML" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="UniqueIdentifier" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="InsertContactUsingUniqueIdentifierResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="InsertContactUsingUniqueIdentifierResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateContact">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="contactXML" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateContactResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UpdateContactResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateContactUsingUniqueIdentifier">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="contactXML" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="UniqueIdentifier" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="InsertIfNotexists" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateContactUsingUniqueIdentifierResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UpdateContactUsingUniqueIdentifierResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadContactXML">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadContactXMLResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UploadContactXMLResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadContactTriggerCampaign">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadContactTriggerCampaignResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UploadContactTriggerCampaignResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadContactTriggerCampaign_UsingTriggerKey">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="TriggerKey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadContactTriggerCampaign_UsingTriggerKeyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UploadContactTriggerCampaign_UsingTriggerKeyResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CheckTriggeredContacByTriggerKey">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TriggerKey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CheckTriggeredContacByTriggerKeyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CheckTriggeredContacByTriggerKeyResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CancelTriggerCampaign">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="triggerKey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CancelTriggerCampaignResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CancelTriggerCampaignResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadBatchContacts">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="UniqueIdentifier" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadBatchContactsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UploadBatchContactsResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReturnLastTriggerUploaded">
+        <s:complexType />
+      </s:element>
+      <s:element name="ReturnLastTriggerUploadedResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReturnLastTriggerUploadedResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadContactDatasetIntoGroup">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GroupDataSet">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+            <s:element minOccurs="0" maxOccurs="1" name="GroupName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadContactDatasetIntoGroupResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UploadContactDatasetIntoGroupResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReturnContactRecord">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="EmailAddress" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReturnContactRecordResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReturnContactRecordResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReturnMatchingContactRecords">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FieldName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Value" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReturnMatchingContactRecordsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReturnMatchingContactRecordsResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ResetCounter">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="functionName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ResetCounterResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ResetCounterResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ResetCounterWithValue">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="functionName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="value" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ResetCounterWithValueResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ResetCounterWithValueResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReturnUnsubscribes">
+        <s:complexType />
+      </s:element>
+      <s:element name="ReturnUnsubscribesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReturnUnsubscribesResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdatedReturnUnsubscribes">
+        <s:complexType />
+      </s:element>
+      <s:element name="UpdatedReturnUnsubscribesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UpdatedReturnUnsubscribesResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SelectReturnUnsubscribes">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="fields" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SelectReturnUnsubscribesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SelectReturnUnsubscribesResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReturnUndeliverables">
+        <s:complexType />
+      </s:element>
+      <s:element name="ReturnUndeliverablesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReturnUndeliverablesResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdatedReturnUndeliverables">
+        <s:complexType />
+      </s:element>
+      <s:element name="UpdatedReturnUndeliverablesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UpdatedReturnUndeliverablesResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SelectReturnFailedEmails">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="fields" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SelectReturnFailedEmailsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SelectReturnFailedEmailsResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SelectReturnUndeliverables">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="fields" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SelectReturnUndeliverablesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SelectReturnUndeliverablesResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReturnCampaignEmailsSent">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CampaignId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReturnCampaignEmailsSentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ReturnCampaignEmailsSentResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReturnOpenEmails">
+        <s:complexType />
+      </s:element>
+      <s:element name="ReturnOpenEmailsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReturnOpenEmailsResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReturnOpenMergeFieldEmails">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MergeFieldsToReturn" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReturnOpenMergeFieldEmailsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReturnOpenMergeFieldEmailsResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SelectOpenEmails">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="fields" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SelectOpenEmailsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SelectOpenEmailsResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReturnLandingZoneHits">
+        <s:complexType />
+      </s:element>
+      <s:element name="ReturnLandingZoneHitsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReturnLandingZoneHitsResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SelectLandingZoneHits">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="fields" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SelectLandingZoneHitsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SelectLandingZoneHitsResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReturnWebHits">
+        <s:complexType />
+      </s:element>
+      <s:element name="ReturnWebHitsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReturnWebHitsResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SelectWebHits">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="fields" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SelectWebHitsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SelectWebHitsResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReturnWebMergeFieldHits">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MergeFieldsToReturn" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReturnWebMergeFieldHitsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReturnWebMergeFieldHitsResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReturnWebCaptureSubmissions">
+        <s:complexType />
+      </s:element>
+      <s:element name="ReturnWebCaptureSubmissionsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReturnWebCaptureSubmissionsResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SelectWebCaptureSubmissions">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="fields" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SelectWebCaptureSubmissionsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SelectWebCaptureSubmissionsResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReturnDownloadHits">
+        <s:complexType />
+      </s:element>
+      <s:element name="ReturnDownloadHitsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReturnDownloadHitsResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SelectDownloadHits">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="fields" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SelectDownloadHitsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SelectDownloadHitsResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReturnSurveysCompleted">
+        <s:complexType />
+      </s:element>
+      <s:element name="ReturnSurveysCompletedResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReturnSurveysCompletedResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SelectSurveysCompleted">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="fields" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SelectSurveysCompletedResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SelectSurveysCompletedResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RunSDKStoredProcedure">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SetName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="TableName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sprocname" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="params" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="RunSDKStoredProcedureResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RunSDKStoredProcedureResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RunSDKSproc">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SetName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="TableName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sprocname" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="params" type="tns:ArrayOfAnyType" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfAnyType">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="anyType" nillable="true" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="RunSDKSprocResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RunSDKSprocResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetResultsDS">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CampaignId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="UniqueField" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetResultsDSResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetResultsDSResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSpecificResults">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CampaignId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="UniqueField" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="UniqueValue" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSpecificResultsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetSpecificResultsResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Import_Recon_AutoMatch_Insert">
+        <s:complexType />
+      </s:element>
+      <s:element name="Import_Recon_AutoMatch_InsertResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Import_Recon_AutoMatch_InsertResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Import_Recon_XML">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="XML" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="OriginalFileName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Import_Recon_XMLResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Import_Recon_XMLResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Import_Recon_CSV">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CSV" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="OriginalFileName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Import_Recon_CSVResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Import_Recon_CSVResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Import_Recon_Dataset">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DataSet">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+            <s:element minOccurs="0" maxOccurs="1" name="TableName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Import_Recon_DatasetResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Import_Recon_DatasetResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReturnAllCampaigns">
+        <s:complexType />
+      </s:element>
+      <s:element name="ReturnAllCampaignsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReturnAllCampaignsResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReturnCampaignsModifiedSinceLastRun">
+        <s:complexType />
+      </s:element>
+      <s:element name="ReturnCampaignsModifiedSinceLastRunResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReturnCampaignsModifiedSinceLastRunResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReturnActiveCampaigns">
+        <s:complexType />
+      </s:element>
+      <s:element name="ReturnActiveCampaignsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReturnActiveCampaignsResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReturnLatestActiveCampaigns">
+        <s:complexType />
+      </s:element>
+      <s:element name="ReturnLatestActiveCampaignsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReturnLatestActiveCampaignsResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="createCampaign">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="cName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="createCampaignResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="createCampaignResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="updateCampaign">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="intCampaignId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="dtstartdate" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="strSenderEmail" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="strSenderAlias" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="strReplyTo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="strSubjectLine" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="strEmailDisplayName" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="intEmailId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="updateCampaignResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="updateCampaignResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="setCampaignUnsubscribe">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="campaignId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="unsubscribeId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="setCampaignUnsubscribeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="setCampaignUnsubscribeResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="createWizardCampaign">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="GroupId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="createWizardCampaignResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="DeleteCampaign">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CampaignId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteCampaignResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DeleteCampaignResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetCampaignGroup">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CampaignId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="GroupId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetCampaignGroupResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetCampaignGroup">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CampaignId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCampaignGroupResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetCampaignGroupResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="sendTestCampaign">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CampaignId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="EmailAddress" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="sendTestCampaignResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sendTestCampaignResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="InitiateCampaign">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CampaignId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="InitiateCampaignResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="InitiateCampaignResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UninitiateCampaign">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CampaignId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UninitiateCampaignResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UninitiateCampaignResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getAudienceCount">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CampaignId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getAudienceCountResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getAudienceCountResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="createEmail">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="eName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="HTML" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Text" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="createEmailResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="createEmailResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="updateEmail">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="emailId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="HTML" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Text" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="updateEmailResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="updateEmailResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateGroup">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GroupName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="GroupDescription" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateGroupResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CreateGroupResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteGroup">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GroupId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteGroupResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DeleteGroupResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CleardownGroup">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GroupId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CleardownGroupResponse">
+        <s:complexType />
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="ReturnAllGroupsSoapIn">
+    <wsdl:part name="parameters" element="tns:ReturnAllGroups" />
+  </wsdl:message>
+  <wsdl:message name="ReturnAllGroupsSoapOut">
+    <wsdl:part name="parameters" element="tns:ReturnAllGroupsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReturnAllGroupsAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="AddGroupInclusionExclusionContactSoapIn">
+    <wsdl:part name="parameters" element="tns:AddGroupInclusionExclusionContact" />
+  </wsdl:message>
+  <wsdl:message name="AddGroupInclusionExclusionContactSoapOut">
+    <wsdl:part name="parameters" element="tns:AddGroupInclusionExclusionContactResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddGroupInclusionExclusionContactAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="ReturnGroupCountSoapIn">
+    <wsdl:part name="parameters" element="tns:ReturnGroupCount" />
+  </wsdl:message>
+  <wsdl:message name="ReturnGroupCountSoapOut">
+    <wsdl:part name="parameters" element="tns:ReturnGroupCountResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReturnGroupCountAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="CopyEventSoapIn">
+    <wsdl:part name="parameters" element="tns:CopyEvent" />
+  </wsdl:message>
+  <wsdl:message name="CopyEventSoapOut">
+    <wsdl:part name="parameters" element="tns:CopyEventResponse" />
+  </wsdl:message>
+  <wsdl:message name="CopyEventAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="UpdateEventSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateEvent" />
+  </wsdl:message>
+  <wsdl:message name="UpdateEventSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateEventResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateEventAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="ReturnEventLocationsSoapIn">
+    <wsdl:part name="parameters" element="tns:ReturnEventLocations" />
+  </wsdl:message>
+  <wsdl:message name="ReturnEventLocationsSoapOut">
+    <wsdl:part name="parameters" element="tns:ReturnEventLocationsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReturnEventLocationsAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="ReturnAllEventsSoapIn">
+    <wsdl:part name="parameters" element="tns:ReturnAllEvents" />
+  </wsdl:message>
+  <wsdl:message name="ReturnAllEventsSoapOut">
+    <wsdl:part name="parameters" element="tns:ReturnAllEventsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReturnAllEventsAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="ReturnActiveEventsSoapIn">
+    <wsdl:part name="parameters" element="tns:ReturnActiveEvents" />
+  </wsdl:message>
+  <wsdl:message name="ReturnActiveEventsSoapOut">
+    <wsdl:part name="parameters" element="tns:ReturnActiveEventsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReturnActiveEventsAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="AuthenticationCheckSoapIn">
+    <wsdl:part name="parameters" element="tns:AuthenticationCheck" />
+  </wsdl:message>
+  <wsdl:message name="AuthenticationCheckSoapOut">
+    <wsdl:part name="parameters" element="tns:AuthenticationCheckResponse" />
+  </wsdl:message>
+  <wsdl:message name="AuthenticationCheckAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="InsertContactSoapIn">
+    <wsdl:part name="parameters" element="tns:InsertContact" />
+  </wsdl:message>
+  <wsdl:message name="InsertContactSoapOut">
+    <wsdl:part name="parameters" element="tns:InsertContactResponse" />
+  </wsdl:message>
+  <wsdl:message name="InsertContactAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="InsertContactUsingUniqueIdentifierSoapIn">
+    <wsdl:part name="parameters" element="tns:InsertContactUsingUniqueIdentifier" />
+  </wsdl:message>
+  <wsdl:message name="InsertContactUsingUniqueIdentifierSoapOut">
+    <wsdl:part name="parameters" element="tns:InsertContactUsingUniqueIdentifierResponse" />
+  </wsdl:message>
+  <wsdl:message name="InsertContactUsingUniqueIdentifierAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="UpdateContactSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateContact" />
+  </wsdl:message>
+  <wsdl:message name="UpdateContactSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateContactResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateContactAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="UpdateContactUsingUniqueIdentifierSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateContactUsingUniqueIdentifier" />
+  </wsdl:message>
+  <wsdl:message name="UpdateContactUsingUniqueIdentifierSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateContactUsingUniqueIdentifierResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateContactUsingUniqueIdentifierAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="UploadContactXMLSoapIn">
+    <wsdl:part name="parameters" element="tns:UploadContactXML" />
+  </wsdl:message>
+  <wsdl:message name="UploadContactXMLSoapOut">
+    <wsdl:part name="parameters" element="tns:UploadContactXMLResponse" />
+  </wsdl:message>
+  <wsdl:message name="UploadContactXMLAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="UploadContactTriggerCampaignSoapIn">
+    <wsdl:part name="parameters" element="tns:UploadContactTriggerCampaign" />
+  </wsdl:message>
+  <wsdl:message name="UploadContactTriggerCampaignSoapOut">
+    <wsdl:part name="parameters" element="tns:UploadContactTriggerCampaignResponse" />
+  </wsdl:message>
+  <wsdl:message name="UploadContactTriggerCampaignAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="UploadContactTriggerCampaign_UsingTriggerKeySoapIn">
+    <wsdl:part name="parameters" element="tns:UploadContactTriggerCampaign_UsingTriggerKey" />
+  </wsdl:message>
+  <wsdl:message name="UploadContactTriggerCampaign_UsingTriggerKeySoapOut">
+    <wsdl:part name="parameters" element="tns:UploadContactTriggerCampaign_UsingTriggerKeyResponse" />
+  </wsdl:message>
+  <wsdl:message name="UploadContactTriggerCampaign_UsingTriggerKeyAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="CheckTriggeredContacByTriggerKeySoapIn">
+    <wsdl:part name="parameters" element="tns:CheckTriggeredContacByTriggerKey" />
+  </wsdl:message>
+  <wsdl:message name="CheckTriggeredContacByTriggerKeySoapOut">
+    <wsdl:part name="parameters" element="tns:CheckTriggeredContacByTriggerKeyResponse" />
+  </wsdl:message>
+  <wsdl:message name="CheckTriggeredContacByTriggerKeyAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="CancelTriggerCampaignSoapIn">
+    <wsdl:part name="parameters" element="tns:CancelTriggerCampaign" />
+  </wsdl:message>
+  <wsdl:message name="CancelTriggerCampaignSoapOut">
+    <wsdl:part name="parameters" element="tns:CancelTriggerCampaignResponse" />
+  </wsdl:message>
+  <wsdl:message name="CancelTriggerCampaignAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="UploadBatchContactsSoapIn">
+    <wsdl:part name="parameters" element="tns:UploadBatchContacts" />
+  </wsdl:message>
+  <wsdl:message name="UploadBatchContactsSoapOut">
+    <wsdl:part name="parameters" element="tns:UploadBatchContactsResponse" />
+  </wsdl:message>
+  <wsdl:message name="UploadBatchContactsAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="ReturnLastTriggerUploadedSoapIn">
+    <wsdl:part name="parameters" element="tns:ReturnLastTriggerUploaded" />
+  </wsdl:message>
+  <wsdl:message name="ReturnLastTriggerUploadedSoapOut">
+    <wsdl:part name="parameters" element="tns:ReturnLastTriggerUploadedResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReturnLastTriggerUploadedAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="UploadContactDatasetIntoGroupSoapIn">
+    <wsdl:part name="parameters" element="tns:UploadContactDatasetIntoGroup" />
+  </wsdl:message>
+  <wsdl:message name="UploadContactDatasetIntoGroupSoapOut">
+    <wsdl:part name="parameters" element="tns:UploadContactDatasetIntoGroupResponse" />
+  </wsdl:message>
+  <wsdl:message name="UploadContactDatasetIntoGroupAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="ReturnContactRecordSoapIn">
+    <wsdl:part name="parameters" element="tns:ReturnContactRecord" />
+  </wsdl:message>
+  <wsdl:message name="ReturnContactRecordSoapOut">
+    <wsdl:part name="parameters" element="tns:ReturnContactRecordResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReturnContactRecordAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="ReturnMatchingContactRecordsSoapIn">
+    <wsdl:part name="parameters" element="tns:ReturnMatchingContactRecords" />
+  </wsdl:message>
+  <wsdl:message name="ReturnMatchingContactRecordsSoapOut">
+    <wsdl:part name="parameters" element="tns:ReturnMatchingContactRecordsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReturnMatchingContactRecordsAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="ResetCounterSoapIn">
+    <wsdl:part name="parameters" element="tns:ResetCounter" />
+  </wsdl:message>
+  <wsdl:message name="ResetCounterSoapOut">
+    <wsdl:part name="parameters" element="tns:ResetCounterResponse" />
+  </wsdl:message>
+  <wsdl:message name="ResetCounterAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="ResetCounterWithValueSoapIn">
+    <wsdl:part name="parameters" element="tns:ResetCounterWithValue" />
+  </wsdl:message>
+  <wsdl:message name="ResetCounterWithValueSoapOut">
+    <wsdl:part name="parameters" element="tns:ResetCounterWithValueResponse" />
+  </wsdl:message>
+  <wsdl:message name="ResetCounterWithValueAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="ReturnUnsubscribesSoapIn">
+    <wsdl:part name="parameters" element="tns:ReturnUnsubscribes" />
+  </wsdl:message>
+  <wsdl:message name="ReturnUnsubscribesSoapOut">
+    <wsdl:part name="parameters" element="tns:ReturnUnsubscribesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReturnUnsubscribesAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="UpdatedReturnUnsubscribesSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdatedReturnUnsubscribes" />
+  </wsdl:message>
+  <wsdl:message name="UpdatedReturnUnsubscribesSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdatedReturnUnsubscribesResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdatedReturnUnsubscribesAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="SelectReturnUnsubscribesSoapIn">
+    <wsdl:part name="parameters" element="tns:SelectReturnUnsubscribes" />
+  </wsdl:message>
+  <wsdl:message name="SelectReturnUnsubscribesSoapOut">
+    <wsdl:part name="parameters" element="tns:SelectReturnUnsubscribesResponse" />
+  </wsdl:message>
+  <wsdl:message name="SelectReturnUnsubscribesAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="ReturnUndeliverablesSoapIn">
+    <wsdl:part name="parameters" element="tns:ReturnUndeliverables" />
+  </wsdl:message>
+  <wsdl:message name="ReturnUndeliverablesSoapOut">
+    <wsdl:part name="parameters" element="tns:ReturnUndeliverablesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReturnUndeliverablesAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="UpdatedReturnUndeliverablesSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdatedReturnUndeliverables" />
+  </wsdl:message>
+  <wsdl:message name="UpdatedReturnUndeliverablesSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdatedReturnUndeliverablesResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdatedReturnUndeliverablesAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="SelectReturnFailedEmailsSoapIn">
+    <wsdl:part name="parameters" element="tns:SelectReturnFailedEmails" />
+  </wsdl:message>
+  <wsdl:message name="SelectReturnFailedEmailsSoapOut">
+    <wsdl:part name="parameters" element="tns:SelectReturnFailedEmailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="SelectReturnFailedEmailsAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="SelectReturnUndeliverablesSoapIn">
+    <wsdl:part name="parameters" element="tns:SelectReturnUndeliverables" />
+  </wsdl:message>
+  <wsdl:message name="SelectReturnUndeliverablesSoapOut">
+    <wsdl:part name="parameters" element="tns:SelectReturnUndeliverablesResponse" />
+  </wsdl:message>
+  <wsdl:message name="SelectReturnUndeliverablesAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="ReturnCampaignEmailsSentSoapIn">
+    <wsdl:part name="parameters" element="tns:ReturnCampaignEmailsSent" />
+  </wsdl:message>
+  <wsdl:message name="ReturnCampaignEmailsSentSoapOut">
+    <wsdl:part name="parameters" element="tns:ReturnCampaignEmailsSentResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReturnCampaignEmailsSentAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="ReturnOpenEmailsSoapIn">
+    <wsdl:part name="parameters" element="tns:ReturnOpenEmails" />
+  </wsdl:message>
+  <wsdl:message name="ReturnOpenEmailsSoapOut">
+    <wsdl:part name="parameters" element="tns:ReturnOpenEmailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReturnOpenEmailsAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="ReturnOpenMergeFieldEmailsSoapIn">
+    <wsdl:part name="parameters" element="tns:ReturnOpenMergeFieldEmails" />
+  </wsdl:message>
+  <wsdl:message name="ReturnOpenMergeFieldEmailsSoapOut">
+    <wsdl:part name="parameters" element="tns:ReturnOpenMergeFieldEmailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReturnOpenMergeFieldEmailsAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="SelectOpenEmailsSoapIn">
+    <wsdl:part name="parameters" element="tns:SelectOpenEmails" />
+  </wsdl:message>
+  <wsdl:message name="SelectOpenEmailsSoapOut">
+    <wsdl:part name="parameters" element="tns:SelectOpenEmailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="SelectOpenEmailsAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="ReturnLandingZoneHitsSoapIn">
+    <wsdl:part name="parameters" element="tns:ReturnLandingZoneHits" />
+  </wsdl:message>
+  <wsdl:message name="ReturnLandingZoneHitsSoapOut">
+    <wsdl:part name="parameters" element="tns:ReturnLandingZoneHitsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReturnLandingZoneHitsAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="SelectLandingZoneHitsSoapIn">
+    <wsdl:part name="parameters" element="tns:SelectLandingZoneHits" />
+  </wsdl:message>
+  <wsdl:message name="SelectLandingZoneHitsSoapOut">
+    <wsdl:part name="parameters" element="tns:SelectLandingZoneHitsResponse" />
+  </wsdl:message>
+  <wsdl:message name="SelectLandingZoneHitsAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="ReturnWebHitsSoapIn">
+    <wsdl:part name="parameters" element="tns:ReturnWebHits" />
+  </wsdl:message>
+  <wsdl:message name="ReturnWebHitsSoapOut">
+    <wsdl:part name="parameters" element="tns:ReturnWebHitsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReturnWebHitsAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="SelectWebHitsSoapIn">
+    <wsdl:part name="parameters" element="tns:SelectWebHits" />
+  </wsdl:message>
+  <wsdl:message name="SelectWebHitsSoapOut">
+    <wsdl:part name="parameters" element="tns:SelectWebHitsResponse" />
+  </wsdl:message>
+  <wsdl:message name="SelectWebHitsAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="ReturnWebMergeFieldHitsSoapIn">
+    <wsdl:part name="parameters" element="tns:ReturnWebMergeFieldHits" />
+  </wsdl:message>
+  <wsdl:message name="ReturnWebMergeFieldHitsSoapOut">
+    <wsdl:part name="parameters" element="tns:ReturnWebMergeFieldHitsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReturnWebMergeFieldHitsAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="ReturnWebCaptureSubmissionsSoapIn">
+    <wsdl:part name="parameters" element="tns:ReturnWebCaptureSubmissions" />
+  </wsdl:message>
+  <wsdl:message name="ReturnWebCaptureSubmissionsSoapOut">
+    <wsdl:part name="parameters" element="tns:ReturnWebCaptureSubmissionsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReturnWebCaptureSubmissionsAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="SelectWebCaptureSubmissionsSoapIn">
+    <wsdl:part name="parameters" element="tns:SelectWebCaptureSubmissions" />
+  </wsdl:message>
+  <wsdl:message name="SelectWebCaptureSubmissionsSoapOut">
+    <wsdl:part name="parameters" element="tns:SelectWebCaptureSubmissionsResponse" />
+  </wsdl:message>
+  <wsdl:message name="SelectWebCaptureSubmissionsAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="ReturnDownloadHitsSoapIn">
+    <wsdl:part name="parameters" element="tns:ReturnDownloadHits" />
+  </wsdl:message>
+  <wsdl:message name="ReturnDownloadHitsSoapOut">
+    <wsdl:part name="parameters" element="tns:ReturnDownloadHitsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReturnDownloadHitsAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="SelectDownloadHitsSoapIn">
+    <wsdl:part name="parameters" element="tns:SelectDownloadHits" />
+  </wsdl:message>
+  <wsdl:message name="SelectDownloadHitsSoapOut">
+    <wsdl:part name="parameters" element="tns:SelectDownloadHitsResponse" />
+  </wsdl:message>
+  <wsdl:message name="SelectDownloadHitsAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="ReturnSurveysCompletedSoapIn">
+    <wsdl:part name="parameters" element="tns:ReturnSurveysCompleted" />
+  </wsdl:message>
+  <wsdl:message name="ReturnSurveysCompletedSoapOut">
+    <wsdl:part name="parameters" element="tns:ReturnSurveysCompletedResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReturnSurveysCompletedAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="SelectSurveysCompletedSoapIn">
+    <wsdl:part name="parameters" element="tns:SelectSurveysCompleted" />
+  </wsdl:message>
+  <wsdl:message name="SelectSurveysCompletedSoapOut">
+    <wsdl:part name="parameters" element="tns:SelectSurveysCompletedResponse" />
+  </wsdl:message>
+  <wsdl:message name="SelectSurveysCompletedAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="RunSDKStoredProcedureSoapIn">
+    <wsdl:part name="parameters" element="tns:RunSDKStoredProcedure" />
+  </wsdl:message>
+  <wsdl:message name="RunSDKStoredProcedureSoapOut">
+    <wsdl:part name="parameters" element="tns:RunSDKStoredProcedureResponse" />
+  </wsdl:message>
+  <wsdl:message name="RunSDKStoredProcedureAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="RunSDKSprocSoapIn">
+    <wsdl:part name="parameters" element="tns:RunSDKSproc" />
+  </wsdl:message>
+  <wsdl:message name="RunSDKSprocSoapOut">
+    <wsdl:part name="parameters" element="tns:RunSDKSprocResponse" />
+  </wsdl:message>
+  <wsdl:message name="RunSDKSprocAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetResultsDSSoapIn">
+    <wsdl:part name="parameters" element="tns:GetResultsDS" />
+  </wsdl:message>
+  <wsdl:message name="GetResultsDSSoapOut">
+    <wsdl:part name="parameters" element="tns:GetResultsDSResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetResultsDSAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetSpecificResultsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetSpecificResults" />
+  </wsdl:message>
+  <wsdl:message name="GetSpecificResultsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetSpecificResultsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetSpecificResultsAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="Import_Recon_AutoMatch_InsertSoapIn">
+    <wsdl:part name="parameters" element="tns:Import_Recon_AutoMatch_Insert" />
+  </wsdl:message>
+  <wsdl:message name="Import_Recon_AutoMatch_InsertSoapOut">
+    <wsdl:part name="parameters" element="tns:Import_Recon_AutoMatch_InsertResponse" />
+  </wsdl:message>
+  <wsdl:message name="Import_Recon_AutoMatch_InsertAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="Import_Recon_XMLSoapIn">
+    <wsdl:part name="parameters" element="tns:Import_Recon_XML" />
+  </wsdl:message>
+  <wsdl:message name="Import_Recon_XMLSoapOut">
+    <wsdl:part name="parameters" element="tns:Import_Recon_XMLResponse" />
+  </wsdl:message>
+  <wsdl:message name="Import_Recon_XMLAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="Import_Recon_CSVSoapIn">
+    <wsdl:part name="parameters" element="tns:Import_Recon_CSV" />
+  </wsdl:message>
+  <wsdl:message name="Import_Recon_CSVSoapOut">
+    <wsdl:part name="parameters" element="tns:Import_Recon_CSVResponse" />
+  </wsdl:message>
+  <wsdl:message name="Import_Recon_CSVAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="Import_Recon_DatasetSoapIn">
+    <wsdl:part name="parameters" element="tns:Import_Recon_Dataset" />
+  </wsdl:message>
+  <wsdl:message name="Import_Recon_DatasetSoapOut">
+    <wsdl:part name="parameters" element="tns:Import_Recon_DatasetResponse" />
+  </wsdl:message>
+  <wsdl:message name="Import_Recon_DatasetAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="ReturnAllCampaignsSoapIn">
+    <wsdl:part name="parameters" element="tns:ReturnAllCampaigns" />
+  </wsdl:message>
+  <wsdl:message name="ReturnAllCampaignsSoapOut">
+    <wsdl:part name="parameters" element="tns:ReturnAllCampaignsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReturnAllCampaignsAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="ReturnCampaignsModifiedSinceLastRunSoapIn">
+    <wsdl:part name="parameters" element="tns:ReturnCampaignsModifiedSinceLastRun" />
+  </wsdl:message>
+  <wsdl:message name="ReturnCampaignsModifiedSinceLastRunSoapOut">
+    <wsdl:part name="parameters" element="tns:ReturnCampaignsModifiedSinceLastRunResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReturnCampaignsModifiedSinceLastRunAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="ReturnActiveCampaignsSoapIn">
+    <wsdl:part name="parameters" element="tns:ReturnActiveCampaigns" />
+  </wsdl:message>
+  <wsdl:message name="ReturnActiveCampaignsSoapOut">
+    <wsdl:part name="parameters" element="tns:ReturnActiveCampaignsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReturnActiveCampaignsAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="ReturnLatestActiveCampaignsSoapIn">
+    <wsdl:part name="parameters" element="tns:ReturnLatestActiveCampaigns" />
+  </wsdl:message>
+  <wsdl:message name="ReturnLatestActiveCampaignsSoapOut">
+    <wsdl:part name="parameters" element="tns:ReturnLatestActiveCampaignsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReturnLatestActiveCampaignsAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="createCampaignSoapIn">
+    <wsdl:part name="parameters" element="tns:createCampaign" />
+  </wsdl:message>
+  <wsdl:message name="createCampaignSoapOut">
+    <wsdl:part name="parameters" element="tns:createCampaignResponse" />
+  </wsdl:message>
+  <wsdl:message name="createCampaignAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="updateCampaignSoapIn">
+    <wsdl:part name="parameters" element="tns:updateCampaign" />
+  </wsdl:message>
+  <wsdl:message name="updateCampaignSoapOut">
+    <wsdl:part name="parameters" element="tns:updateCampaignResponse" />
+  </wsdl:message>
+  <wsdl:message name="updateCampaignAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="setCampaignUnsubscribeSoapIn">
+    <wsdl:part name="parameters" element="tns:setCampaignUnsubscribe" />
+  </wsdl:message>
+  <wsdl:message name="setCampaignUnsubscribeSoapOut">
+    <wsdl:part name="parameters" element="tns:setCampaignUnsubscribeResponse" />
+  </wsdl:message>
+  <wsdl:message name="setCampaignUnsubscribeAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="createWizardCampaignSoapIn">
+    <wsdl:part name="parameters" element="tns:createWizardCampaign" />
+  </wsdl:message>
+  <wsdl:message name="createWizardCampaignSoapOut">
+    <wsdl:part name="parameters" element="tns:createWizardCampaignResponse" />
+  </wsdl:message>
+  <wsdl:message name="createWizardCampaignAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="DeleteCampaignSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteCampaign" />
+  </wsdl:message>
+  <wsdl:message name="DeleteCampaignSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteCampaignResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteCampaignAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="SetCampaignGroupSoapIn">
+    <wsdl:part name="parameters" element="tns:SetCampaignGroup" />
+  </wsdl:message>
+  <wsdl:message name="SetCampaignGroupSoapOut">
+    <wsdl:part name="parameters" element="tns:SetCampaignGroupResponse" />
+  </wsdl:message>
+  <wsdl:message name="SetCampaignGroupAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetCampaignGroupSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCampaignGroup" />
+  </wsdl:message>
+  <wsdl:message name="GetCampaignGroupSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCampaignGroupResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCampaignGroupAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="sendTestCampaignSoapIn">
+    <wsdl:part name="parameters" element="tns:sendTestCampaign" />
+  </wsdl:message>
+  <wsdl:message name="sendTestCampaignSoapOut">
+    <wsdl:part name="parameters" element="tns:sendTestCampaignResponse" />
+  </wsdl:message>
+  <wsdl:message name="sendTestCampaignAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="InitiateCampaignSoapIn">
+    <wsdl:part name="parameters" element="tns:InitiateCampaign" />
+  </wsdl:message>
+  <wsdl:message name="InitiateCampaignSoapOut">
+    <wsdl:part name="parameters" element="tns:InitiateCampaignResponse" />
+  </wsdl:message>
+  <wsdl:message name="InitiateCampaignAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="UninitiateCampaignSoapIn">
+    <wsdl:part name="parameters" element="tns:UninitiateCampaign" />
+  </wsdl:message>
+  <wsdl:message name="UninitiateCampaignSoapOut">
+    <wsdl:part name="parameters" element="tns:UninitiateCampaignResponse" />
+  </wsdl:message>
+  <wsdl:message name="UninitiateCampaignAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="getAudienceCountSoapIn">
+    <wsdl:part name="parameters" element="tns:getAudienceCount" />
+  </wsdl:message>
+  <wsdl:message name="getAudienceCountSoapOut">
+    <wsdl:part name="parameters" element="tns:getAudienceCountResponse" />
+  </wsdl:message>
+  <wsdl:message name="getAudienceCountAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="createEmailSoapIn">
+    <wsdl:part name="parameters" element="tns:createEmail" />
+  </wsdl:message>
+  <wsdl:message name="createEmailSoapOut">
+    <wsdl:part name="parameters" element="tns:createEmailResponse" />
+  </wsdl:message>
+  <wsdl:message name="createEmailAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="updateEmailSoapIn">
+    <wsdl:part name="parameters" element="tns:updateEmail" />
+  </wsdl:message>
+  <wsdl:message name="updateEmailSoapOut">
+    <wsdl:part name="parameters" element="tns:updateEmailResponse" />
+  </wsdl:message>
+  <wsdl:message name="updateEmailAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="CreateGroupSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateGroup" />
+  </wsdl:message>
+  <wsdl:message name="CreateGroupSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateGroupResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateGroupAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="DeleteGroupSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteGroup" />
+  </wsdl:message>
+  <wsdl:message name="DeleteGroupSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteGroupResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteGroupAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="CleardownGroupSoapIn">
+    <wsdl:part name="parameters" element="tns:CleardownGroup" />
+  </wsdl:message>
+  <wsdl:message name="CleardownGroupSoapOut">
+    <wsdl:part name="parameters" element="tns:CleardownGroupResponse" />
+  </wsdl:message>
+  <wsdl:message name="CleardownGroupAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:portType name="SDKSoap">
+    <wsdl:operation name="ReturnAllGroups">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function returns all groups.</wsdl:documentation>
+      <wsdl:input message="tns:ReturnAllGroupsSoapIn" />
+      <wsdl:output message="tns:ReturnAllGroupsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddGroupInclusionExclusionContact">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function allows a added to a group.</wsdl:documentation>
+      <wsdl:input message="tns:AddGroupInclusionExclusionContactSoapIn" />
+      <wsdl:output message="tns:AddGroupInclusionExclusionContactSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReturnGroupCount">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function returns a count for the speicifed group</wsdl:documentation>
+      <wsdl:input message="tns:ReturnGroupCountSoapIn" />
+      <wsdl:output message="tns:ReturnGroupCountSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CopyEvent">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function allows you to copy an event by providing an event id.</wsdl:documentation>
+      <wsdl:input message="tns:CopyEventSoapIn" />
+      <wsdl:output message="tns:CopyEventSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateEvent">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function allows you to update the details of an existing event</wsdl:documentation>
+      <wsdl:input message="tns:UpdateEventSoapIn" />
+      <wsdl:output message="tns:UpdateEventSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReturnEventLocations">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function returns a list of all stored location names and id's</wsdl:documentation>
+      <wsdl:input message="tns:ReturnEventLocationsSoapIn" />
+      <wsdl:output message="tns:ReturnEventLocationsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReturnAllEvents">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function returns a list of all event id's and names.</wsdl:documentation>
+      <wsdl:input message="tns:ReturnAllEventsSoapIn" />
+      <wsdl:output message="tns:ReturnAllEventsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReturnActiveEvents">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function returns a list of all active event id's and names.</wsdl:documentation>
+      <wsdl:input message="tns:ReturnActiveEventsSoapIn" />
+      <wsdl:output message="tns:ReturnActiveEventsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AuthenticationCheck">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function allows you to check your access to the SDK</wsdl:documentation>
+      <wsdl:input message="tns:AuthenticationCheckSoapIn" />
+      <wsdl:output message="tns:AuthenticationCheckSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertContact">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function allows a contact to be inserted into the database. The function accepts an xml string containing contact details to process. If the contact exists then processing is stopped and function returns 0.</wsdl:documentation>
+      <wsdl:input message="tns:InsertContactSoapIn" />
+      <wsdl:output message="tns:InsertContactSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertContactUsingUniqueIdentifier">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function allows a contact to be inserted into the database using the unique identifier to match against. The function accepts an xml string containing contact details to process and the fieldname of the unique identifier. If the contact exists then processing is stopped and function returns 0.</wsdl:documentation>
+      <wsdl:input message="tns:InsertContactUsingUniqueIdentifierSoapIn" />
+      <wsdl:output message="tns:InsertContactUsingUniqueIdentifierSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateContact">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function allows a contact to be updated into the database. The function accepts an xml string containing contact details to process. If the contact does not exist then the contact is inserted instead. The new or updated ContactId is returned.</wsdl:documentation>
+      <wsdl:input message="tns:UpdateContactSoapIn" />
+      <wsdl:output message="tns:UpdateContactSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateContactUsingUniqueIdentifier">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function allows a contact to be updated into the database based on the UniqueIdentifier passed rather than the default set for the instance. The function accepts an xml string containing contact details to process and the name of the unique identifier. If the contact does not exist then the contact is inserted instead. The new or updated ContactId is returned.</wsdl:documentation>
+      <wsdl:input message="tns:UpdateContactUsingUniqueIdentifierSoapIn" />
+      <wsdl:output message="tns:UpdateContactUsingUniqueIdentifierSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadContactXML">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Same as UploadContactTriggerCampaign, included as legacy function.</wsdl:documentation>
+      <wsdl:input message="tns:UploadContactXMLSoapIn" />
+      <wsdl:output message="tns:UploadContactXMLSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadContactTriggerCampaign">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">The purpose of this function is to trigger an outbound email using a contact’s details. The contact details sent to the web service will either be updated or inserted in to the database. If a campaign name [CAMPAIGNCODE] is supplied as part of the ContactXML then the contact will become audience member of the specified campaign. This web service allows for any number of contacts to be supplied and processed rather than individual contacts.</wsdl:documentation>
+      <wsdl:input message="tns:UploadContactTriggerCampaignSoapIn" />
+      <wsdl:output message="tns:UploadContactTriggerCampaignSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadContactTriggerCampaign_UsingTriggerKey">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">The purpose of this function is to trigger an outbound email using a contact’s details. The contact details sent to the web service will either be updated or inserted in to the database. If a campaign name [CAMPAIGNCODE] is supplied as part of the ContactXML then the contact will become audience member of the specified campaign. This web service allows for any number of contacts to be supplied and processed rather than individual contacts.</wsdl:documentation>
+      <wsdl:input message="tns:UploadContactTriggerCampaign_UsingTriggerKeySoapIn" />
+      <wsdl:output message="tns:UploadContactTriggerCampaign_UsingTriggerKeySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckTriggeredContacByTriggerKey">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Rturens Trigged Contacts. Using the TriggerKey</wsdl:documentation>
+      <wsdl:input message="tns:CheckTriggeredContacByTriggerKeySoapIn" />
+      <wsdl:output message="tns:CheckTriggeredContacByTriggerKeySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CancelTriggerCampaign">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">The purpose of this function is to cancel an outbound email using the trigger key associated with the campaign trigger record.</wsdl:documentation>
+      <wsdl:input message="tns:CancelTriggerCampaignSoapIn" />
+      <wsdl:output message="tns:CancelTriggerCampaignSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadBatchContacts">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function allows Multiply contacts to be updated into the database. The function accepts an xml string containing Multiply contact details to process. If a contact does not exist then the contact is inserted instead. The new or updated ContactIds are returned. XML Node Layout same as UploadContactTriggerCampaign,NOCAMPAIGN Triggers</wsdl:documentation>
+      <wsdl:input message="tns:UploadBatchContactsSoapIn" />
+      <wsdl:output message="tns:UploadBatchContactsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReturnLastTriggerUploaded">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function returns the last triggered email entered into the system.</wsdl:documentation>
+      <wsdl:input message="tns:ReturnLastTriggerUploadedSoapIn" />
+      <wsdl:output message="tns:ReturnLastTriggerUploadedSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadContactDatasetIntoGroup">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function allows contact details to be inserted into the database. The function accepts a dataset containing contact details to process. Contacts are deemed to be unique on Email Address. If the contact exists then the contact data is updated if it does not then the contact is created.  If the GroupName passed is a blank string the Contact will just be inserted or updated and not added to a group.</wsdl:documentation>
+      <wsdl:input message="tns:UploadContactDatasetIntoGroupSoapIn" />
+      <wsdl:output message="tns:UploadContactDatasetIntoGroupSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReturnContactRecord">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns the Contact Records for the given email address</wsdl:documentation>
+      <wsdl:input message="tns:ReturnContactRecordSoapIn" />
+      <wsdl:output message="tns:ReturnContactRecordSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReturnMatchingContactRecords">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns the Matching Contact Records for the given Field and Value Match</wsdl:documentation>
+      <wsdl:input message="tns:ReturnMatchingContactRecordsSoapIn" />
+      <wsdl:output message="tns:ReturnMatchingContactRecordsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ResetCounter">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function resets the date a web service function was last run so all details are returned next time it is run.</wsdl:documentation>
+      <wsdl:input message="tns:ResetCounterSoapIn" />
+      <wsdl:output message="tns:ResetCounterSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ResetCounterWithValue">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function resets the date a web service function was last run to a specified date so details are returned from this date the next time it is run.</wsdl:documentation>
+      <wsdl:input message="tns:ResetCounterWithValueSoapIn" />
+      <wsdl:output message="tns:ResetCounterWithValueSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReturnUnsubscribes">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function returns a list of all contacts who have unsubscribed from further mailings since the last time this function was run also returning the Campaign Id for which the unsubscribe took place.</wsdl:documentation>
+      <wsdl:input message="tns:ReturnUnsubscribesSoapIn" />
+      <wsdl:output message="tns:ReturnUnsubscribesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdatedReturnUnsubscribes">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function returns a list of all contacts who have unsubscribed from further mailings since the last time this function was run also returning the Campaign Id for which the unsubscribe took place.</wsdl:documentation>
+      <wsdl:input message="tns:UpdatedReturnUnsubscribesSoapIn" />
+      <wsdl:output message="tns:UpdatedReturnUnsubscribesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SelectReturnUnsubscribes">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function returns a list of all contacts who have unsubscribed from further mailings since the last time this function was run also returning the Campaign Id for which the unsubscribe took place.  It also accepts a string of comma seperated fields to return the data that is required.</wsdl:documentation>
+      <wsdl:input message="tns:SelectReturnUnsubscribesSoapIn" />
+      <wsdl:output message="tns:SelectReturnUnsubscribesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReturnUndeliverables">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function returns a list of all contacts whose email address has been recorded as ‘undeliverable’ since the last time this function was run.</wsdl:documentation>
+      <wsdl:input message="tns:ReturnUndeliverablesSoapIn" />
+      <wsdl:output message="tns:ReturnUndeliverablesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdatedReturnUndeliverables">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function returns a list of all contacts whose email address has been recorded as ‘undeliverable’ since the last time this function was run.</wsdl:documentation>
+      <wsdl:input message="tns:UpdatedReturnUndeliverablesSoapIn" />
+      <wsdl:output message="tns:UpdatedReturnUndeliverablesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SelectReturnFailedEmails">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function returns a list of all contacts where an email has failed to send since the last time this function was run.   It also accepts a string of comma seperated fields to return the data that is required.</wsdl:documentation>
+      <wsdl:input message="tns:SelectReturnFailedEmailsSoapIn" />
+      <wsdl:output message="tns:SelectReturnFailedEmailsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SelectReturnUndeliverables">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function returns a list of all contacts whose email address has been recorded as ‘undeliverable’ since the last time this function was run.   It also accepts a string of comma seperated fields to return the data that is required.</wsdl:documentation>
+      <wsdl:input message="tns:SelectReturnUndeliverablesSoapIn" />
+      <wsdl:output message="tns:SelectReturnUndeliverablesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReturnCampaignEmailsSent">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function returns a count of all emails sent for a specified campaign id.</wsdl:documentation>
+      <wsdl:input message="tns:ReturnCampaignEmailsSentSoapIn" />
+      <wsdl:output message="tns:ReturnCampaignEmailsSentSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReturnOpenEmails">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function returns a list of all contacts who opened an email since the last time this function was run.</wsdl:documentation>
+      <wsdl:input message="tns:ReturnOpenEmailsSoapIn" />
+      <wsdl:output message="tns:ReturnOpenEmailsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReturnOpenMergeFieldEmails">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function returns a list of all contacts who opened an email since the last time this function was run.</wsdl:documentation>
+      <wsdl:input message="tns:ReturnOpenMergeFieldEmailsSoapIn" />
+      <wsdl:output message="tns:ReturnOpenMergeFieldEmailsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SelectOpenEmails">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function returns a list of all contacts who opened an email since the last time this function was run.   It also accepts a string of comma seperated fields to return the data that is required.</wsdl:documentation>
+      <wsdl:input message="tns:SelectOpenEmailsSoapIn" />
+      <wsdl:output message="tns:SelectOpenEmailsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReturnLandingZoneHits">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function returns a list of all contacts who clicked on a landing zone since the last time this function was run. </wsdl:documentation>
+      <wsdl:input message="tns:ReturnLandingZoneHitsSoapIn" />
+      <wsdl:output message="tns:ReturnLandingZoneHitsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SelectLandingZoneHits">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function returns a list of all contacts who clicked on a landing zone since the last time this function was run.   It also accepts a string of comma seperated fields to return the data that is required.</wsdl:documentation>
+      <wsdl:input message="tns:SelectLandingZoneHitsSoapIn" />
+      <wsdl:output message="tns:SelectLandingZoneHitsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReturnWebHits">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function returns a list of all contacts who clicked on a web page since the last time this function was run.</wsdl:documentation>
+      <wsdl:input message="tns:ReturnWebHitsSoapIn" />
+      <wsdl:output message="tns:ReturnWebHitsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SelectWebHits">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function returns a list of all contacts who clicked on a web page since the last time this function was run.   It also accepts a string of comma seperated fields to return the data that is required.</wsdl:documentation>
+      <wsdl:input message="tns:SelectWebHitsSoapIn" />
+      <wsdl:output message="tns:SelectWebHitsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReturnWebMergeFieldHits">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function returns a list of all contacts who clicked on a web page since the last time this function was run.   It accepts a string of comma seperated mergefields to return the data that is required.</wsdl:documentation>
+      <wsdl:input message="tns:ReturnWebMergeFieldHitsSoapIn" />
+      <wsdl:output message="tns:ReturnWebMergeFieldHitsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReturnWebCaptureSubmissions">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function returns a list of all contacts who completed a WebCapture Since the last time this function was run.</wsdl:documentation>
+      <wsdl:input message="tns:ReturnWebCaptureSubmissionsSoapIn" />
+      <wsdl:output message="tns:ReturnWebCaptureSubmissionsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SelectWebCaptureSubmissions">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function returns a list of all contacts who completed a WebCapture since the last time this function was run. It also accepts a string of comma seperated fields to return the data that is required. I.E C.FirstName,C.LastName</wsdl:documentation>
+      <wsdl:input message="tns:SelectWebCaptureSubmissionsSoapIn" />
+      <wsdl:output message="tns:SelectWebCaptureSubmissionsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReturnDownloadHits">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function returns a list of all contacts who downloaded a file since the last time this function was run.</wsdl:documentation>
+      <wsdl:input message="tns:ReturnDownloadHitsSoapIn" />
+      <wsdl:output message="tns:ReturnDownloadHitsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SelectDownloadHits">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function returns a list of all contacts who downloaded a file since the last time this function was run.   It also accepts a string of comma seperated fields to return the data that is required.</wsdl:documentation>
+      <wsdl:input message="tns:SelectDownloadHitsSoapIn" />
+      <wsdl:output message="tns:SelectDownloadHitsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReturnSurveysCompleted">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function returns a list of all contacts who completed a survey since the last time this function was run.</wsdl:documentation>
+      <wsdl:input message="tns:ReturnSurveysCompletedSoapIn" />
+      <wsdl:output message="tns:ReturnSurveysCompletedSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SelectSurveysCompleted">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function returns a list of all contacts who completed a survey since the last time this function was run.   It also accepts a string of comma seperated fields to return the data that is required.</wsdl:documentation>
+      <wsdl:input message="tns:SelectSurveysCompletedSoapIn" />
+      <wsdl:output message="tns:SelectSurveysCompletedSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RunSDKStoredProcedure">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function runs the SDK sproc</wsdl:documentation>
+      <wsdl:input message="tns:RunSDKStoredProcedureSoapIn" />
+      <wsdl:output message="tns:RunSDKStoredProcedureSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RunSDKSproc">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function runs the SDK sproc</wsdl:documentation>
+      <wsdl:input message="tns:RunSDKSprocSoapIn" />
+      <wsdl:output message="tns:RunSDKSprocSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetResultsDS">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function returns the table with all of the results for a particular campaign groupded by the unique id</wsdl:documentation>
+      <wsdl:input message="tns:GetResultsDSSoapIn" />
+      <wsdl:output message="tns:GetResultsDSSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSpecificResults">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function returns the details for the inputted result</wsdl:documentation>
+      <wsdl:input message="tns:GetSpecificResultsSoapIn" />
+      <wsdl:output message="tns:GetSpecificResultsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Import_Recon_AutoMatch_Insert">
+      <wsdl:input message="tns:Import_Recon_AutoMatch_InsertSoapIn" />
+      <wsdl:output message="tns:Import_Recon_AutoMatch_InsertSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Import_Recon_XML">
+      <wsdl:input message="tns:Import_Recon_XMLSoapIn" />
+      <wsdl:output message="tns:Import_Recon_XMLSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Import_Recon_CSV">
+      <wsdl:input message="tns:Import_Recon_CSVSoapIn" />
+      <wsdl:output message="tns:Import_Recon_CSVSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Import_Recon_Dataset">
+      <wsdl:input message="tns:Import_Recon_DatasetSoapIn" />
+      <wsdl:output message="tns:Import_Recon_DatasetSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReturnAllCampaigns">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function returns a list of all current campaigns with their name, start date, end date, status and type.</wsdl:documentation>
+      <wsdl:input message="tns:ReturnAllCampaignsSoapIn" />
+      <wsdl:output message="tns:ReturnAllCampaignsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReturnCampaignsModifiedSinceLastRun">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function returns a list of current campaigns with their name, start date, end date, status and type since the last run time.</wsdl:documentation>
+      <wsdl:input message="tns:ReturnCampaignsModifiedSinceLastRunSoapIn" />
+      <wsdl:output message="tns:ReturnCampaignsModifiedSinceLastRunSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReturnActiveCampaigns">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function returns a list of all active campaigns with their name, start date, end date, status and type.</wsdl:documentation>
+      <wsdl:input message="tns:ReturnActiveCampaignsSoapIn" />
+      <wsdl:output message="tns:ReturnActiveCampaignsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReturnLatestActiveCampaigns">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function returns a list of all active campaigns with their name, start date, end date, status and type since the last time this function was run.</wsdl:documentation>
+      <wsdl:input message="tns:ReturnLatestActiveCampaignsSoapIn" />
+      <wsdl:output message="tns:ReturnLatestActiveCampaignsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="createCampaign">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Create a new campaign</wsdl:documentation>
+      <wsdl:input message="tns:createCampaignSoapIn" />
+      <wsdl:output message="tns:createCampaignSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="updateCampaign">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Updates a campaign.</wsdl:documentation>
+      <wsdl:input message="tns:updateCampaignSoapIn" />
+      <wsdl:output message="tns:updateCampaignSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="setCampaignUnsubscribe">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Sets a campaigns associated Unsubscribe (Returns 'Success' if successful or 'Error: [Error Message] if the Unsubscribe/Campaign was not found or a failure occurs).</wsdl:documentation>
+      <wsdl:input message="tns:setCampaignUnsubscribeSoapIn" />
+      <wsdl:output message="tns:setCampaignUnsubscribeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="createWizardCampaign">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Create a new wizard campaign</wsdl:documentation>
+      <wsdl:input message="tns:createWizardCampaignSoapIn" />
+      <wsdl:output message="tns:createWizardCampaignSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteCampaign">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function deletes a campaign.</wsdl:documentation>
+      <wsdl:input message="tns:DeleteCampaignSoapIn" />
+      <wsdl:output message="tns:DeleteCampaignSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetCampaignGroup">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function sets a campaigns group.</wsdl:documentation>
+      <wsdl:input message="tns:SetCampaignGroupSoapIn" />
+      <wsdl:output message="tns:SetCampaignGroupSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCampaignGroup">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function gets a campaigns group.</wsdl:documentation>
+      <wsdl:input message="tns:GetCampaignGroupSoapIn" />
+      <wsdl:output message="tns:GetCampaignGroupSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="sendTestCampaign">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">send a test of the campaign to the first Contact in the system</wsdl:documentation>
+      <wsdl:input message="tns:sendTestCampaignSoapIn" />
+      <wsdl:output message="tns:sendTestCampaignSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="InitiateCampaign">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Initiate a standard campaign</wsdl:documentation>
+      <wsdl:input message="tns:InitiateCampaignSoapIn" />
+      <wsdl:output message="tns:InitiateCampaignSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UninitiateCampaign">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Uninitiate a standard campaign</wsdl:documentation>
+      <wsdl:input message="tns:UninitiateCampaignSoapIn" />
+      <wsdl:output message="tns:UninitiateCampaignSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getAudienceCount">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get the audience count for a campaign. Returns a comma seperated list of counts (total count,undeliverable count,unsubscribe count, final audience)</wsdl:documentation>
+      <wsdl:input message="tns:getAudienceCountSoapIn" />
+      <wsdl:output message="tns:getAudienceCountSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="createEmail">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Create a new Email</wsdl:documentation>
+      <wsdl:input message="tns:createEmailSoapIn" />
+      <wsdl:output message="tns:createEmailSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="updateEmail">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Updates an Email</wsdl:documentation>
+      <wsdl:input message="tns:updateEmailSoapIn" />
+      <wsdl:output message="tns:updateEmailSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateGroup">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function allows a group to be inserted into the database and then returns the group identifier.</wsdl:documentation>
+      <wsdl:input message="tns:CreateGroupSoapIn" />
+      <wsdl:output message="tns:CreateGroupSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteGroup">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function allows a group to be deleted from the database.</wsdl:documentation>
+      <wsdl:input message="tns:DeleteGroupSoapIn" />
+      <wsdl:output message="tns:DeleteGroupSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CleardownGroup">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function clears all of a groups inclusions/exclusions of all contacts.</wsdl:documentation>
+      <wsdl:input message="tns:CleardownGroupSoapIn" />
+      <wsdl:output message="tns:CleardownGroupSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SDKSoap" type="tns:SDKSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ReturnAllGroups">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/ReturnAllGroups" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:ReturnAllGroupsAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddGroupInclusionExclusionContact">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/AddGroupInclusionExclusionContact" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:AddGroupInclusionExclusionContactAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnGroupCount">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/ReturnGroupCount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:ReturnGroupCountAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CopyEvent">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/CopyEvent" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:CopyEventAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateEvent">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/UpdateEvent" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:UpdateEventAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnEventLocations">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/ReturnEventLocations" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:ReturnEventLocationsAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnAllEvents">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/ReturnAllEvents" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:ReturnAllEventsAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnActiveEvents">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/ReturnActiveEvents" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:ReturnActiveEventsAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AuthenticationCheck">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/AuthenticationCheck" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:AuthenticationCheckAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InsertContact">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/InsertContact" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:InsertContactAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InsertContactUsingUniqueIdentifier">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/InsertContactUsingUniqueIdentifier" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:InsertContactUsingUniqueIdentifierAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateContact">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/UpdateContact" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:UpdateContactAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateContactUsingUniqueIdentifier">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/UpdateContactUsingUniqueIdentifier" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:UpdateContactUsingUniqueIdentifierAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadContactXML">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/UploadContactXML" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:UploadContactXMLAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadContactTriggerCampaign">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/UploadContactTriggerCampaign" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:UploadContactTriggerCampaignAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadContactTriggerCampaign_UsingTriggerKey">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/UploadContactTriggerCampaign_UsingTriggerKey" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:UploadContactTriggerCampaign_UsingTriggerKeyAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckTriggeredContacByTriggerKey">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/CheckTriggeredContacByTriggerKey" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:CheckTriggeredContacByTriggerKeyAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelTriggerCampaign">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/CancelTriggerCampaign" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:CancelTriggerCampaignAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadBatchContacts">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/UploadBatchContacts" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:UploadBatchContactsAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnLastTriggerUploaded">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/ReturnLastTriggerUploaded" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:ReturnLastTriggerUploadedAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadContactDatasetIntoGroup">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/UploadContactDatasetIntoGroup" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:UploadContactDatasetIntoGroupAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnContactRecord">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/ReturnContactRecord" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:ReturnContactRecordAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnMatchingContactRecords">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/ReturnMatchingContactRecords" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:ReturnMatchingContactRecordsAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ResetCounter">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/ResetCounter" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:ResetCounterAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ResetCounterWithValue">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/ResetCounterWithValue" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:ResetCounterWithValueAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnUnsubscribes">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/ReturnUnsubscribes" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:ReturnUnsubscribesAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdatedReturnUnsubscribes">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/UpdatedReturnUnsubscribes" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:UpdatedReturnUnsubscribesAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SelectReturnUnsubscribes">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/SelectReturnUnsubscribes" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:SelectReturnUnsubscribesAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnUndeliverables">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/ReturnUndeliverables" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:ReturnUndeliverablesAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdatedReturnUndeliverables">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/UpdatedReturnUndeliverables" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:UpdatedReturnUndeliverablesAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SelectReturnFailedEmails">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/SelectReturnFailedEmails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:SelectReturnFailedEmailsAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SelectReturnUndeliverables">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/SelectReturnUndeliverables" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:SelectReturnUndeliverablesAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnCampaignEmailsSent">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/ReturnCampaignEmailsSent" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:ReturnCampaignEmailsSentAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnOpenEmails">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/ReturnOpenEmails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:ReturnOpenEmailsAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnOpenMergeFieldEmails">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/ReturnOpenMergeFieldEmails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:ReturnOpenMergeFieldEmailsAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SelectOpenEmails">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/SelectOpenEmails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:SelectOpenEmailsAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnLandingZoneHits">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/ReturnLandingZoneHits" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:ReturnLandingZoneHitsAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SelectLandingZoneHits">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/SelectLandingZoneHits" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:SelectLandingZoneHitsAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnWebHits">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/ReturnWebHits" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:ReturnWebHitsAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SelectWebHits">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/SelectWebHits" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:SelectWebHitsAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnWebMergeFieldHits">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/ReturnWebMergeFieldHits" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:ReturnWebMergeFieldHitsAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnWebCaptureSubmissions">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/ReturnWebCaptureSubmissions" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:ReturnWebCaptureSubmissionsAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SelectWebCaptureSubmissions">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/SelectWebCaptureSubmissions" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:SelectWebCaptureSubmissionsAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnDownloadHits">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/ReturnDownloadHits" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:ReturnDownloadHitsAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SelectDownloadHits">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/SelectDownloadHits" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:SelectDownloadHitsAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnSurveysCompleted">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/ReturnSurveysCompleted" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:ReturnSurveysCompletedAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SelectSurveysCompleted">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/SelectSurveysCompleted" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:SelectSurveysCompletedAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RunSDKStoredProcedure">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/RunSDKStoredProcedure" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:RunSDKStoredProcedureAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RunSDKSproc">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/RunSDKSproc" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:RunSDKSprocAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetResultsDS">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/GetResultsDS" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetResultsDSAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSpecificResults">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/GetSpecificResults" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetSpecificResultsAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Import_Recon_AutoMatch_Insert">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/Import_Recon_AutoMatch_Insert" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:Import_Recon_AutoMatch_InsertAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Import_Recon_XML">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/Import_Recon_XML" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:Import_Recon_XMLAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Import_Recon_CSV">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/Import_Recon_CSV" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:Import_Recon_CSVAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Import_Recon_Dataset">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/Import_Recon_Dataset" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:Import_Recon_DatasetAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnAllCampaigns">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/ReturnAllCampaigns" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:ReturnAllCampaignsAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnCampaignsModifiedSinceLastRun">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/ReturnCampaignsModifiedSinceLastRun" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:ReturnCampaignsModifiedSinceLastRunAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnActiveCampaigns">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/ReturnActiveCampaigns" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:ReturnActiveCampaignsAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnLatestActiveCampaigns">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/ReturnLatestActiveCampaigns" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:ReturnLatestActiveCampaignsAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createCampaign">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/createCampaign" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:createCampaignAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateCampaign">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/updateCampaign" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:updateCampaignAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setCampaignUnsubscribe">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/setCampaignUnsubscribe" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:setCampaignUnsubscribeAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createWizardCampaign">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/createWizardCampaign" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:createWizardCampaignAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteCampaign">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/DeleteCampaign" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:DeleteCampaignAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetCampaignGroup">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/SetCampaignGroup" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:SetCampaignGroupAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCampaignGroup">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/GetCampaignGroup" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetCampaignGroupAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sendTestCampaign">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/sendTestCampaign" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:sendTestCampaignAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InitiateCampaign">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/InitiateCampaign" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:InitiateCampaignAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UninitiateCampaign">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/UninitiateCampaign" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:UninitiateCampaignAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAudienceCount">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/getAudienceCount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:getAudienceCountAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createEmail">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/createEmail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:createEmailAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateEmail">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/updateEmail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:updateEmailAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateGroup">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/CreateGroup" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:CreateGroupAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteGroup">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/DeleteGroup" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:DeleteGroupAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CleardownGroup">
+      <soap:operation soapAction="http://tempuri.org/SDK/SDK/CleardownGroup" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:CleardownGroupAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="SDKSoap12" type="tns:SDKSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ReturnAllGroups">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/ReturnAllGroups" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:ReturnAllGroupsAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddGroupInclusionExclusionContact">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/AddGroupInclusionExclusionContact" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:AddGroupInclusionExclusionContactAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnGroupCount">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/ReturnGroupCount" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:ReturnGroupCountAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CopyEvent">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/CopyEvent" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:CopyEventAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateEvent">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/UpdateEvent" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:UpdateEventAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnEventLocations">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/ReturnEventLocations" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:ReturnEventLocationsAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnAllEvents">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/ReturnAllEvents" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:ReturnAllEventsAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnActiveEvents">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/ReturnActiveEvents" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:ReturnActiveEventsAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AuthenticationCheck">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/AuthenticationCheck" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:AuthenticationCheckAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InsertContact">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/InsertContact" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:InsertContactAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InsertContactUsingUniqueIdentifier">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/InsertContactUsingUniqueIdentifier" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:InsertContactUsingUniqueIdentifierAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateContact">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/UpdateContact" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:UpdateContactAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateContactUsingUniqueIdentifier">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/UpdateContactUsingUniqueIdentifier" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:UpdateContactUsingUniqueIdentifierAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadContactXML">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/UploadContactXML" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:UploadContactXMLAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadContactTriggerCampaign">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/UploadContactTriggerCampaign" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:UploadContactTriggerCampaignAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadContactTriggerCampaign_UsingTriggerKey">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/UploadContactTriggerCampaign_UsingTriggerKey" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:UploadContactTriggerCampaign_UsingTriggerKeyAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckTriggeredContacByTriggerKey">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/CheckTriggeredContacByTriggerKey" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:CheckTriggeredContacByTriggerKeyAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelTriggerCampaign">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/CancelTriggerCampaign" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:CancelTriggerCampaignAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadBatchContacts">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/UploadBatchContacts" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:UploadBatchContactsAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnLastTriggerUploaded">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/ReturnLastTriggerUploaded" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:ReturnLastTriggerUploadedAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadContactDatasetIntoGroup">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/UploadContactDatasetIntoGroup" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:UploadContactDatasetIntoGroupAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnContactRecord">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/ReturnContactRecord" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:ReturnContactRecordAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnMatchingContactRecords">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/ReturnMatchingContactRecords" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:ReturnMatchingContactRecordsAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ResetCounter">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/ResetCounter" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:ResetCounterAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ResetCounterWithValue">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/ResetCounterWithValue" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:ResetCounterWithValueAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnUnsubscribes">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/ReturnUnsubscribes" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:ReturnUnsubscribesAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdatedReturnUnsubscribes">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/UpdatedReturnUnsubscribes" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:UpdatedReturnUnsubscribesAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SelectReturnUnsubscribes">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/SelectReturnUnsubscribes" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:SelectReturnUnsubscribesAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnUndeliverables">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/ReturnUndeliverables" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:ReturnUndeliverablesAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdatedReturnUndeliverables">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/UpdatedReturnUndeliverables" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:UpdatedReturnUndeliverablesAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SelectReturnFailedEmails">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/SelectReturnFailedEmails" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:SelectReturnFailedEmailsAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SelectReturnUndeliverables">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/SelectReturnUndeliverables" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:SelectReturnUndeliverablesAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnCampaignEmailsSent">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/ReturnCampaignEmailsSent" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:ReturnCampaignEmailsSentAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnOpenEmails">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/ReturnOpenEmails" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:ReturnOpenEmailsAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnOpenMergeFieldEmails">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/ReturnOpenMergeFieldEmails" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:ReturnOpenMergeFieldEmailsAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SelectOpenEmails">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/SelectOpenEmails" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:SelectOpenEmailsAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnLandingZoneHits">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/ReturnLandingZoneHits" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:ReturnLandingZoneHitsAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SelectLandingZoneHits">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/SelectLandingZoneHits" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:SelectLandingZoneHitsAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnWebHits">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/ReturnWebHits" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:ReturnWebHitsAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SelectWebHits">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/SelectWebHits" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:SelectWebHitsAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnWebMergeFieldHits">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/ReturnWebMergeFieldHits" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:ReturnWebMergeFieldHitsAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnWebCaptureSubmissions">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/ReturnWebCaptureSubmissions" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:ReturnWebCaptureSubmissionsAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SelectWebCaptureSubmissions">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/SelectWebCaptureSubmissions" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:SelectWebCaptureSubmissionsAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnDownloadHits">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/ReturnDownloadHits" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:ReturnDownloadHitsAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SelectDownloadHits">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/SelectDownloadHits" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:SelectDownloadHitsAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnSurveysCompleted">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/ReturnSurveysCompleted" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:ReturnSurveysCompletedAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SelectSurveysCompleted">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/SelectSurveysCompleted" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:SelectSurveysCompletedAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RunSDKStoredProcedure">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/RunSDKStoredProcedure" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:RunSDKStoredProcedureAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RunSDKSproc">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/RunSDKSproc" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:RunSDKSprocAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetResultsDS">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/GetResultsDS" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetResultsDSAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSpecificResults">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/GetSpecificResults" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetSpecificResultsAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Import_Recon_AutoMatch_Insert">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/Import_Recon_AutoMatch_Insert" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:Import_Recon_AutoMatch_InsertAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Import_Recon_XML">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/Import_Recon_XML" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:Import_Recon_XMLAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Import_Recon_CSV">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/Import_Recon_CSV" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:Import_Recon_CSVAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Import_Recon_Dataset">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/Import_Recon_Dataset" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:Import_Recon_DatasetAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnAllCampaigns">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/ReturnAllCampaigns" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:ReturnAllCampaignsAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnCampaignsModifiedSinceLastRun">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/ReturnCampaignsModifiedSinceLastRun" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:ReturnCampaignsModifiedSinceLastRunAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnActiveCampaigns">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/ReturnActiveCampaigns" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:ReturnActiveCampaignsAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnLatestActiveCampaigns">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/ReturnLatestActiveCampaigns" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:ReturnLatestActiveCampaignsAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createCampaign">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/createCampaign" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:createCampaignAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateCampaign">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/updateCampaign" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:updateCampaignAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setCampaignUnsubscribe">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/setCampaignUnsubscribe" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:setCampaignUnsubscribeAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createWizardCampaign">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/createWizardCampaign" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:createWizardCampaignAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteCampaign">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/DeleteCampaign" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:DeleteCampaignAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetCampaignGroup">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/SetCampaignGroup" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:SetCampaignGroupAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCampaignGroup">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/GetCampaignGroup" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetCampaignGroupAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sendTestCampaign">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/sendTestCampaign" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:sendTestCampaignAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InitiateCampaign">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/InitiateCampaign" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:InitiateCampaignAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UninitiateCampaign">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/UninitiateCampaign" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:UninitiateCampaignAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAudienceCount">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/getAudienceCount" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:getAudienceCountAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createEmail">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/createEmail" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:createEmailAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateEmail">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/updateEmail" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:updateEmailAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateGroup">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/CreateGroup" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:CreateGroupAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteGroup">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/DeleteGroup" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:DeleteGroupAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CleardownGroup">
+      <soap12:operation soapAction="http://tempuri.org/SDK/SDK/CleardownGroup" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:CleardownGroupAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SDK">
+    <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">The SDK is available to clients to interface with sending campaings, adding contacts and reporting other collected information</wsdl:documentation>
+    <wsdl:port name="SDKSoap" binding="tns:SDKSoap">
+      <soap:address location="http://oomphagency.gtml2.com/oomphagencylz/SDK.asmx" />
+    </wsdl:port>
+    <wsdl:port name="SDKSoap12" binding="tns:SDKSoap12">
+      <soap12:address location="http://oomphagency.gtml2.com/oomphagencylz/SDK.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

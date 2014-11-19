@@ -1,0 +1,160 @@
+﻿@model CMS.BL.Entity.tbl_Products
+@{
+    ViewBag.Title = Model != null ? Model.P_Title : String.Empty;
+    CMS.BL.Entity.tbl_Content productPage = Model.tbl_SiteMap.tbl_Content.FirstOrDefault(c => !c.C_Deleted && c.C_Approved);
+    List<SelectListItem> dateList = ViewBag.eventDates as List<SelectListItem>;
+}
+@section metatags {
+    @{ Html.RenderPartial("/Views/Partials/MetaTags.cshtml", new CMS.UI.Models.MetadataModel(productPage)); }
+}
+@section styles {
+    @Html.Raw(productPage != null ? productPage.tbl_SiteMap.SM_CSS : String.Empty)
+}
+@section scripts {
+    @Scripts.Render("~/bundles/jquery/web/add")
+    @Scripts.Render("~/bundles/productManager")
+}
+@section sidebar {
+    @{
+        Html.RenderPartial("../Partials/SearchPanel");
+        Html.RenderAction("BasketSummary", "Website");
+    }
+}
+<div class="product" data-productid="@Model.ProductID"
+     data-getprice-url="@Url.Action("GetPrice", "Website")"
+     data-getbasketsummary-url="@Url.Action("BasketSummary", "Website")"
+     data-addtobasket-url="@Url.Action("AddToBasket", "Website")">
+    <div class="prodImage col-sm-4">
+        <div>
+            <div id="itemsingle" class="carousel slide clearfix">
+                @if (Model.tbl_ProductImageLink.Count > 0)
+                {
+
+                    int j = 0;
+                    j = 0;
+                    
+                    <div class="carousel-inner">
+                        @foreach (var image in Model.tbl_ProductImageLink)
+                        {
+                            <div class="item@(j == 0 ? " active" : String.Empty)">
+                                <img data-zoom-image="@Html.ImageProvider(CMS.BL.ImageVersionName.large, Model.tbl_ProductImageLink.FirstOrDefault().tbl_ProductImages.I_Name, String.Empty)" id="imgPrimary" alt="@image.tbl_ProductImages.I_View" src="@Html.ImageProvider(CMS.BL.ImageVersionName.category, image.tbl_ProductImages.I_Name, String.Empty)"  class="img-responsive" />
+                            </div>j++;
+                        }
+                    </div>
+                       
+                        int i = 0;
+                        i = 0;
+                        
+                    <ol class="carousel-indicators">
+                        @foreach (var image in Model.tbl_ProductImageLink)
+                        {
+                            <li data-target="#itemsingle" data-slide-to="@i"   class="@(i == 0 ? " active" : String.Empty)">
+                                <img  class="img-responsive" alt="@image.tbl_ProductImages.I_Name" src="@Html.ImageProvider(CMS.BL.ImageVersionName.thumb, image.tbl_ProductImages.I_Name, String.Empty)" />
+                            </li>
+                            i++;
+                        }
+                    </ol>
+                }
+                else
+                {
+                    <div class="prodImage">
+                        <div><span class="glyphicon glyphicon-picture"></span></div>
+                    </div>
+                }
+
+            </div>
+        </div>
+
+        @*@if (Model.tbl_ProductImageLink.Count > 0)
+        {
+            <img id="imgPrimary" alt="@Model.tbl_ProductImageLink.FirstOrDefault().tbl_ProductImages.I_View" src="@Html.ImageProvider(CMS.BL.ImageVersionName.productThumb, Model.tbl_ProductImageLink.FirstOrDefault().tbl_ProductImages.I_Name, String.Empty)" data-zoom-image="@Html.ImageProvider(CMS.BL.ImageVersionName.large, Model.tbl_ProductImageLink.FirstOrDefault().tbl_ProductImages.I_Name, String.Empty)" />
+        }*@
+    </div>
+    <div class="prodInfo col-sm-8">
+        <h1>@(Model != null ? Model.P_Title : String.Empty)</h1>
+        <div class="description">@Html.Raw(Model.tbl_SiteMap.tbl_Content.Where(c => c.C_Approved && !c.C_Deleted).OrderByDescending(c => c.C_ModificationDate).Select(c => c.C_Content).FirstOrDefault())</div>
+        <div class="row">
+            <div class="col-sm-7 pull-right">
+                @if (Model.P_CanPurchase)
+                {
+                    if (Model.tbl_ProductTypes.PT_Name == CMS.BL.ProductType.Event.ToString())
+                    {
+                    <div class="form-group">
+                        <label for="eventDate">Select date</label>
+                        @Html.DropDownList("eventDate", dateList, new { @class = "form-control" })
+                    </div>
+                    }
+                    foreach (var attr in Model.tbl_ProductPrice.SelectMany(pp => pp.tbl_ProdPriceAttributes.Select(ppa => ppa.tbl_ProdAttValue.tbl_ProdAttributes)).Distinct())
+                    {
+                    <div class="form-group">
+                        @{
+                        var list = Model.tbl_ProductPrice.SelectMany(pp => pp.tbl_ProdPriceAttributes.Where(pps => pps.tbl_ProdAttValue.tbl_ProdAttributes.AttributeID == attr.AttributeID).Select(ppa => ppa.tbl_ProdAttValue)).Distinct();
+                        if (list.Count() == 1)
+                        {
+                            <label for="attr@(attr.AttributeID)">@attr.A_Title:</label>
+                            <span class="attr" id="attr@(attr.AttributeID)" data-attr="@list.First().AttributeValueID">@list.First().AV_Value</span>
+                        }
+                        else
+                        {
+                            <label for="attr@(attr.AttributeID)">Select @attr.A_Title:</label>
+                            <select class="selectAttr" id="attr@(attr.AttributeID)">
+                                @foreach (var value in list)
+                                {
+                                    <option value="@value.AttributeValueID" @(value.tbl_ProdPriceAttributes.Any(ppa => ppa.PPA_ProdPriceID == (int)this.ViewBag.PriceID) ? "selected=\"selected\"" : String.Empty)>@value.AV_Value</option>
+                                }
+                            </select>
+                        }
+                        }
+                    </div>
+                    }
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-3 pull-right">
+                                <label for="tbQuantity" class="">Quantity:</label>
+                                <input id="tbQuantity" name="tbQuantity" type="number" value="@Model.P_MinQuantity.GetValueOrDefault(1)" min="@Model.P_MinQuantity.GetValueOrDefault(1)" class="form-control pull-right"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group clear-fix">
+                        <label>Price:</label><span id="lbPrice"></span>
+                    </div>
+                    <div class="form-group">
+                        <button id="btnAdd" class="btn btn-success">Add to basket </button>
+                    </div>
+                }
+                else
+                {
+                    <p>This @Model.tbl_ProductTypes.PT_Name cannot be purchased online</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@if ((bool)this.ViewBag.ProductSaleEnabled &&
+    (Model.tbl_ProdAss.GetOfType(Model.ProductID, CMS.BL.ProductType.Item).Count() > 0 ||
+     Model.tbl_ProdAss1.GetOfType(Model.ProductID, CMS.BL.ProductType.Item).Count() > 0))
+{
+    <h2>You may also like other products</h2>
+    @Html.Partial("../Partials/ProductAssociation", new CMS.UI.Models.ProductAssocationModel
+    {
+        ProdAss = Model.tbl_ProdAss.ToList(),
+        ProdAss1 = Model.tbl_ProdAss1.ToList(),
+        ProductID = Model.ProductID,
+        Type = CMS.BL.ProductType.Item,
+        Url = this.ViewBag.ProductShopUrl
+    })
+}
+@if ((bool)this.ViewBag.EventSaleEnabled &&
+   ((Model.tbl_ProdAss.GetOfType(Model.ProductID, CMS.BL.ProductType.Event).Count() > 0) ||
+    (Model.tbl_ProdAss1.GetOfType(Model.ProductID, CMS.BL.ProductType.Event).Count() > 0)))
+{
+    <h2>Checkout incoming events</h2>
+    @Html.Partial("../Partials/ProductAssociation", new CMS.UI.Models.ProductAssocationModel
+{
+    ProdAss = Model.tbl_ProdAss.ToList(),
+    ProdAss1 = Model.tbl_ProdAss1.ToList(),
+    ProductID = Model.ProductID,
+    Type = CMS.BL.ProductType.Event,
+    Url = this.ViewBag.EventShopUrl
+})
+}

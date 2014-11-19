@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "Thank you";
+}
+@section metatags {
+    @{Html.RenderPartial("/Views/Partials/MetaTags.cshtml", new CMS.UI.Models.MetadataModel());}
+}
+@section sidebar {
+    @{
+        Html.RenderPartial("../Partials/SearchPanel");
+        Html.RenderAction("ContactUsPartial", "Website");
+    }
+}
+
+<div class="thankyou">
+    <h1>Thank you!</h1>
+    Your order number is @ViewBag.OrderID
+</div>

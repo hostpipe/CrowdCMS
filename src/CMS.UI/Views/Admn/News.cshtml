@@ -1,0 +1,49 @@
+﻿@{
+    ViewBag.Title = "News";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@section scripts {
+    <script type="text/javascript" src="/Scripts/tinymce/jquery.tinymce.min.js"></script>
+    @Scripts.Render("~/bundles/news")
+}
+
+<div id="NewsContent"
+    data-addNews-url="@Url.Action("AddNews", "Admn")"
+    data-addTag-url="@Url.Action("AddTag", "Admn")"
+    data-addCategory-url="@Url.Action("AddCategory", "Admn")"
+    data-approveContent-url="@Url.Action("ApproveBlogVersion", "Admn")"
+    data-authoriseComment-url="@Url.Action("AuthoriseNewsComment", "Admn")"
+    data-deleteBlog-url="@Url.Action("DeleteBlog", "Admn")"
+    data-deleteCategory-url="@Url.Action("DeleteCategory", "Admn")"
+    data-deleteComment-url="@Url.Action("DeleteNewsComment", "Admn")"
+    data-deleteImage-url="@Url.Action("DeleteBlogImage", "Admn")"
+    data-deleteVersion-url="@Url.Action("DeleteBlogVersion", "Admn")"
+    data-deleteTag-url="@Url.Action("DeleteTag", "Admn")"
+    data-getBlog-url="@Url.Action("NewsSettings", "Admn")"
+    data-getCategories-url="@Url.Action("GetCategories", "Admn")"
+    data-getComments-url="@Url.Action("NewsComments", "Admn")"
+    data-getDomainsList-url="@Url.Action("GetDomainsList", "Admn")"
+    data-getImages-url="@Url.Action("BlogImages", "Admn")"
+    data-getTags-url="@Url.Action("GetTags", "Admn")"
+    data-previewContent-url="@Url.Action("Preview", "Admn")"
+    data-saveNewsCategories-url="@Url.Action("SaveNewsCategories", "Admn")"
+    data-saveNewsVisibility-url="@Url.Action("ToggleNewsVisibility", "Admn")"
+    data-updateNews-url="@Url.Action("UpdateNews", "Admn")"
+    data-sectionID="@ViewBag.SectionID"
+    data-domainCSSFile="@ViewBag.DomainCSSFile"
+    data-getCustomEditorObjects-url="@Url.Action("CustomEditorObjects", "Website")"
+    data-updateCaption-url="@Url.Action("SavePageImageCaption", "Admn")"
+    >
+    <div class="leftMenuContainer">
+        @if ((User as CMS.Utils.CustomPrincipal).HasPermission(CMS.BL.Permission.AddNews))
+        {
+        <div class="btnGreyMenu short" data-bind="click: onNewArticle">New Blog Post</div>
+        }
+        <select data-bind="options: domains, optionsText: 'Text', optionsValue: 'Value', optionsCaption: 'All domains', value: lDomainID, event: {change: onLDomainChange}">
+        </select>
+        @Html.Partial("~/Views/Partials/Loader.cshtml")
+    </div>
+    <div class="mainContainer">
+         @Html.Action("NewsSettings", "Admn", new { sectionID = ViewBag.SectionID })
+    </div>
+</div>

@@ -1,0 +1,17 @@
+﻿<div class="sectionHeader" data-bind="text: sectionHeader"></div>
+<div class="sectionWindow">
+    <div class="btnToggleSection">Countries Import +</div>
+    <form id="CountryImportForm" action="#" class="sectionContent">
+        <div>
+            <label for="importFor">From</label>
+            <select id="importFor" data-bind="options: domains, optionsText: 'Text', optionsValue: 'Value', optionsCaption: 'Basic Country List', value: domainSourceID"></select>
+        </div>
+        <div>
+            <label for="importTo">To</label>
+            <select id="importTo" data-bind="options: domains, optionsText: 'Text', optionsValue: 'Value', value: domainDestID"></select>
+        </div>
+        <div class="btnContainer">
+            <input type="button" class="btnGreen" data-bind="click: onImportCountriesExec" value="Import" />
+        </div>
+    </form>    
+</div>

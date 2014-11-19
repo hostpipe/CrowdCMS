@@ -1,0 +1,24 @@
+﻿@{
+    Layout = null;
+}
+<html>
+    <head>
+        <title>3D Secure Verification</title>
+        <script type="text/javascript">
+            function OnLoadEvent() { document.form.submit(); }
+        </script>
+    </head>
+    <body OnLoad="OnLoadEvent();">
+        <FORM name="form" action="@ViewBag.ACSURL" method="POST">
+            <input type="hidden" name="PaReq" value="@ViewBag.PaReq"/>
+            <input type="hidden" name="TermUrl" value="@ViewBag.TermUrl" />
+            <input type="hidden" name="MD" value="@ViewBag.MD"/>
+        <NOSCRIPT>
+            <center>
+                <p>Please click button below to Authenticate your card</p>
+                <input type="submit" value="Go"/>
+            </center>
+        </NOSCRIPT>
+        </form>
+    </body>
+</html>

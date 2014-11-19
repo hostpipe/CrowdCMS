@@ -1,0 +1,62 @@
+﻿@model List<CMS.BL.Entity.tbl_Orders>
+@{
+    ViewBag.Title = "Order History";
+}
+@section metatags {
+    @{Html.RenderPartial("/Views/Partials/MetaTags.cshtml", new CMS.UI.Models.MetadataModel());}
+}
+@section sidebar {
+    @{
+        Html.RenderPartial("../Partials/SearchPanel");
+        Html.RenderAction("ContactUsPartial", "Website");
+    }
+}
+<h1>Order History</h1>
+@if (!Model.Any())
+{
+    <div>There are no orders in our system</div>
+}
+else
+{
+    foreach (var item in Model.Where(o => !o.O_ParentOrderID.HasValue))
+    {
+        <div class="orderHistoryList">
+            <ul>
+                <li><strong>Date:</strong> @(item.O_Timestamp.HasValue ? item.O_Timestamp.Value.ToCustomDateString() : string.Empty)</li>
+                <li><strong>Order ID:</strong> @item.OrderID</li>
+                @if (item.tbl_OrderStatus != null)
+                {
+                    <li><strong>Status</strong> @item.tbl_OrderStatus.OS_Status</li>
+                }
+                <li>
+                    <div>
+                        <div style="float: left;">
+                            <strong>Order Details</strong>
+                        </div>
+                        <div style="float: right;">
+                            <strong>Price</strong>
+                        </div>
+                    </div>
+                </li>
+                @foreach (var orderItem in item.tbl_OrderContent)
+                {
+                    <li>
+                        <div style="clear: both;">
+                            <div style="float: left;">@orderItem.OC_Title</div>
+                            <div style="float: right;">@orderItem.GetPriceString()</div>
+                        </div>
+                    </li>
+                }
+                @foreach (var orderItem in item.DependentOrders)
+                {
+                    <li>
+                        <div style="clear: both;">
+                            <div style="float: left;">Donation</div>
+                            <div style="float: right;">@orderItem.TotalAmount.ToString("C")</div>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    }
+}

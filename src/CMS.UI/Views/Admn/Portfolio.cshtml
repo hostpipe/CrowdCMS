@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "Portfolio";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@section scripts {
+    <script type="text/javascript" src="/Scripts/tinymce/jquery.tinymce.min.js"></script>
+    @Scripts.Render("~/bundles/portfolio")
+}
+
+<div id="PortfolioContent"
+     data-addportfolio-url="@Url.Action("AddPortfolio", "Admn")"
+     data-deleteportfolio-url="@Url.Action("DeletePortfolio", "Admn")"
+     data-newportfolio-url="@Url.Action("PortfolioSettings","Admn")"
+     data-getcustomeditorobjects-url="@Url.Action("CustomEditorObjects", "Website")"
+     data-getdomainslist-url="@Url.Action("GetDomainsList", "Admn")"
+     data-updateportfolio-url="@Url.Action("UpdatePortfolio", "Admn")"
+     data-getportfolio-url="@Url.Action("PortfolioSettings", "Admn")"
+     data-togglevisibility-url="@Url.Action("TogglePortfolioVisibility","Admn")"
+     data-deleteportfolioversion-url="@Url.Action("DeletePortfolioVersion", "Admn")"
+     data-saveportfolioorder-url="@Url.Action("SavePortfolioOrder","Admn")"
+     data-screengrab-url="@Url.Action("PortfolioScreenGrab","Admn")"
+     data-previewportfolioversion-url="@Url.Action("Preview", "Admn")"
+     data-approveportfolio-url="@Url.Action("ApprovePortfolioVersion", "Admn")"
+     data-categorycssfiles="@ViewBag.CategoryCSSFile"
+     data-getportfolioimage-url="@Url.Action("PortfolioImage", "Admn")"
+     data-deleteportfolioimage-url="@Url.Action("DeletePortfolioImage","Admn")"
+     data-saveimageorder-url="@Url.Action("SaveImageOrder","Admn")"
+     data-getcategories-url="@Url.Action("GetPortfolioCategories", "Admn")"
+     data-getcategory-url="@Url.Action("GetPortfolioCategory", "Admn")"
+     data-savecategory-url="@Url.Action("SavePortfolioCategory","Admn")"
+     data-deletecategory-url="@Url.Action("DeletePortfolioCategory","Admn")"
+     >
+    <div class="leftMenuContainer">
+        <div class="btnGreyMenu" data-bind="click: onNewPortfolio">New Portfolio Item</div>
+        <div class="btnGreyMenu short" data-bind="click: onSaveOrder"><span id="orderIndicator" class="icon-ok"></span>Save Sort Order</div>
+        <select data-bind="options: domains, optionsText: 'Text', optionsValue: 'Value', optionsCaption: 'All domains', value: lDomainID, event: { change: onLDomainChange }"></select>
+        @Html.Partial("~/Views/Partials/Loader.cshtml")
+    </div>
+    <div class="mainContainer">
+        @Html.Action("PortfolioSettings", "Admn")
+    </div>
+
+    <div id="PortfolioCategoryDialog" class="sectionContent hidden">
+        <form id="PortfolioCategoryForm" data-bind="with: currentPortfolioCategory">
+            <input type="hidden" id="PortfolioCategoryID" name="PortfolioCategoryID" data-bind="value: PortfolioCategoryID" />
+            <div>
+                <label for="dTitle">Title</label>
+                <input id="dTitle" name="Title" type="text" data-bind="value: Title" />
+            </div>
+            <div class="btnContainer">
+                <input type="button" id="btnNewPortfolioCategory" name="NewPortfolioCategory" class="btnGreen" value="Add Portfolio Category" data-bind="click: $root.onSubmitPortfolioCategory, visible: PortfolioCategoryID() == 0" />
+                <input type="button" id="btnSavePortfolioCategory" name="SavePortfolioCategory" class="btnGreen" value="Update Portfolio Category" data-bind="click: $root.onSubmitPortfolioCategory, visible: PortfolioCategoryID() > 0" />
+                <input type="button" id="btnDeletePortfolioCategory" name="DeletePortfolioCategory" class="btnRed" value="Delete Portfolio Category" data-bind="click: $root.onDeletePortfolioCategory, visible: PortfolioCategoryID() > 0" />
+                <input type="button" id="btnCancel" name="Cancel" class="btnRed" value="Cancel" data-bind="click: $root.onClosePortfolioCategoryDialog" />
+            </div>
+        </form>
+    </div>
+
+</div>

@@ -1,0 +1,30 @@
+﻿@model CMS.BL.Entity.tbl_Content
+
+<div class="sectionHeader" data-bind="text: sectionHeader"></div>
+@Html.Action("PageDetails", "Admn", new { contentID = Model != null ? Model.ContentID : 0})
+@Html.Action("SEOFields", "Admn", new { contentID = Model != null ? Model.ContentID : 0 })
+<div class="sectionWindow">
+    <div class="btnToggleSection">Page Content +</div>
+    <div class="sectionContent">
+        <div>
+            <textarea id="PageContent" name="PageContent" class="tinyMCEEditor" data-count="true" data-minWords="250">@(Model != null ? Model.C_Content : ViewBag.DefaultWyswigContent)</textarea>
+            <span data-for="PageContent" class="counter"><span data-name="icon" title="Your Page Contents must be at least 250 words long, ideally approaching 400 words!"></span><span data-name="text"></span></span>
+        </div>
+    </div>
+</div>
+@Html.Action("PageContentVersion", "Admn", new { sectionID = Model != null ? Model.tbl_SiteMap.SiteMapID : 0, contentID = Model != null ? Model.ContentID : 0 })
+<div>
+    @if ((User as CMS.Utils.CustomPrincipal).HasPermission(CMS.BL.Permission.AddContent))
+    {
+    <input type="button" id="btnNewPage" name="NewPage" class="btnGreen" value="Add Page" data-bind="click: onSubmit, visible: !isEdit()"/>
+    }
+    @if ((User as CMS.Utils.CustomPrincipal).HasPermission(CMS.BL.Permission.EditContent))
+    {
+    <input type="button" id="btnSavePage" name="SavePage" class="btnGreen" value="Update Page" data-bind="click: onSubmit, visible: isEdit"/>
+    }
+    @if ((User as CMS.Utils.CustomPrincipal).HasPermission(CMS.BL.Permission.ApproveContent))
+    {
+    <input type="button" id="btnApprovePage" name="ApprovePage" class="btnGrey" value="Approve Content" data-bind="click: onApprove, visible: isEdit"/>
+    }
+    <input type="button" id="btnCancel" name="Cancel" class="btnRed" value="Cancel" data-bind="click: onNewSection" />
+</div>

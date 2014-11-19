@@ -1,0 +1,66 @@
+﻿@model CMS.UI.Models.StripeCheckoutViewModel
+@{
+    ViewBag.Title = "Stripe Checkout";
+}
+@section metatags {
+    @{Html.RenderPartial("/Views/Partials/MetaTags.cshtml", new CMS.UI.Models.MetadataModel());}
+}
+@section styles {
+    @Styles.Render("~/Content/themes/base/ui.css")
+}
+@section scripts {
+    @Scripts.Render("~/bundles/jqueryUI")
+}
+@section sidebar {
+    @{
+        Html.RenderPartial("../Partials/SearchPanel");
+        Html.RenderAction("ContactUsPartial", "Website");
+    }
+}
+
+<h1>Stripe Checkout</h1>
+
+<div id="StripeCheckout">
+
+    @using (Html.BeginForm("Payment", "Stripe"))
+    {
+        <div class="row">
+            <div class="col-sm-5">
+                @Html.AntiForgeryToken()
+                <div>@Html.ValidationSummary(true)</div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.CreditCardNumber)
+                    @Html.TextBoxFor(m => m.CreditCardNumber, new { @class = "form-control", maxlength="16", data_stripe="number"})
+                    @Html.ValidationMessageFor(m => m.CreditCardNumber)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Cvv)
+                    @Html.TextBoxFor(m => m.Cvv, new { @class = "form-control", maxlength = "4", data_stripe = "cvc" })
+                    @Html.ValidationMessageFor(m => m.Cvv)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ExpiryMonth)
+                    @Html.TextBoxFor(m => m.ExpiryMonth, new { @class = "form-control", maxlength = "2", data_stripe = "exp-month" })
+                    @Html.ValidationMessageFor(m => m.ExpiryMonth)
+                </div>
+                
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ExpiryYear)
+                    @Html.TextBoxFor(m => m.ExpiryYear, new { @class = "form-control", maxlength = "4", data_stripe = "exp-year" })
+                    @Html.ValidationMessageFor(m => m.ExpiryYear)
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            @Html.HiddenFor(m => m.OrderId)
+            <input type="submit" class="btn btn-warning pull-right" value="Proceed" />
+        </div>
+        
+    }
+
+</div>
+
+

@@ -1,0 +1,50 @@
+﻿@model CMS.BL.Entity.tbl_ProdCategories
+
+<div class="sectionHeader">Upload Category Image For @(Model != null ? Model.PC_Title : String.Empty)</div>
+<div class="sectionWindow">
+    <div class="btnToggleSection">Upload Image +</div>
+    <form id="ImagesUpload" class="sectionContent" action="@Url.Action("SaveCategoryImage", "Admn")" method="post" enctype="multipart/form-data" >
+        <div>
+            <label>Image File</label>
+            <input type="file" name="file" accept="image/*" />
+            @Html.HiddenFor(m => m.CategoryID)
+            <span class="fa fa-info-circle" title="You can upload only images."></span>
+        </div>
+        <div>
+            <label>Description</label>
+            <input type="text" name="description" />
+        </div>
+        <div>
+            <label>Alt Text</label>
+            <input type="text" name="altText" />
+        </div>
+        <div class="btnContainer">
+            <button type="submit" class="btnGreen" >Upload Image</button>
+        </div>
+    </form>
+</div>
+<div class="sectionWindow">
+    <div class="btnToggleSection">Image Uploaded +</div>
+    <div class="sectionContent">
+        @if (Model != null)
+        {
+        <div class="imagesGallery">
+        @if (Model.tbl_ProductImages != null)
+        {
+            <span>
+                <img src="@Html.ImageProvider(CMS.BL.ImageVersionName.category, Model.tbl_ProductImages.I_Name, String.Empty)" alt="@Model.tbl_ProductImages.I_View" />
+                <input type="button" value="Delete" class="btnRed" data-imageID="@Model.tbl_ProductImages.ImageID" data-bind="click: onDeleteImage"/>
+            </span>
+        }
+        else
+        {
+            <span>No image have been uploaded.</span>
+        }
+        </div>
+        }
+    </div>
+</div>
+<div id="UploadWindow">
+    <div>Image is being uploaded.</div>
+    <div id="Progressbar"></div>
+</div>

@@ -1,0 +1,166 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style>
+        table 
+        {
+            border: 1px solid #000;
+        }
+        
+        table tbody,
+        table thead, 
+        table tfoot,
+        table tr
+        {
+            border: 0px;
+        }
+        
+        table td,
+        table th
+        {
+            padding: 4px;
+            border: 1px solid #000;
+        }
+        
+        table thead,
+        table td.color
+        {
+            background: #EEEEEE;
+            font-weight: bold;
+        }
+        
+        .noHborder
+        {
+            border-bottom: 0px;
+            border-top: 0px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Dear $BNAME</h2>
+    <h3>Thank you very much for your order.</h3>
+    <br />
+    <table cellspacing="0" cellpadding="0">
+        <tbody>
+            <tr>
+                <td class="color">Order Date</td>
+                <td>$ORDERDATE</td>
+            </tr>
+            <tr>
+                <td class="color">Delivery Date</td>
+                <td>$DELIVERYDATE</td>
+            </tr>
+            <tr>
+                <td class="color">Delivery Instruction</td>
+                <td>$INSTRUCTION</td>
+            </tr>
+            <tr>
+                <td class="color">Order Reference</td>
+                <td>$ORDERID</td>
+            </tr>
+        </tbody>
+    </table>
+    <br />
+    <table cellspacing="0" cellpadding="0">
+        <thead>
+            <tr>
+                <th>Billing Address</th>
+                <th>Delivery Address</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="noHborder">$BNAME</td>
+                <td class="noHborder">$DNAME</td>
+            </tr>
+            <tr>
+                <td class="noHborder">$BADDRESS1</td>
+                <td class="noHborder">$DADDRESS1</td>
+            </tr>
+            <tr>
+                <td class="noHborder">$BADDRESS2</td>
+                <td class="noHborder">$DADDRESS2</td>
+            </tr>
+            <tr>
+                <td class="noHborder">$BADDRESS3</td>
+                <td class="noHborder">$DADDRESS3</td>
+            </tr>
+            <tr>
+                <td class="noHborder">$BTOWN</td>
+                <td class="noHborder">$DTOWN</td>
+            </tr>
+            <tr>
+                <td class="noHborder">$BPOSTCODE</td>
+                <td class="noHborder">$DPOSTCODE</td>
+            </tr>
+            <tr>
+                <td class="noHborder">$BCOUNTY</td>
+                <td class="noHborder">$DCOUNTY</td>
+            </tr>
+            <tr>
+                <td class="noHborder">$BCOUNTRY</td>
+                <td class="noHborder">$DCOUNTRY</td>
+            </tr>
+            <tr>
+                <td class="noHborder">$BPHONE</td>
+                <td class="noHborder">$DPHONE</td>
+            </tr>
+        </tbody>
+    </table>
+    <br />
+    <table cellspacing="0" cellpadding="0">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Sub Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            #foreach( $PRODUCT in $PRODUCTS )
+            <tr>
+                <td>$PRODUCT.Name</td>
+                <td>$PRODUCT.Quantity</td>
+                <td>$PRODUCT.Price</td>
+                <td>$PRODUCT.TotalPrice</td>
+            </tr>
+            #end
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>Delivery</td>
+                <td>1</td>
+                <td>$DELIVERYAMOUNT</td>
+                <td>$DELIVERYAMOUNT</td>
+            </tr>
+            #if( $ISDISCOUNT )
+            <tr>
+                <td>Discount</td>
+                <td>1</td>
+                <td>$DISCOUNTAMOUNT</td>
+                <td>$DISCOUNTAMOUNT</td>
+            </tr>
+            #end
+            <tr>
+                <td colspan="3">Total products amount</td>
+                <td>$TOTALAMOUNT</td>
+            </tr>
+            #if( $ISDONATION )
+            <tr>
+                <td colspan="3">Total amount paid</td>
+                <td>$TOTALAMOUNTPAID</td>
+            </tr>
+            #end
+        </tfoot>
+    </table>
+    <br />
+    <h4>
+        If you have any questions about this order, please contact us and we will be happy to help.
+    </h4>
+    <br />
+    <h3>Kind Regards</h3>
+    <h3>Crowd CMS Support Team</h3>
+</body>
+</html>

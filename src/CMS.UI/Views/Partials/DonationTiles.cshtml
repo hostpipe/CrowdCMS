@@ -1,0 +1,28 @@
+﻿@model IEnumerable<CMS.BL.Entity.tbl_DonationInfo>
+@if (Model != null){
+        <h2>@*@item.Text*@ Single donation for</h2>
+}
+<div class="row">
+@foreach (var item in Model)
+{
+    <div class="col-sm-4">
+        <div class="donationTile">
+            <a href="@Url.RouteUrl("DonateCheckout", new { type = item.tbl_DonationType.DT_Name, amount = item.DI_Amount.ToString("F2") })" title="Donae @String.Format("{0:c}", item.DI_Amount)">
+		        <div class="donationImage">
+                    @if (!item.DI_ImagePath.IsEmpty())
+                    {
+                        <img alt="@item.DI_Title" src="@item.DI_ImagePath" />
+                    }
+                </div>
+                <div class="donationInfo">
+                    <div class="donationTitle">@item.DI_Title <br /> @String.Format("{0:c}", item.DI_Amount)</div>
+                    <div class="donationDesc">
+                        <div class="scrollContainer">@item.DI_Description</div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+}
+
+</div>

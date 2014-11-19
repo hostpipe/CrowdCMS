@@ -1,0 +1,216 @@
+﻿@model List<CMS.BL.Entity.tbl_Orders>
+
+@if (Model == null || Model.Count == 0)
+{
+    <div class="sectionWindow" data-issummary="true">
+        <div class="btnToggleSection">Orders Summary +</div>
+        <div class="sectionContent">
+            <div>There are no orders found</div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="sectionWindow" data-issummary="true">
+        <div class="btnToggleSection">
+            @if (ViewBag.Donation != null && ViewBag.Donation == true)
+            {
+                @Html.Raw("Donations Summary +");
+            }
+            else
+            {
+                @Html.Raw("Product/Orders Summary +");
+            }
+
+
+        </div>
+        <div class="sectionContent">
+            @if (ViewBag.Donation == null || ViewBag.Donation != true)
+            {
+
+                <h2>Product Summary</h2>
+                <div class="tableContainer">
+                    <table class="hTable noBorders">
+                        <thead>
+                            <tr>
+                                <td>Product Code</td>
+                                <td>Product</td>
+                                <td>Total Orders</td>
+                                <td>Total Quantity</td>
+                                <td>Total Value</td>
+                            </tr>
+                        </thead>
+                        @Html.Raw(Model.SelectMany(m => m.tbl_OrderContent)
+                        .GroupBy(oc => oc.OC_Title)
+                        .Aggregate(String.Empty, (amounts, seed) => (amounts +=
+                            seed.FirstOrDefault().tbl_ProductPrice != null && seed.FirstOrDefault().tbl_ProductPrice.tbl_Products.P_StockControl ?
+                                String.Format("<tr>  <td>{3}</td> <td>{0}</td> <td>{1}</td> <td>{4} (of all {5})</td> <td>{2}</td>  </tr>",
+                                    seed.Key,
+                                    seed.Count(),
+                                    seed.Sum(oc => oc.OC_TotalPrice).ToString("C"),
+                                    seed.Select(oc => oc.tbl_Products != null ? oc.tbl_Products.P_ProductCode : String.Empty).FirstOrDefault(),
+                                    seed.Sum(oc => oc.OC_Quantity).ToString(),
+                                    (seed.Sum(oc => oc.OC_Quantity) + (seed.FirstOrDefault().tbl_Products != null ? seed.FirstOrDefault().tbl_Products.tbl_ProductPrice.Sum(p => p.PR_Stock) : 0)).GetValueOrDefault(0).ToString()) :
+                                String.Format("<tr>  <td>{3}</td> <td>{0}</td> <td>{1}</td> <td>{4}</td> <td>{2}</td>  </tr>",
+                                    seed.Key,
+                                    seed.Count(),
+                                    seed.Sum(oc => oc.OC_TotalPrice).ToString("C"),
+                                    seed.Select(oc => oc.tbl_Products != null ? oc.tbl_Products.P_ProductCode : String.Empty).FirstOrDefault(),
+                                    seed.Sum(oc => oc.OC_Quantity).ToString()))))
+                    </table>
+                </div>
+            }
+            <h2>
+                @if (ViewBag.Donation != null && ViewBag.Donation == true)
+                { @Html.Raw("Donations") }
+                else
+                { @Html.Raw("Orders")} Summary
+            </h2>
+            <div class="tableContainer">
+                <table class="hTable noBorders">
+                    <thead>
+                        <tr>
+                            <td>
+                                @if (ViewBag.Donation != null && ViewBag.Donation == true)
+                                { @Html.Raw("Donations") }
+                                else
+                                { @Html.Raw("Orders")}
+                            </td>
+                            <td>Total Price</td>
+                            <td>Paid</td>
+                            <td>Awaiting Payment</td>
+                            <td>Payment Errors</td>
+                            <td>Processing</td>
+                            <td>Despatched</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@Model.Count</td>
+                            <td><b>@Model.Sum(m => m.TotalAmount).ToString("C")</b></td>
+                            <td>@String.Format("{0} - {1}", Model.Where(m => m.CurrentOrderStatus == CMS.BL.OrderStatus.Paid).Count(), Model.Where(m => m.CurrentOrderStatus == CMS.BL.OrderStatus.Paid).Sum(m => m.TotalAmount).ToString("C"))</td>
+                            <td>@String.Format("{0} - {1}", Model.Where(m => m.CurrentOrderStatus == CMS.BL.OrderStatus.Commited).Count(), Model.Where(m => m.CurrentOrderStatus == CMS.BL.OrderStatus.Commited).Sum(m => m.TotalAmount).ToString("C"))</td>
+                            <td>@String.Format("{0} - {1}", Model.Where(m => m.CurrentOrderStatus == CMS.BL.OrderStatus.PaymentFailed).Count(), Model.Where(m => m.CurrentOrderStatus == CMS.BL.OrderStatus.PaymentFailed).Sum(m => m.TotalAmount).ToString("C"))</td>
+                            <td>@String.Format("{0} - {1}", Model.Where(m => m.CurrentOrderStatus == CMS.BL.OrderStatus.Processing).Count(), Model.Where(m => m.CurrentOrderStatus == CMS.BL.OrderStatus.Processing).Sum(m => m.TotalAmount).ToString("C"))</td>
+                            <td>@String.Format("{0} - {1}", Model.Where(m => m.CurrentOrderStatus == CMS.BL.OrderStatus.Despatched).Count(), Model.Where(m => m.CurrentOrderStatus == CMS.BL.OrderStatus.Despatched).Sum(m => m.TotalAmount).ToString("C"))</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <a href="#" class="btnGreen" data-bind="click: onGetEmailsAsCSV">Get Customers Emails</a>
+            </div>
+
+        </div>
+    </div>
+    <div class="sectionWindow">
+        <div class="btnToggleSection">
+            Detailed List Of
+            @if (ViewBag.Donation != null && ViewBag.Donation == true)
+            { @Html.Raw("Donations") }
+            else
+            { @Html.Raw("Orders")}  +
+        </div>
+        <div class="sectionContent">
+            <div class="tableContainer">
+                <table class="hTable noBorders">
+                    <thead>
+                        <tr>
+                            <td>
+                                @if (ViewBag.Donation != null && ViewBag.Donation == true)
+                                { @Html.Raw("Donation") }
+                                else
+                                { @Html.Raw("Order")}  #
+                        </td>
+                        <td>Time/Date</td>
+                        <td>Customer Name</td>
+                        <td>Customer Email</td>
+                        <td>
+                            @if (ViewBag.Donation != null && ViewBag.Donation == true)
+                            { @Html.Raw("Donation") }
+                            else
+                            { @Html.Raw("Order")}  Status
+                    </td>
+                    @if (ViewBag.Donation == null || ViewBag.Donation != true)
+                    {
+                    <td>Product</td>
+                    <td>Quantity</td>   
+                    }
+                    <td>Total</td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int n = 0; n < Model.Count; n++)
+                {
+                    int i = 0;
+                    do
+                    {
+                        //TODO: change this categories view to sth better and generic
+                        String parentCategory = Model[n].tbl_OrderContent.Select(oc => oc.tbl_Products != null && oc.tbl_Products.tbl_ProdCategories.tbl_ProdCategories2 != null ? oc.tbl_Products.tbl_ProdCategories.tbl_ProdCategories2.PC_Title : String.Empty).ElementAtOrDefault(i);
+
+                        <tr class="menuItem @(n % 2 == 0 ? "even" : "odd")" data-itemid="@Model[n].OrderID">
+                            <td>@(i == 0 ? Model[n].OrderID.ToString() : String.Empty)</td>
+                            <td>@(i == 0 ? Model[n].O_Timestamp.GetValueOrDefault().ToString("HH:mm:ss dd:MM:yyyy") : String.Empty)</td>
+                            <td>@(i == 0 ? Model[n].tbl_Customer != null ? Model[n].tbl_Customer.FullName : Model[n].BillingFullName : String.Empty)</td>
+                            <td>@(i == 0 ? Model[n].CustomerEMail : String.Empty)</td>
+                            <td>@(i == 0 ? Model[n].CurrentOrderStatus.ToString() : String.Empty)</td>
+                            @if (ViewBag.Donation == null || ViewBag.Donation != true)
+                            {
+                            <td>
+                                @(String.Format(String.IsNullOrEmpty(parentCategory) ? "{2} -> {0} - {1}" : "{3} -> {2} -> {0} - {1}",
+                                      Model[n].tbl_OrderContent.Select(oc => oc.tbl_Products != null ? oc.tbl_Products.P_ProductCode : String.Empty).ElementAtOrDefault(i),
+                                      Model[n].tbl_OrderContent.Select(oc => oc.OC_Title).ElementAtOrDefault(i),
+                                      Model[n].tbl_OrderContent.Select(oc => oc.tbl_Products != null ? oc.tbl_Products.tbl_ProdCategories.PC_Title : String.Empty).ElementAtOrDefault(i),
+                                      parentCategory)
+                                )
+                            </td>
+                            <td>@Model[n].tbl_OrderContent.Select(oc => oc.OC_Quantity).ElementAtOrDefault(i)</td>
+                            <td>@Model[n].tbl_OrderContent.Select(oc => oc.GetPriceString()).ElementAtOrDefault(i)</td>
+                            }
+                            else
+                            {
+                            <td>@Model[n].GetPriceString()</td>
+                            }
+
+                            <td>
+                                @if (i == 0)
+                                {
+                                    <a data-name="btnEdit" href="#" class="icon-edit" title="Edit Order" data-bind="click: onEdit"></a>
+                                    <a data-name="btnCancel" href="#" class="icon-delete" title="Cancel Order" data-bind="click: onDelete"></a>
+                                }
+                            </td>
+                        </tr>
+                                i++;
+                    }
+                    while (i < Model[n].tbl_OrderContent.Count);
+
+                    if (ViewBag.Donation == null || ViewBag.Donation != true)
+                    {
+                    <tr class="@(n % 2 == 0 ? "even" : "odd")">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="topBorder"></td>
+                        <td class="topBorder">Subtotal</td>
+                        <td class="topBorder">@Model[n].GetPriceString()</td>
+                        <td></td>
+                    </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <a href="#" class="btnGreen" data-bind="click: onGetOrderSummaryAsCSV">
+            @if (ViewBag.Donation != null && ViewBag.Donation == true)
+            { @Html.Raw("Donations") }
+            else
+            { @Html.Raw("Orders")}  Summary CSV
+    </a>
+</div>
+</div>
+</div>
+}

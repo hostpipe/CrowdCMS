@@ -1,0 +1,55 @@
+﻿@model CMS.BL.Entity.tbl_ProdCategories
+@{
+    ViewBag.Title = Model != null ? Model.PC_Title : String.Empty;
+    CMS.BL.Entity.tbl_Content categoryPage = Model.tbl_SiteMap.tbl_Content.FirstOrDefault(c => !c.C_Deleted && c.C_Approved);
+}
+@section metatags {
+    @{ Html.RenderPartial("/Views/Partials/MetaTags.cshtml", new CMS.UI.Models.MetadataModel(categoryPage)); }
+}
+@section styles {
+    @Html.Raw(categoryPage != null ? categoryPage.tbl_SiteMap.SM_CSS : String.Empty)
+}
+@section scripts {
+    @Scripts.Render("~/bundles/web/add")
+    @Scripts.Render("~/bundles/categoryManager")
+}
+@section sidebar {
+    @{
+        Html.RenderPartial("../Partials/SearchPanel");
+        Html.RenderAction("BasketSummary", "Website");
+        Html.RenderAction("ContactUsPartial", "Website");
+    }
+}
+<h1>@(Model != null ? Model.PC_Title : String.Empty)</h1>
+@if (Model != null && Model.tbl_ProductTypes.PT_Name.Equals(CMS.BL.ProductType.Item.ToString()))
+{
+    @Html.Partial("~/Views/Partials/ProductsList.cshtml", Model)
+}
+else if (Model != null && Model.tbl_ProductTypes.PT_Name.Equals(CMS.BL.ProductType.Event.ToString()))
+{
+    <div>
+        <a data-name="btnView" href="@Url.Action("GetEventView", "Website")" data-viewtype="@CMS.BL.EventViewType.Calendar" class="btnViolet small">
+            Calendar View
+        </a> <a data-name="btnView" href="@Url.Action("GetEventView", "Website")" data-viewtype="@CMS.BL.EventViewType.List" class="btnViolet small">
+            List View
+        </a>
+    </div>
+    <div id="Events" class="eventsContainer" data-categoryid="@Model.CategoryID">
+        @if (ViewBag.ViewType == CMS.BL.EventViewType.Calendar)
+        {
+            @Html.Partial("~/Views/Partials/EventsCalendar.cshtml")
+        }
+        else
+        {
+            @Html.Partial("~/Views/Partials/EventsList.cshtml", Model.tbl_Products.ToList())
+        }
+    </div>
+}
+@if ((this.ViewBag.Categories as List<CMS.BL.Entity.tbl_ProdCategories>).Count > 0)
+{
+    <br />
+    <hr />
+    <br />
+    <h2>Subcategories</h2>
+    @Html.Partial("~/Views/Partials/ProdCategoriesPartial.cshtml", this.ViewBag.Categories as List<CMS.BL.Entity.tbl_ProdCategories>)
+}

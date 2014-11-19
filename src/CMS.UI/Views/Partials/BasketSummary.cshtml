@@ -1,0 +1,44 @@
+﻿@model CMS.BL.Entity.tbl_Basket
+
+<div id="BasketSummary" class="basket">
+    <h2>Shopping Basket</h2>
+    @if (Model == null || Model.tbl_BasketContent.Count == 0)
+    {
+    <p>Your basket is currently empty</p>
+    }
+    else
+    {
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>QTY</th>
+                <th>Product</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach(var item in Model.tbl_BasketContent)
+        {
+            <tr>
+                <td>@item.BC_Quantity</td>
+                <td>
+                    @item.tbl_ProductPrice.tbl_Products.P_Title <br />
+                    @foreach (var attr in item.tbl_ProductPrice.tbl_ProdPriceAttributes.Select(ppa => ppa.tbl_ProdAttValue))
+                    {
+                        @:@attr.tbl_ProdAttributes.A_Title: @attr.AV_Value <br />
+                    }
+                </td>
+                <td>@item.GetPriceString(true)</td>
+            </tr>
+        }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2" id="total"><b>Total</b></td>
+                <td><b>@Model.GetProductsPriceString(true)</b></td>
+            </tr>
+        </tfoot>
+    </table>
+    <a href="@Url.RouteUrl("Basket")" class="btn btn-warning pull-right">View Basket and Checkout</a>
+    }
+</div>

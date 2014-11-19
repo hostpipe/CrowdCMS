@@ -1,0 +1,90 @@
+﻿@model CMS.BL.Entity.tbl_Gallery
+
+<div class="sectionHeader">Upload Images For @(Model != null ? Model.G_Title : String.Empty)</div>
+<div class="sectionWindow">
+    <div class="btnToggleSection">Upload Image +</div>
+    <form id="ImagesUpload" class="sectionContent" action="@Url.Action("UploadGalleryImage", "Admn")" method="post" enctype="multipart/form-data" >
+        <div>
+            <label>Image File</label>
+            <!-- ko if: !isImageEdit() -->
+            <input type="file" name="files" accept="image/*" multiple="multiple" />
+            <span class="fa fa-info-circle" title="You can upload only images."></span>
+            <!-- /ko -->
+            <!-- ko if: isImageEdit -->
+            <span data-bind="text: imageName"></span>
+            <!-- /ko -->
+        </div>
+        <div>
+            @Html.HiddenFor(m => m.GalleryID)
+            <input type="hidden" name="imageID" value="0" data-bind="value: imageID" />
+            <label>Image description</label>
+            <input type="text" name="description" data-bind="value: imageDescription" />
+        </div>
+        <div>
+            <label for="tbCategory">Gallery Tags</label>
+            <input id="tbNewTag" name="newtag" type="text" />
+            <input type="button" class="btnGreyGreen" value="Add" title="Add Tag" data-bind="click: onAddImageTag" />
+        </div>
+        <div>
+            <div class="checkBoxList" data-bind="foreach: imagesTags">
+                <span>
+                    <input type="checkbox" name="tagIDs" data-bind="value: Value, checked: Selected, attr: { id: 'tag' + Value }" />
+                    <label data-bind="text: Text, attr: { 'for': 'tag' + Value }"></label>
+                    <span class="deleteLink" data-bind="click: $parent.onDeleteImageTag, attr: { 'data-tagID': Value, title: 'Delete ' + Text }"></span>
+                </span>
+            </div>
+        </div>
+        <div class="btnContainer">
+            <!-- ko if: !isImageEdit() -->
+            <button type="submit" class="btnGreen">Upload Image</button>
+            <!-- /ko -->
+            <!-- ko if: isImageEdit -->
+            <button type="button" class="btnGreen" data-bind="click: onSaveImage">Save Image</button>
+            <button type="button" class="btnGreen" data-bind="click: onCancelImageEdition">Cancel Edition</button>
+            <!-- /ko -->
+        </div>
+    </form>
+</div>
+<div class="sectionWindow">
+    <div class="btnToggleSection">Image Uploaded +</div>
+    <div class="sectionContent">
+        @if (Model != null)
+        {
+        <div class="imagesGallery">
+        @if (Model.tbl_GalleryImage != null && Model.tbl_GalleryImage.Count > 0)
+        {
+            <div class="btnGrey" data-bind="click: onSaveImageOrder" id="ImageOrderIndicator">Save Image Order <span class="glyphicon glyphicon-ok ok-green"></span></div>
+            <div class="clear">&nbsp;</div>
+            <div id="image-border">
+                <ul class="sortable-images">
+                    @foreach (var galleryImage in Model.tbl_GalleryImage.OrderBy(gi => gi.GI_Order))
+                    {
+                    <li data-sortgalleryimageid="@galleryImage.GalleryImageID" data-preview="@galleryImage.tbl_Image.I_Thumb" data-imageID="@galleryImage.GI_ImageID" data-image-description="@galleryImage.tbl_Image.I_Description">
+                        <img src="@Html.ImageProvider(CMS.BL.ImageVersionName.galleryThumb, galleryImage.tbl_Image.I_Thumb,String.Empty)" alt="@galleryImage.tbl_Image.I_Description" />
+                        <img class="image-preview hidden" src="@Html.ImageProvider(CMS.BL.ImageVersionName.medium, galleryImage.tbl_Image.I_Thumb,String.Empty)" alt="@galleryImage.tbl_Image.I_Description"/>
+                        <p class="ref">@galleryImage.Reference <span class="glyphicon glyphicon-tag"></span></p>
+                        <p class="tags">Tags: @galleryImage.tbl_Image.tbl_GalleryTags.Aggregate(String.Empty, (total, seed) => (total += seed.GT_Title + ", ")).Trim(',', ' ')</p>
+                        <button title="Preview" class="btnGrey" data-bind="click: onPreviewImage">Preview</button>
+                        <button title="Edit" class="btnGreen" data-bind="click: onEditImageItem">Edit</button>
+                        @if ((bool)this.ViewBag.CanDeleteImage)
+                        {
+                            <button  class="btnRed" data-galleryimageid="@galleryImage.GalleryImageID" data-bind="click: onDeleteGalleryImage">Delete</button>
+                        }
+                    </li>
+                    }
+                </ul>
+                <div class="clear"></div>
+            </div>
+        }
+        else
+        {
+            <span>No images have been uploaded.</span>
+        }
+        </div>
+        }
+    </div>
+</div>
+<div id="UploadWindow">
+    <div>Image is being uploaded.</div>
+    <div id="Progressbar"></div>
+</div>

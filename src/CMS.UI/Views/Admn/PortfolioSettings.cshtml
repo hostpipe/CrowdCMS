@@ -1,0 +1,78 @@
+﻿@model CMS.BL.Entity.tbl_Content
+
+<div class="sectionHeader" data-bind="text: sectionHeader"></div>
+<div class="sectionWindow">
+    <div class="btnToggleSection">Portfolio Item Details +</div>
+    <form id="DetailsForm" action="#" class="sectionContent">
+        <div>
+            @Html.Label("ddlDomain", "Domain")
+            @Html.DropDownListFor(m => m.tbl_SiteMap.SM_DomainID, ViewBag.Domains as SelectList, new { @class = "short", id = "ddlDomain" })
+            @Html.HiddenFor(m => m.ContentID)
+            @Html.HiddenFor(m => m.tbl_SiteMap.SiteMapID)
+            @Html.HiddenFor(m => m.tbl_SiteMap.tbl_Portfolio.PortfolioID, new {id="PortfolioID" })
+        </div>
+        <div>
+            @Html.LabelFor(m => m.tbl_SiteMap.tbl_Portfolio.PO_Title, "Portfolio Item Title")
+            @Html.TextBoxFor(m => m.tbl_SiteMap.tbl_Portfolio.PO_Title, new { @class = "short", id = "tbTitle" })
+            @Html.ValidationMessageFor(m => m.tbl_SiteMap.tbl_Portfolio.PO_Title)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.tbl_SiteMap.tbl_Portfolio.PO_PortfolioCategoryID, "Category")
+            @Html.DropDownListFor(m => m.tbl_SiteMap.tbl_Portfolio.PO_PortfolioCategoryID, ViewBag.PortfolioCategories as SelectList, new { id = "ddCategory", data_bind = "options: portfolioCategories, optionsText: 'Title', optionsValue: 'PortfolioCategoryID', optionsCaption: 'Select Category', value: portfolioCategoryID" })
+            <input type="button" class="btnGreyGreen" value="Add" data-bind="click: onEditPortfolioCategory" />
+            <input type="button" class="btnGreyGreen" value="Edit" data-bind="click: onViewPortfolioCategory, visible: portfolioCategoryID() > 0" />
+            @Html.ValidationMessageFor(m => m.tbl_SiteMap.tbl_Portfolio.PO_PortfolioCategoryID)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.tbl_SiteMap.tbl_Portfolio.PO_Live, "Live Status")
+            @Html.RadioButton("PO_Live", true, Model != null ? Model.tbl_SiteMap.tbl_Portfolio.PO_Live : false, new { id = "radioLiveYes" })
+            @Html.Label("LabelYes", "On", new { @for = "radioLiveYes", @class = "checkboxLabel" })
+            @Html.RadioButton("PO_Live", false, Model != null ? !Model.tbl_SiteMap.tbl_Portfolio.PO_Live : true, new { id = "radioLiveNo" })
+            @Html.Label("LabelNo", "Off", new { @for = "radioLiveNo", @class = "checkboxLabel" })
+        </div>
+        <div>
+            @Html.LabelFor(m => m.tbl_SiteMap.tbl_Portfolio.PO_Link, "External URL")
+            @Html.TextBoxFor(m => m.tbl_SiteMap.tbl_Portfolio.PO_Link, new { @class = "short", id = "tbLink" }) <span class="glyphicon glyphicon-picture" data-bind="click: onScreenGrab"></span>
+            @Html.ValidationMessageFor(m => m.tbl_SiteMap.tbl_Portfolio.PO_Link)
+            <div id="ScreenGrab">
+                @if (Model != null && Model.tbl_SiteMap.tbl_Portfolio.PO_Link != "")
+                {
+                    Html.Action("PortfolioScreenGrab", "Admn", new { url = Model.tbl_SiteMap.tbl_Portfolio.PO_Link });
+                }
+            </div>
+        </div>
+        <div>
+            @Html.LabelFor(m => m.tbl_SiteMap.tbl_Portfolio.PO_ShowLink, "Display Link?")
+            @Html.RadioButton("PO_ShowLink", true, Model != null ? Model.tbl_SiteMap.tbl_Portfolio.PO_ShowLink : false, new { id = "radioShowLinkYes" })
+            @Html.Label("LabelYes", "Yes", new { @for = "radioShowLinkYes", @class = "checkboxLabel" })
+            @Html.RadioButton("PO_ShowLink", false, Model != null ? !Model.tbl_SiteMap.tbl_Portfolio.PO_ShowLink : true, new { id = "radioShowLinkNo" })
+            @Html.Label("LabelNo", "No", new { @for = "radioShowLinkNo", @class = "checkboxLabel" })
+        </div>
+        <div>
+            @Html.LabelFor(m => m.tbl_SiteMap.tbl_Portfolio.PO_Feature, "Featured?")
+            @Html.RadioButton("PO_Feature", true, Model != null ? Model.tbl_SiteMap.tbl_Portfolio.PO_Feature : false, new { id = "radioFeaturedYes" })
+            @Html.Label("LabelYes", "Yes", new { @for = "radioFeaturedYes", @class = "checkboxLabel" })
+            @Html.RadioButton("PO_Feature", false, Model != null ? !Model.tbl_SiteMap.tbl_Portfolio.PO_Feature : true, new { id = "radioFeaturedkNo" })
+            @Html.Label("LabelNo", "No", new { @for = "radioFeaturedkNo", @class = "checkboxLabel" })
+        </div>
+
+    </form>
+    </div>
+
+@Html.Action("SEOCategoriesFields", "Admn", new { contentID = Model != null ? Model.ContentID : 0 })
+<div class="sectionWindow">
+    <div class="btnToggleSection">Page Content +</div>
+    <div class="sectionContent">
+        <div>
+            <textarea id="SEOContent" name="CategoriesContent" class="tinyMCEEditor" data-count="true" data-minwords="250">@(Model != null ? Model.C_Content : ViewBag.DefaultWyswigContent)</textarea>
+            <span data-for="SEOContent" class="counter"><span data-name="icon" title="Your Page Contents must be at least 250 words long, ideally approaching 400 words!"></span><span data-name="text"></span></span>
+        </div>
+    </div>
+</div>
+@Html.Action("CategoriesContentVersion", "Admn", new { sectionID = Model != null ? Model.tbl_SiteMap.SiteMapID : 0, contentID = Model != null ? Model.ContentID : 0 })
+<div>
+    <input type="button" id="btnAddPortfolio" name="AddPortfolio" class="btnGreen" value="Add Portfolio" data-bind="click: onSubmit, visible: !isEdit()" />
+    <input type="button" id="btnSavePortfolio" name="SavePortfolio" class="btnGreen" value="Update Portfolio" data-bind="click: onSubmit, visible: isEdit" />
+    <input type="button" id="btnApprovePortfolio" name="ApprovePortfolio" class="btnGrey" value="Approve Content" data-bind="click: onApprove, visible: isEdit" />
+    <input type="button" id="btnCancel" name="Cancel" class="btnRed" value="Cancel" data-bind="click: onNewPortfolio" />
+</div>

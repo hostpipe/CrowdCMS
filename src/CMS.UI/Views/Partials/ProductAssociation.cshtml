@@ -1,0 +1,36 @@
+﻿@model CMS.UI.Models.ProductAssocationModel
+
+<div class="productsList">
+    @foreach (var product in Model.ProdAss.GetOfType(Model.ProductID, Model.Type)
+        .Select(pa => pa.tbl_Products.ProductID == Model.ProductID ? pa.tbl_Products1 : pa.tbl_Products))
+    {
+    <div class="productTile">
+        <a href="@(Model.Url + product.tbl_SiteMap.SM_URL.Trim('/'))">
+            <div class="prodImage">
+                @if (product.tbl_ProductImageLink.Count > 0)
+                {
+                <img alt="@product.tbl_ProductImageLink.FirstOrDefault().tbl_ProductImages.I_View" src="@Html.ImageProvider(CMS.BL.ImageVersionName.thumb, product.tbl_ProductImageLink.FirstOrDefault().tbl_ProductImages.I_Name, String.Empty)" />
+                }
+            </div>
+            <div class="prodTitle">@product.P_Title</div>
+            <div class="prodCode">(@product.P_ProductCode)</div>
+        </a>
+    </div>
+    }
+    @foreach (var product in Model.ProdAss1.GetOfType(Model.ProductID, Model.Type)
+        .Select(pa => pa.tbl_Products.ProductID == Model.ProductID ? pa.tbl_Products1 : pa.tbl_Products))
+    {
+    <div class="productTile">
+        <a href="@(Model.Url + product.tbl_SiteMap.SM_URL.Trim('/'))">
+            <div class="prodImage">
+                @if (product.tbl_ProductImageLink.Count > 0)
+                {
+                <img alt="@product.tbl_ProductImageLink.FirstOrDefault().tbl_ProductImages.I_View" src="@Html.ImageProvider(CMS.BL.ImageVersionName.thumb, product.tbl_ProductImageLink.FirstOrDefault().tbl_ProductImages.I_Name, String.Empty)" />
+                }
+            </div>
+            <div class="prodTitle">@product.P_Title</div>
+            <div class="prodCode">(@product.P_ProductCode)</div>
+        </a>
+    </div>
+    }
+</div>

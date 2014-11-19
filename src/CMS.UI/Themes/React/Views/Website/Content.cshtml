@@ -1,0 +1,38 @@
+﻿@model CMS.UI.Models.ContentModel
+@section metatags {
+    @{ Html.RenderPartial("MetaTags", new CMS.UI.Models.MetadataModel(Model.Content));}
+}
+@section styles {
+    @Html.Raw(Model != null ? Model.CSS : String.Empty)
+}
+@section scripts {
+     @Scripts.Render("~/bundles/contactUsManager")
+    @{ Html.RenderPartial("Tracking"); }
+}
+@section sidebar {
+    @if (!(bool)ViewBag.IsHomePage)
+    {
+        {
+        //Html.RenderPartial("SearchPanel");
+        //Html.RenderAction("TestimonialsPartial", "Website");
+        //Html.RenderAction("ContactUsPartial", "Website");
+        }
+    }
+}
+@if (ViewBag.DynamicLayout != null)
+{
+    Layout = ViewBag.DynamicLayout;
+}
+@section slideshow {
+    @{
+        if ((bool)ViewBag.IsHomePage)
+        {
+
+        Html.RenderPartial("Slideshow", Model.Content.tbl_SiteMap.SitemapImages.ToList());
+        }
+}   }
+
+@if (Model != null)
+{
+    Html.RenderPartial("ContentPartial", Model.HtmlElements);
+}

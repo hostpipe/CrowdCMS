@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Stripe.net</id>
+    <version>2.3.0</version>
+    <title>Stripe.net</title>
+    <authors>Jayme Davis</authors>
+    <owners>Jayme Davis</owners>
+    <licenseUrl>https://raw.github.com/jaymedavis/stripe.net/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/jaymedavis/stripe.net</projectUrl>
+    <iconUrl>http://i.imgur.com/V3vD8EF.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Stripe.net is a full service .net api for http://stripe.com. For documentation, visit https://github.com/jaymedavis/stripe.net.</description>
+    <tags>stripe payment credit cards money</tags>
+    <dependencies>
+      <dependency id="Newtonsoft.Json" version="5.0.8" />
+    </dependencies>
+  </metadata>
+</package>

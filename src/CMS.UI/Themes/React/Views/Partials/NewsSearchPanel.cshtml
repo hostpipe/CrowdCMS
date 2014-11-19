@@ -1,0 +1,10 @@
+﻿<div>
+    <form action="@String.Format("/{0}/{1}", ViewBag.BlogUrl.Trim('/'), CMS.UI.SettingsManager.Blog.SearchUrl.Trim('/'))" method="get" class="form-inline">
+        <div class="input-group">
+            @Html.TextBox("keyword", null, new { @class = "tbsearch form-control" })
+	        <div class="input-group-btn">
+	            <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-search"></span></button>
+	        </div>
+        </div>
+    </form>
+</div>

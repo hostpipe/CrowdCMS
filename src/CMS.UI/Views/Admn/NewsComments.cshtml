@@ -1,0 +1,39 @@
+﻿@model List<CMS.BL.Entity.tbl_Comments>
+<div class="sectionHeader">Viewing Comments</div>
+@{
+    string style = "display: block;";
+    if (Model.Count > 0)
+    {
+        style = "display: none;";
+    }
+}
+<p class="blog-nocomments" style="@style">No Comments!</p>
+@if (Model.Count > 0)
+{
+    <ul class="blog-comments transitions-enabled clearfix">
+        @foreach (var c in Model)
+        {
+            <li>
+                <div class="comments input-background" data-itemID="@c.CommentID" data-sitemapID="@c.CO_SiteMapID">
+                    <div class="comment-content">
+                        <p><a href="@(String.IsNullOrEmpty(c.CO_URL) ? "#" : c.CO_URL )" rel="external" target="_blank" class="comment-author">@c.CO_Author</a> (<a href="mailto:@c.CO_Email">@c.CO_Email</a>) left a comment on the <span class="comment-date"><strong>@c.CO_Date.ToShortDateString() at @c.CO_Date.ToShortTimeString()</strong></span></p>
+                        <br />
+                        <p>@Html.Raw(c.CO_Comment)</p>
+                    </div>
+                    <div class="comment-buttons">
+                        @if (!c.CO_Authorised && (User as CMS.Utils.CustomPrincipal).HasPermission(CMS.BL.Permission.ApproveContent))
+                        {
+                            <a href="#" class="btnGreen" data-bind="click: onAuthoriseComment" title="Authorise Comment">Authorise Comment</a>
+                        }
+                        @if ((User as CMS.Utils.CustomPrincipal).HasPermission(CMS.BL.Permission.EditNews))
+                        {
+                        <a href="#" class="btnRed" data-bind="click: onDeleteComment" title="Delete Comment">Delete Comment</a>
+                        }
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+}

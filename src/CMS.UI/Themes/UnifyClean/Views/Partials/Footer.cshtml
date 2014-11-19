@@ -1,0 +1,47 @@
+﻿@model CMS.UI.Models.FooterModel
+
+
+<footer>
+    <div class="container">
+        <div class="col-sm-4">
+            <div class="heading"><p class="h3">About</p></div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas scelerisque, est et sagittis posuere, tellus diam imperdiet arcu, consectetur aliquam lorem arcu vel ante.</p>
+            @if (!Request.IsAuthenticated && ViewBag.SubscriptionEnabled ?? false)
+            {
+                @Html.Partial("~/Views/Partials/Subscribe.cshtml")
+            }
+        </div>
+        <div class="col-sm-4">
+            <div class="heading"><p class="h3">Latest Blog Posts</p></div>
+            @Html.Action("HomepageBlogs", "Website")
+        </div>
+        <div class="col-sm-4 social">
+            <div class="heading"><p class="h3">Contact Us</p></div>
+            <p>Duis pulvinar elit vel consectetur hendrerit<br /> Nullam quis nulla sollicitudin <br />Dolor lobortis pulvinar.</p>
+            <p>Phone:0800 987 654</p>
+            <p>Email: <a href="mailto:info@crowdcms.com?subect=Website%20Enquiry">info@crowdcms.com</a></p>
+            <div class="heading"><p class="h3">Stay Connected</p></div>
+            <a href="#" title="Facebook"><img src="/Themes/UnifyClean/img/32-facebook.png" alt="Facebook" /></a>
+            <a href="#" title="Twitter"><img src="/Themes/UnifyClean/img/32-twitter.png" alt="Twitter" /></a>
+            <a href="#" title="Google +"><img src="/Themes/UnifyClean/img/32-googleplus.png" alt="Google +" /></a>
+            <a href="#" title="Instagram"><img src="/Themes/UnifyClean/img/32-instagram.png" alt="Instagram" /></a>
+            <a href="#" title="Linkedin"><img src="/Themes/UnifyClean/img/32-linkedin.png" alt="Linkedin" /></a>
+            <a href="#" title="RSS Feed"><img src="/Themes/UnifyClean/img/32-rss.png" alt="RSS Feed" /></a>
+            <a href="#" title="Skype"><img src="/Themes/UnifyClean/img/32-skype.png" alt="Skype" /></a>
+            <a href="#" title="Vimeo"><img src="/Themes/UnifyClean/img/32-vimeo.png" alt="Vimeo" /></a>
+            <a href="#" title="Youtube"><img src="/Themes/UnifyClean/img/32-youtube.png" alt="Youtube" /></a>
+        </div>
+    </div>
+</footer>
+
+<div id="copyright">
+    <div class="container">
+        <div class="col-sm-12">
+            <p>@ViewBag.CompanyName © 2014 <a href="#terms" title="Terms and Conditions">Terms and Conditions</a> | <a href="#privacy" title="Privacy Policy">Privacy Policy</a>
+            | <a href="http://validator.w3.org/check?uri=referer" title="Validate HTML5" rel="external">HTML5</a>
+            | <a href="http://www.hostpipe.co.uk" title="Website Design Gloucestershire" rel="external">Website Design Gloucestershire</a>
+
+            </p>
+        </div>
+    </div>
+</div>

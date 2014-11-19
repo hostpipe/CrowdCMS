@@ -1,0 +1,96 @@
+﻿<div class="panel-group blog-col" id="accordion">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+          Recent Posts
+        </a>
+      </h4>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse in">
+      <div class="panel-body">
+            <ul>
+            @if ((this.ViewBag.RecentPosts as List<CMS.BL.Entity.tbl_Content>).Count() > 0)
+            {
+                foreach (var post in this.ViewBag.RecentPosts as List<CMS.BL.Entity.tbl_Content>)
+                {
+                <li><a href="@String.Format("/{0}/{1}", ViewBag.BlogUrl, post.tbl_SiteMap.SM_URL.Trim('/'))">@post.C_Title</a></li>    
+                @*<li><a href="@String.Format("{0}/{1}", ViewBag.BlogUrl, post.tbl_SiteMap.SM_URL.Trim('/'))">@post.C_Title</a></li>*@
+                }
+            }
+            else
+            {
+                <li>No Posts Exists</li>
+            }
+            </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+          Categories
+        </a>
+      </h4>
+    </div>
+    <div id="collapseTwo" class="panel-collapse collapse">
+      <div class="panel-body">
+          <ul>
+            @if ((this.ViewBag.Categories as List<CMS.BL.Entity.tbl_Categories>).Count > 0)
+            {
+                foreach (var category in this.ViewBag.Categories as List<CMS.BL.Entity.tbl_Categories>)
+                {
+                <li><a href="@(String.Format("/{0}/{1}/{2}", ViewBag.BlogUrl, CMS.UI.SettingsManager.Blog.CategoryUrl.Trim('/'), category.CA_URL))">@category.CA_Title</a></li>
+                @*<li><a href="@(String.Format("{0}/{1}/{2}", ViewBag.BlogBaseUrl, CMS.UI.SettingsManager.Blog.CategoryUrl.Trim('/'), category.CA_URL))">@category.CA_Title</a></li>*@
+                }
+        
+            }
+            else
+            {
+                <li>No Categories Exists</li>
+            }
+            </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+          Archives
+        </a>
+      </h4>
+    </div>
+    <div id="collapseThree" class="panel-collapse collapse">
+      <div class="panel-body">
+          <ul>
+            @if ((this.ViewBag.Archive as List<DateTime>).Count > 0)
+            {
+                foreach (var date in this.ViewBag.Archive as List<DateTime>)
+                {
+                <li><a href="@(String.Format("/{0}/{1}/{2}", ViewBag.BlogUrl, date.Year, date.Month))">@date.ToString("MMMM yyyy")</a></li>
+                @*<li><a href="@(String.Format("{0}/{1}/{2}", ViewBag.BlogBaseUrl, date.Year, date.Month))">@date.ToString("MMMM yyyy")</a></li>*@
+                }
+            }
+            else
+            {
+                <li>No Archives Exists</li>
+            }
+            </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a class="rssLink" href="/@ViewBag.BlogUrl/feed">  
+        @*<a class="rssLink" href="@ViewBag.BlogBaseUrl/feed">*@
+          RSS Feed
+        </a>
+      </h4>
+    </div>
+</div>

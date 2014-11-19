@@ -1,0 +1,80 @@
+﻿@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="homepage masonry" id="homepage">
+    <div class="item w2">
+        <div class="tutorials ease">
+            <h2>Crowd CMS Tutorials <span class="glyphicon glyphicon-film float-right"></span></h2>
+            <a href="#" class="tutorial-link" onclick="$('#video1').toggle();return false;" title="Create a Link to a File, Image or PDF using the WYSIWYG Editor">Create a Link to a File, Image or PDF <span class="glyphicon glyphicon-chevron-down float-right"></span></a>
+            <div class="vidoes" id="video1">
+                <iframe src="//player.vimeo.com/video/78341171?byline=0&amp;portrait=0"  frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                <p>This is a short tutorial on how to Create a Link to a File, Image or PDF using the WYSIWYG Editor in Crowd CMS.</p>
+            </div>
+
+            <a href="#" class="tutorial-link" onclick="$('#video2').toggle();return false;" title="Add a and Edit Links using the WYSIWYG Editor">Add a and Edit Links <span class="glyphicon glyphicon-chevron-down float-right"></span></a>
+            <div id="video2" class="hide vidoes">
+                <iframe src="//player.vimeo.com/video/78268623?byline=0&amp;portrait=0" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                <p>This is a short tutorial on how to Add a and Edit Links using the WYSIWYG Editor in Crowd CMS.</p>
+            </div>
+
+            <a href="#" class="tutorial-link" onclick="$('#video3').toggle();return false;" title="Login and trigger a Password Reminder">Login and Password Reminder <span class="glyphicon glyphicon-chevron-down float-right"></span></a>
+                <div id="video3" class="hide vidoes">
+                <iframe src="//player.vimeo.com/video/78059619?byline=0&amp;portrait=0" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> 
+                    <p>This is a short tutorial on how to Login and trigger a Password Reminder in Crowd CMS.</p>
+            </div>
+        </div>
+    </div>
+    <div class="item w2">
+        <div class="ease">
+            <a href="/admn/Sections" title="Add New Page">
+                <h2>Add New Page <span class="glyphicon glyphicon-plus-sign float-right"></span></h2>
+                <p>Get started with a new page for your website, edit an existing page and make pages live.  This is where you manage the main content of your site.</p>
+            </a>
+        </div>
+    </div>
+    <div class="item w2">
+        <div class=" ease">
+            <a href="/Admn/Domains" title="Domain Settings">
+                <h2>Website Config <span class="glyphicon glyphicon-wrench float-right"></span></h2>
+                <p>Control your domain information here.</p>
+            </a>
+        </div>
+    </div>
+    <div class="item w2">
+        <div class="ease">
+            <a href="/Admn/FormSubmission" title="Forms Submissions">
+                <h2>Forms Submissions <span class="glyphicon glyphicon-inbox float-right"></span></h2>
+                <p>See who has been contacting you.</p>
+            </a>
+        </div>
+    </div>
+    <div class="item w2">
+        <div class="ease">
+            <a href="/admn/News" title="Add Blog Article">
+                <h2>Add Blog Article <span class="glyphicon glyphicon-plus-sign float-right"></span></h2>
+                <p>Got something to shout about? Tell the world here in the interactive blog area.</p>
+            </a>
+        </div>
+    </div>
+    <div class="item w2">
+        <div class="ease">
+            <a href="/Admn/Forms" title="Create a Form">
+                <h2>Create a Form <span class="glyphicon glyphicon-pencil float-right"></span></h2>
+                <p>Create a new form for your users to fill out. You can tailer it to your requirements.</p>
+            </a>
+        </div>
+    </div>
+</div>
+<div class="clear"></div>
+<div class="cms-logos">
+    <p>
+        <span><img src="../../Content/admin/images/mailchimp.png" alt="MailChimp" height="30" /></span>
+        <span><img src="../../Content/admin/images/paypal.png" alt="PayPal" height="30" /></span>
+        <span><img src="../../Content/admin/images/securetrading.png" alt="Secure Trading" height="30" /></span>
+        <span><img src="../../Content/admin/images/sagepay.png" alt="SagePay" height="30" /></span>
+        <span><img src="../../Content/admin/images/facebook.png" alt="Facebook" height="30" /></span>
+        <span><img src="../../Content/admin/images/twitter.png" alt="Twitter" height="30" /></span>
+        @*<li><img src="../../Content/admin/images/recaptcha.png" alt="reCaptcha" height="20" /></li>*@
+    </p>
+</div>

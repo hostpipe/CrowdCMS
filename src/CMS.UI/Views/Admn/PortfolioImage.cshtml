@@ -1,0 +1,55 @@
+﻿@model CMS.BL.Entity.tbl_Portfolio
+
+<div class="sectionHeader">Upload Portoflio Images For @(Model != null ? Model.PO_Title : String.Empty)</div>
+<div class="sectionWindow">
+    <div class="btnToggleSection">Upload Image +</div>
+    <form id="ImagesUpload" class="sectionContent" action="@Url.Action("UploadPortfolioImage", "Admn")" method="post" enctype="multipart/form-data" >
+        <div>
+            <label>Image File</label>
+            <input type="file" name="file" accept="image/*" />
+            @Html.HiddenFor(m => m.PortfolioID)
+            <span class="fa fa-info-circle" title="You can upload only images."></span>
+        </div>
+        <div>
+            <label>Alt Text</label>
+            <input type="text" name="altText" />
+        </div>
+        <div class="btnContainer">
+            <button type="submit" class="btnGreen" >Upload Image</button>
+        </div>
+    </form>
+</div>
+<div class="sectionWindow">
+    <div class="btnToggleSection">Image Uploaded +</div>
+    <div class="sectionContent">
+        @if (Model != null)
+        {
+        <div class="imagesGallery">
+        @if (Model.tbl_PortfolioImage != null && Model.tbl_PortfolioImage.Count > 0)
+{
+            <div class="btnGrey" data-bind="click: onSaveImageOrder" id="ImageOrderIndicator">Save Image Order <span class="glyphicon glyphicon-ok ok-green"></span></div>
+    <ul class="sortable-images">
+        @foreach (var portfolioImage in Model.tbl_PortfolioImage.OrderBy(pi => pi.PI_Order))
+{
+    <li data-sortportfolioimageid="@portfolioImage.PortfolioImageID">
+        <img src="@Html.ImageProvider(CMS.BL.ImageVersionName.portfolioThumb, portfolioImage.tbl_Image.I_Thumb,String.Empty)" alt="@portfolioImage.tbl_Image.I_Description" />
+        @if ((bool)this.ViewBag.CanDeleteImage)
+        {
+            <input type="button" value="Delete" class="btnRed" data-portfolioimageid="@portfolioImage.PortfolioImageID" data-bind="click: onDeletePortfolioImage" />
+        }
+    </li>
+}
+    </ul>
+}
+else
+{
+            <span>No images have been uploaded.</span>
+        }
+        </div>
+        }
+    </div>
+</div>
+<div id="UploadWindow">
+    <div>Image is being uploaded.</div>
+    <div id="Progressbar"></div>
+</div>

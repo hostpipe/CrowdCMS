@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "Forms Submissions";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@section scripts {
+    @Scripts.Render("~/bundles/formSubmissions")
+}
+<div id="FormSubmissions"
+    data-getDomainsList-url="@Url.Action("GetDomainsList", "Admn")"
+    data-getFormSubmissions-url="@Url.Action("FormSubmissions", "Admn")"
+    data-markAsReadFormSubmission-url="@Url.Action("MarkFormSubmissionAsRead", "Admn")"
+    data-deleteFormSubmission-url="@Url.Action("DeleteFormSubmission", "Admn")"
+    data-downloadCSVUrl-url="@Url.Action("DownloadFormSubmissionsAsCSV", "Admn")"
+    >
+    <div class="leftMenuContainer">
+        <select data-bind="options: domains, optionsText: 'Text', optionsValue: 'Value', optionsCaption: 'All domains', value: lDomainID, event: {change: onLDomainChange}">
+        </select>
+        <div class="leftMenu">
+        </div>
+    </div>
+    <div class="mainContainer">
+        @Html.Action("FormSubmissions", "Admn")
+    </div>
+</div>

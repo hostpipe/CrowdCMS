@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "Payment error";
+}
+@section metatags {
+    @{Html.RenderPartial("/Views/Partials/MetaTags.cshtml", new CMS.UI.Models.MetadataModel());}
+}
+@section sidebar {
+    @{
+        Html.RenderPartial("../Partials/SearchPanel");
+        Html.RenderAction("ContactUsPartial", "Website");
+    }
+}
+
+<div class="paymenterror">
+    Payment processing problems appeared for your order number @ViewBag.OrderID.
+    <br />
+    Please try again with other payment method. In case of more problems please contact with customer service.
+    <p>@ViewBag.ErrorMessage</p>
+</div>

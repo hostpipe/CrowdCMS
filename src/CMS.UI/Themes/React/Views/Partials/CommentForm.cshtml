@@ -1,0 +1,44 @@
+﻿@model CMS.UI.Models.CommentModel
+@using Recaptcha.Web.Mvc
+
+<form id="CommentForm" action="@Url.Action("SaveComment", "Website")" method="post">
+    <h3>Leave a Reply</h3>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                @Html.LabelFor(m => m.Name)
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                <span class="info">(Required)</span>
+                @Html.ValidationMessageFor(m => m.Name)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Email)
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                <span class="info">(Required, not published)</span>
+                @Html.ValidationMessageFor(m => m.Email)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Website)
+                @Html.TextBoxFor(m => m.Website, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="col-sm-7">
+            <div class="form-group">
+                @Html.LabelFor(m => m.Message)
+                @Html.TextAreaFor(m => m.Message, new { @class = "form-control", @style="height:150px;" })
+            </div>
+            <div class="form-group">
+                @Html.Recaptcha(publicKey: ViewBag.PublicKey as string, theme: Recaptcha.Web.RecaptchaTheme.White)
+                <span id="validationSummary" class="validation-summary-errors"></span>
+            </div>
+            <div class="form-group">
+                <input type="hidden" name="sitemapID" value="@ViewBag.SitemapID" />
+                <button type="submit" class="button button-small">Submit Comment</button>
+            </div>
+        </div>
+    </div>
+</form>
+<div id="CommentSaved" style="display: none;">
+    <h3>Comment Submitted!</h3>
+    <p>Your comment has been submitted for moderation!</p>
+</div>

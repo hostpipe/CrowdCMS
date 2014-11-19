@@ -1,0 +1,29 @@
+﻿@model List<CMS.BL.Entity.tbl_Testimonials>
+@{
+    ViewBag.Title = "Testimonials";
+    CMS.BL.Entity.tbl_Content testimonialsPage = ViewBag.TestimonialsPage as CMS.BL.Entity.tbl_Content;
+}
+@section metatags {
+    @{ Html.RenderPartial("/Views/Partials/MetaTags.cshtml", new CMS.UI.Models.MetadataModel(testimonialsPage)); }
+}
+@section styles {
+    @Html.Raw(testimonialsPage != null ? testimonialsPage.tbl_SiteMap.SM_CSS : String.Empty)
+}
+@section sidebar {
+    @{
+        Html.RenderPartial("../Partials/SearchPanel");
+        Html.RenderAction("ContactUsPartial", "Website");
+    }
+}
+<ul class="testimonials">
+    @foreach (var testimonial in Model)
+    {
+        <li><div class="text">
+            @Html.Raw(@testimonial.TE_Content)
+        </div>
+            <div class="client">
+                @testimonial.TE_Client, @testimonial.TE_Company
+            </div>
+        </li>
+    }
+</ul>

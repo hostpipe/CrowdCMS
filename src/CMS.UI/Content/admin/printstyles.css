@@ -1,0 +1,7 @@
+﻿
+/*Print Styles*/
+
+.leftMenuContainer, .topmenu, .sectionButtons, .btnGreyGreen  {display:none!important;}
+.mainContainer {width:100%!important;position:inherit!important;left:0!important;}
+.sectionWindow {border:none!important;}
+.sectionContent, .btnToggleSection {padding:0!important;}

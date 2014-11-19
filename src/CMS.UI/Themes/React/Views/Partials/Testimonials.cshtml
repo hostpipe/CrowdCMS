@@ -1,0 +1,30 @@
+﻿<div id="testimonials">
+    <div class="container">
+        <div class="row header">
+            <div class="col-md-12">
+                <h3>Trusted by a lot businesses around the world:</h3>
+            </div>
+        </div>
+        <div class="row">
+            @foreach (var testimonial in Model)
+            {
+                <div class="col-sm-6">
+                    <div class="testimonial pull-right">
+                        <div class="quote">
+                            @Html.Raw(@testimonial.TE_Content)
+                            <div class="arrow-down">
+                                <div class="arrow"></div>
+                                <div class="arrow-border"></div>
+                            </div>
+                        </div>
+                        <div class="author">
+                            @*<img src="/Themes/React/img/testimonials/testimonial1.jpg" class="pic" alt="testimonial1" />*@
+                            <div class="name">@testimonial.TE_Client</div>
+                            <div class="company">@testimonial.TE_Company</div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

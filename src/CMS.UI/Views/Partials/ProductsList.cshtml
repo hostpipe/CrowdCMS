@@ -1,0 +1,38 @@
+﻿@model CMS.BL.Entity.tbl_ProdCategories
+@if (Model != null && Model.tbl_Products.GetWithContent(CMS.BL.ProductType.Item).Count() > 0)
+{
+    <div class="row">
+    @foreach (var product in Model.tbl_Products.GetWithContent(CMS.BL.ProductType.Item))
+    {
+    <div class="prodTile col-sm-4 col-xs-6">
+        <a href="@(ViewBag.ShopUrl + product.tbl_SiteMap.SM_URL.Trim('/'))">
+            <div class="prodImage">
+                @if (product.tbl_ProductImageLink.Count > 0)
+                {
+                    <img alt="@product.tbl_ProductImageLink.FirstOrDefault().tbl_ProductImages.I_View" src="@Html.ImageProvider(CMS.BL.ImageVersionName.productThumb, product.tbl_ProductImageLink.FirstOrDefault().tbl_ProductImages.I_Name, String.Empty)" />
+                }else{
+                    <div><span class="glyphicon glyphicon-picture"></span></div>
+                }
+            </div>
+            <div class="prodTitle">@product.P_Title @*<span class="prodCode">(@product.P_ProductCode)</span>*@
+            
+            @if (product.tbl_ProductPrice.Count == 1 || (product.tbl_ProductPrice.Count > 1 && product.tbl_ProductPrice.MinPrice() == product.tbl_ProductPrice.MaxPrice()))
+            {
+                <span class="prodPrice">@product.tbl_ProductPrice.First().GetPriceString()</span>
+            }
+            else if (product.tbl_ProductPrice.Count > 1)
+            {
+                <span class="prodPrice">from @product.tbl_ProductPrice.Order().First().GetPriceString()
+                    to @product.tbl_ProductPrice.Order().Last().GetPriceString()</span>
+            }
+
+            </div>
+        </a>
+    </div>
+    }
+    </div>
+}
+else
+{
+    <div>There is no product in this category.</div>
+}

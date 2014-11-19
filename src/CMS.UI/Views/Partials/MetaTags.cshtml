@@ -1,0 +1,19 @@
+﻿@model CMS.UI.Models.MetadataModel
+
+@if (Request.Url.AbsolutePath.Contains("/blog/tag/") || (bool)ViewBag.NoIndex) 
+{	
+    <meta name="robots" content="noindex,nofollow" />
+}
+else 
+{
+    <meta name="robots" content="index, follow" />
+}
+@if (Model != null && !String.IsNullOrEmpty(Model.Keywords))
+{
+<meta name="keywords" content="@Model.Keywords" />
+}
+@if (Model != null && !String.IsNullOrEmpty(Model.Description))
+{
+<meta name="description" content="@Model.Description" />
+}
+@Html.Raw(Model != null ? Model.MetaTags : String.Empty)

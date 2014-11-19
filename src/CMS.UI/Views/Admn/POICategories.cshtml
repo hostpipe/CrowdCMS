@@ -1,0 +1,46 @@
+﻿@model CMS.UI.Models.POICategoryModel
+@{
+    ViewBag.Title = "POI Categories";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@section scripts {
+    @Scripts.Render("~/bundles/poiCategories")
+}
+
+<div id="POICategoriesContent"
+    data-addCategory-url="@Url.Action("AddPOICategory", "Admn")"
+    data-deleteCategory-url="@Url.Action("DeletePOICategory", "Admn")"
+    data-getCategory-url="@Url.Action("GetPOICategory", "Admn")"
+    data-updateCategory-url="@Url.Action("UpdatePOICategory", "Admn")"
+    >
+    <div class="leftMenuContainer twoBtns">
+        <div class="btnGreyMenu" data-bind="click: onNewCategory">Add Category</div>
+        @Html.Partial("~/Views/Partials/Loader.cshtml")
+    </div>
+    <div class="mainContainer">
+        <div class="sectionHeader" data-bind="text: sectionHeader"></div>
+        <div class="sectionWindow">
+            <div class="btnToggleSection">POI Category Details +</div>
+            <form id="DetailsForm" action="#" class="sectionContent">
+                <div>
+                    @Html.LabelFor(m => m.Title)
+                    @Html.TextBoxFor(m => m.Title, new { data_bind = "value: title" })
+                    @Html.ValidationMessageFor(m => m.Title)
+                    @Html.HiddenFor(m => m.POICategoryID, new { data_bind = "value: poiCategoryID" })
+                </div>
+                <div>
+                    @Html.LabelFor(m => m.IsLive)
+                    @Html.RadioButton("IsLive", 1, new { id = "radioLiveYes", data_bind = "checked: isLive" })
+                    @Html.Label("LabelYes", "On", new { @for = "radioLiveYes", @class = "checkboxLabel" }) 
+                    @Html.RadioButton("IsLive", 0, new { id = "radioLiveNo", data_bind = "checked: isLive" })
+                    @Html.Label("LabelNo", "Off", new { @for = "radioLiveNo", @class = "checkboxLabel" }) 
+                </div>
+                <div class="btnContainer">
+                    <input type="button" id="btnNewCategory" name="NewCategory" class="btnGreen" value="Add category" data-bind="click: onSubmit, visible: !isEdit()"/>
+                    <input type="button" id="btnSaveCategory" name="SaveCategory" class="btnGreen" value="Update category" data-bind="click: onSubmit, visible: isEdit"/>
+                    <input type="button" id="btnCancel" name="Cancel" class="btnRed" value="Cancel" data-bind="click: onNewCategory" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

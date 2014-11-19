@@ -1,0 +1,13 @@
+*.suo
+*.user
+*.log
+/src/CMS.BL/bin/*
+/src/CMS.BL/obj/*
+/src/CMS.DAL/bin/*
+/src/CMS.DAL/obj/*
+/src/CMS.Services/bin/*
+/src/CMS.Services/obj/*
+/src/CMS.UI/bin/*
+/src/CMS.UI/obj/*
+/src/CMS.Utils/bin/*
+/src/CMS.Utils/obj/*

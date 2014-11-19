@@ -1,0 +1,57 @@
+﻿@model List<CMS.BL.Entity.tbl_Gallery>
+@if (ViewBag.DynamicLayout != null)
+{
+    Layout = ViewBag.DynamicLayout;
+}
+@{
+    ViewBag.Title = "Gallery";
+    CMS.BL.Entity.tbl_Content galleryPage = ViewBag.PortfolioPage as CMS.BL.Entity.tbl_Content;
+}
+
+@section metatags {
+     @if (galleryPage != null) { Html.Partial("/Views/Partials/MetaTags.cshtml", galleryPage); }
+}
+@section styles {
+    @Html.Raw(galleryPage != null ? galleryPage.tbl_SiteMap.SM_CSS : String.Empty)
+}
+@section sidebar {
+    @{
+        Html.RenderPartial("../Partials/SearchPanel");
+        Html.RenderAction("ContactUsPartial", "Website");
+    }
+}
+
+@if (galleryPage != null && ViewBag.Content != null)
+{
+    <div class="siteContent">
+        @Html.Partial("~/Views/Partials/ContentPartial.cshtml", ViewBag.Content.HtmlElements as List<object>)
+    </div>
+}
+@{string lastgalleryCatTitle = "";}
+<div class="row" id="gallery">
+    @foreach (var gallery in Model)
+    {
+        if (gallery.tbl_GalleryCategory.GC_Title != lastgalleryCatTitle)
+        {
+            <div class="col-sm-12">
+                <h2>@gallery.tbl_GalleryCategory.GC_Title</h2>
+            </div>
+        }
+        <div class="col-sm-4 gallery-item">
+            <p>
+            <a href="@(ViewBag.GalleryUrl + gallery.tbl_SiteMap.SM_URL)">
+            @*<a href="@(ViewBag.GalleryUrl + gallery.tbl_SiteMap.SM_URL.Trim('/'))">*@
+                <span class="gallery-heading">@gallery.G_Title</span>
+                @if (gallery.tbl_GalleryImage.FirstOrDefault() != null)
+                {
+                    <img src="@Html.ImageProvider(CMS.BL.ImageVersionName.galleryThumb, gallery.tbl_GalleryImage.FirstOrDefault().tbl_Image.I_Thumb,String.Empty)" alt="@gallery.tbl_GalleryImage.FirstOrDefault().tbl_Image.I_Description" class="img-responsive"/>
+                }
+            </a>
+            </p>
+        </div>
+        
+        lastgalleryCatTitle = gallery.tbl_GalleryCategory.GC_Title;
+    }
+</div>
+<div class="clear"></div>
+

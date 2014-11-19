@@ -1,0 +1,165 @@
+﻿@model CMS.UI.Models.POIModel
+@{
+    ViewBag.Title = "Points Of Interest";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@section scripts {
+    <script type="text/javascript" src="/Scripts/tinymce/jquery.tinymce.min.js"></script>
+    @Scripts.Render("~/bundles/pois")
+}
+
+<div id="POIsContent"
+     data-addpoi-url="@Url.Action("AddPOI", "Admn")"
+     data-deletepoi-url="@Url.Action("DeletePOI", "Admn")"
+     data-deletepoifile-url="@Url.Action("DeletePOIFile", "Admn")"
+     data-getcustomeditorobjects-url="@Url.Action("CustomEditorObjects", "Website")"
+     data-getdomains-url="@Url.Action("GetDomainsList", "Admn")"
+     data-getsitemaps-url="@Url.Action("GetSitemapListByDomain", "Admn")"
+     data-getpoi-url="@Url.Action("GetPOI", "Admn")"
+     data-getpoifiles-url="@Url.Action("GetPOIFiles", "Admn")"
+     data-getpoitags-url="@Url.Action("GetPOITagsForPOI", "Admn")"
+     data-updatepoi-url="@Url.Action("UpdatePOI", "Admn")"
+     data-domaincssfile="@ViewBag.DomainCSSFile">
+    <div class="leftMenuContainer twoBtns">
+        <div class="btnGreyMenu" data-bind="click: onNewPOI">Add POI</div>
+        @Html.Partial("~/Views/Partials/Loader.cshtml")
+    </div>
+    <form id="DetailsForm" action="#" class="mainContainer" data-bind="visible: !isFileEdit()">
+        <div class="sectionHeader" data-bind="text: sectionHeader"></div>
+        <div class="sectionWindow">
+            <div class="btnToggleSection">Point Of Interest Details +</div>
+            <div class="sectionContent">
+                <div>
+                    @Html.LabelFor(m => m.DomainID)
+                    @Html.DropDownListFor(m => m.DomainID, new List<SelectListItem>(), new { data_bind = "options: domains, optionsValue: 'Value', optionsText: 'Text', value: domainID" })
+                </div>
+                <div>
+                    @Html.LabelFor(m => m.SitemapID)
+                    @Html.DropDownListFor(m => m.SitemapID, new List<SelectListItem>(), new { data_bind = "options: sitemaps, optionsValue: 'Value', optionsText: 'Text', optionsCaption: 'Select Page', value: sitemapID" })
+                    @Html.ValidationMessageFor(m => m.SitemapID)
+                </div>
+                <div>
+                    @Html.LabelFor(m => m.Title)
+                    @Html.TextBoxFor(m => m.Title, new { data_bind = "value: title" })
+                    @Html.ValidationMessageFor(m => m.Title)
+                    @Html.HiddenFor(m => m.POIID, new { data_bind = "value: poiID" })
+                </div>
+                <div>
+                    @Html.LabelFor(m => m.Description)
+                    @Html.TextAreaFor(m => m.Description, new { @class = "long", data_bind = "value: description" })
+                    @Html.ValidationMessageFor(m => m.Description)
+                </div>
+                <div>
+                    @Html.LabelFor(m => m.CategoryID)
+                    @Html.DropDownListFor(m => m.CategoryID, ViewBag.Categories as SelectList, new { data_bind = "value: categoryID" })
+                    @Html.ValidationMessageFor(m => m.CategoryID)
+                </div>
+                <div>
+                    @Html.LabelFor(m => m.Phone)
+                    @Html.TextBoxFor(m => m.Phone, new { data_bind = "value: phone" })
+                    @Html.ValidationMessageFor(m => m.Phone)
+                </div>
+                <div>
+                    @Html.LabelFor(m => m.Latitude)
+                    @Html.TextBoxFor(m => m.Latitude, new { data_bind = "value: latitude" })
+                    @Html.ValidationMessageFor(m => m.Latitude)
+                </div>
+                <div>
+                    @Html.LabelFor(m => m.Longitude)
+                    @Html.TextBoxFor(m => m.Longitude, new { data_bind = "value: longitude" })
+                    @Html.ValidationMessageFor(m => m.Longitude)
+                </div>
+                <hr />
+                <div>
+                    <h3>Tags</h3>
+                    <div data-bind="foreach: tags">
+                        <div class="POIgroups">
+                            <label data-bind="text: Title"></label>
+                            <span class="checkBoxList withoutLabel" data-bind="foreach: POITags">
+                                <span>
+                                    <input type="checkbox" name="tagsIDs" data-bind="value: Value, checked: Selected, attr: { id: 'tag' + Value }" />
+                                    <label data-bind="text: Text, attr: { 'for': 'tag' + Value }"></label>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sectionWindow">
+            <div class="btnToggleSection">Point Of Interest Address +</div>
+            <div class="sectionContent">
+                <div>
+                    @Html.LabelFor(m => m.Address1)
+                    @Html.TextBoxFor(m => m.Address1, new { data_bind = "value: address1" })
+                    @Html.ValidationMessageFor(m => m.Address1)
+                    @Html.HiddenFor(m => m.AddressID, new { data_bind = "value: addressID" })
+                </div>
+                <div>
+                    @Html.LabelFor(m => m.Address2)
+                    @Html.TextBoxFor(m => m.Address2, new { data_bind = "value: address2" })
+                    @Html.ValidationMessageFor(m => m.Address2)
+                </div>
+                <div>
+                    @Html.LabelFor(m => m.Address3)
+                    @Html.TextBoxFor(m => m.Address3, new { data_bind = "value: address3" })
+                    @Html.ValidationMessageFor(m => m.Address3)
+                </div>
+                <div>
+                    @Html.LabelFor(m => m.Town)
+                    @Html.TextBoxFor(m => m.Town, new { data_bind = "value: town" })
+                    @Html.ValidationMessageFor(m => m.Town)
+                </div>
+                <div>
+                    @Html.LabelFor(m => m.Postcode)
+                    @Html.TextBoxFor(m => m.Postcode, new { data_bind = "value: postcode" })
+                    @Html.ValidationMessageFor(m => m.Postcode)
+                </div>
+                <div>
+                    @Html.LabelFor(m => m.County)
+                    @Html.TextBoxFor(m => m.County, new { data_bind = "value: county" })
+                    @Html.ValidationMessageFor(m => m.County)
+                </div>
+                <div>
+                    @Html.LabelFor(m => m.Country)
+                    @Html.TextBoxFor(m => m.Country, new { data_bind = "value: country" })
+                    @Html.ValidationMessageFor(m => m.Country)
+                </div>
+            </div>
+        </div>
+        <div class="btnContainer">
+            <input type="button" id="btnNewPOI" name="NewPOI" class="btnGreen" value="Add POI" data-bind="click: onSubmit, visible: !isEdit()" />
+            <input type="button" id="btnSavePOI" name="SavePOI" class="btnGreen" value="Update POI" data-bind="click: onSubmit, visible: isEdit" />
+            <input type="button" id="btnCancel" name="Cancel" class="btnRed" value="Cancel" data-bind="click: onNewPOI" />
+        </div>
+    </form>
+    <div class="mainContainer" data-bind="visible: isFileEdit">
+        <div class="sectionHeader">Update files for point of interest</div>
+        <div class="sectionWindow">
+            <div class="btnToggleSection">Upload File +</div>
+            <form id="POIFilesForm" action="@Url.Action("SavePOIFile", "Admn")" class="sectionContent" enctype="multipart/form-data" method="post">
+                <input type="hidden" name="poiID" id="poiID" data-bind="value: poiID" />
+                <div>
+                    <label for="file">File</label>
+                    <input id="file" name="file" type="file" />
+                </div>
+                <div class="btnContainer">
+                    <input type="submit" class="btnGreen" value="Save file" />
+                </div>
+            </form>
+        </div>
+        <div class="sectionWindow">
+            <div class="btnToggleSection">Files +</div>
+            <div class="sectionContent" data-bind="foreach: files">
+                <div class="btnContainer">
+                    <a href="#" data-bind="text: FileName, attr: { href: Path }" target="_blank"></a>
+                    <input type="button" class="btnGreyRed" value="Delete" data-bind="click: $root.onDeleteFile, attr: { 'data-fileID': FileID }" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="UploadWindow">
+        <div>File is being uploaded.</div>
+        <div id="Progressbar"></div>
+    </div>
+</div>

@@ -1,0 +1,61 @@
+﻿@model CMS.UI.Models.CustomerModel
+@{
+    ViewBag.Title = "Your Account";
+}
+@section metatags {
+    @{Html.RenderPartial("/Views/Partials/MetaTags.cshtml", new CMS.UI.Models.MetadataModel());}
+}
+@section sidebar {
+    @{
+        Html.RenderPartial("../Partials/SearchPanel");
+        Html.RenderAction("ContactUsPartial", "Website");
+    }
+}
+<h1>Your Account</h1>
+
+@if (Model.galleries != null)
+{
+    foreach (CMS.BL.Entity.tbl_Gallery gallery in Model.galleries)
+    {
+        <h2>@gallery.G_Title</h2>
+        <img src="@Html.ImageProvider(CMS.BL.ImageVersionName.galleryThumb, gallery.tbl_GalleryImage.FirstOrDefault().tbl_Image.I_Thumb,String.Empty)" alt="@gallery.tbl_GalleryImage.FirstOrDefault().tbl_Image.I_Description" />
+        @Html.ActionLink(linkText: "View Gallery", actionName: "CustomerGallery", controllerName: "Website", routeValues: new { galleryID = gallery.GalleryID }, htmlAttributes:new { })
+    }
+}
+
+<div class="addressLabel">
+    <div>
+        @Html.LabelFor(m => m.UserName)
+        @Html.DisplayFor(m => m.UserName)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.Email)
+        @Html.DisplayFor(m => m.Email)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.Phone)
+        @Html.DisplayFor(m => m.Phone)
+    </div>
+</div>
+<h2>Address Book</h2>
+<h3>@Html.RouteLink("Add new address", "addAddress", null, new { @class = "button" })</h3>
+@foreach (var item in Model.addresses)
+{
+    <fieldset class="addressform">
+        <legend class="hidden"></legend>
+        <ul>
+            <li>@String.Format("{0} {1} {2}", item.A_Title, item.A_FirstName, item.A_Surname)</li>
+            <li>@item.A_Line1</li>
+            <li>@item.A_Line2</li>
+            <li>@item.A_Line3</li>
+            <li>@item.A_Town </li>
+            <li>@item.A_County</li>
+            <li>@item.A_Postcode</li>
+            <li>@item.A_Country</li>
+        </ul>
+        <div class="bottom">
+            @Html.RouteLink("Edit", "addAddress", new { id = @item.AddressID }, new { @class = "button" })
+            @Html.RouteLink("Delete", "deleteAddress", new { addressID = @item.AddressID }, new { @class = "button", onclick = "return confirm('Are you sure you want to delete this address?') ?  true :  false;" })
+        </div>
+    </fieldset>
+}

@@ -1,0 +1,23 @@
+﻿@model CMS.UI.Models.SettingsListModel
+@for (int i = 0; i < Model.list.Count; i++)
+{
+    <div>
+            <input type="hidden" name="@String.Format("SettingsValues[{0}].SettingsValueID", Model.startCountAt + i)" value="@Model.list[i].SettingsValueID" />
+            <label for="@String.Format("SettingsValues_{0}__SV_Value", Model.startCountAt + i)" title="@Model.list[i].Settings.SE_Variable">@Model.list[i].Settings.SE_VariableLabel</label>
+            @switch (Model.list[i].Settings.SE_Type)
+            {
+                case (int)CMS.BL.SettingsType.String:
+                    <input id="@String.Format("SettingsValues_{0}__SV_Value", Model.startCountAt + i)"
+                           name="@String.Format("SettingsValues[{0}].SV_Value", Model.startCountAt + i)" type="text" value="@Model.list[i].SV_Value" />
+                    break;
+                case (int)CMS.BL.SettingsType.Bool:
+                    @Html.CheckBox(String.Format("SettingsValues[{0}].SV_Value", Model.startCountAt + i), Model.list[i].SV_Value.AsBool())
+                    break;
+                case (int)CMS.BL.SettingsType.Enum:
+                <select id="@String.Format("SettingsValues_{0}__SV_Value", Model.startCountAt + i)" data-savedvalue="@Model.list[i].SV_Value" data-selectid="@Model.list[i].SV_SettingsID" name="@String.Format("SettingsValues[{0}].SV_Value", Model.startCountAt + i)"></select>
+                    break;
+            }
+        <input type="hidden" name="@String.Format("SettingsValues[{0}].SV_SettingsID", Model.startCountAt + i)" value="@Model.list[i].SV_SettingsID" />
+        <span class="fa fa-info-circle" title="@Model.list[i].Settings.SE_Description"></span>
+    </div>
+}

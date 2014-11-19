@@ -1,0 +1,375 @@
+﻿@using CMS.UI.Models
+
+@helper CMSMenu(CMSMenuModel model)
+{
+    <div class="leftMenu">
+        <p>@model.Title</p>
+        <ul>
+        @foreach (var item in model.MenuItems)
+        {
+            <li>
+                @CMSMenuItem(item, 1)
+            </li>
+        }
+        </ul>
+    </div>
+}
+
+@helper CMSMenu(List<CMSMenuModel> models)
+{
+    <div class="leftMenu">
+    @foreach (var model in models)
+    {
+        <p>@model.Title</p>
+        <ul>
+        @foreach (var item in model.MenuItems)
+        {
+            <li>
+                @CMSMenuItem(item, 1)
+            </li>
+        }
+        </ul>
+    }
+    </div>
+}
+
+@helper SubMenu(List<CMS.UI.Models.WebsiteMenuModel> menu, string currentUrl)
+{
+    foreach (var item in menu)
+    {
+    <li>
+        <a href="@('/' + (String.IsNullOrEmpty(item.Url) ? String.Empty : item.Url.Trim('/')))" class="@(item.Url != null && item.Url.Equals(currentUrl) ? "active" : String.Empty)" title="@item.Title">@item.Name</a>
+        @if (item.SubMenuItems.Count > 0)
+        {
+            @SubMenu(item.SubMenuItems, currentUrl)
+        }
+    </li>
+    }
+}
+
+@helper CMSMenuItem(CMSMenuItem item, int nestingLevel)
+{
+        var html = (WebPageContext.Current.Page as System.Web.Mvc.WebViewPage).Html;
+    
+    <div class="menuItem clearFix level@(nestingLevel) @item.CssClasses" data-itemID="@item.MenuItemID" style="padding-left: @(nestingLevel * 10)px; @(item.IsExpand ? "border-bottom:1px dashed #CCC;" : string.Empty)">
+        @if (item.IsMove)
+        {
+        <a data-name="btnMove" href="#"><span class="fa fa-arrows"></span></a>
+        }  
+        @if (item.Date.HasValue)
+        {
+        <span class="dateText">@item.Date.Value.ToString()</span>
+        }
+        <span class="title">
+            @if (!String.IsNullOrEmpty(item.BoldedTitle))
+            {
+            <b>@html.Raw(item.BoldedTitle)</b>
+            }
+            @if (!String.IsNullOrEmpty(item.BoldedTitle) && !String.IsNullOrEmpty(item.Title))
+            {
+            <br />
+            }
+            @html.Raw(item.Title)
+        </span>
+        <span class="actions">
+            @if (item.IsFuturePublish)
+            {
+            <a data-name="btnPublish" href="javascript:void(0);" title="@item.PublishDateText"><span class="fa fa-clock-o"></span></a>
+            }
+            @if (item.IsInfo)
+            {
+            <a data-name="btnInfo" href="javascript:void(0);" title="@item.InfoText"><span class="fa fa-info"></span></a>
+            }  
+            @if (item.IsPaymentLogosConf)
+            {
+            <a data-name="btnPaymentLogosConf" href="#" title="@item.PaymentLogosConfText" data-bind="click: onPaymentLogosConf"><span class="fa fa-image"></span></a>   
+            }  
+            @if (item.IsApprove)
+            {
+            <a data-name="btnApprove" href="#" title="@item.ApproveText" data-bind="click: onApprove"><span class="fa fa-check-circle-o highlight-ok"></span></a>
+            }
+            @if (item.IsExpand)
+            {
+            <a data-name="btnExpand" href="#"  title="@item.ExpandText"><span class="fa fa-chevron-down"></span></a>
+            }
+            @if (item.IsVisibility)
+            {
+            <a data-name="btnVisibitily" href="#" class="@(item.Visible ? "on" : "off")" title="@item.VisibilityText" data-bind="click: onToggleVisibility"><span class="fa fa-power-off"></span></a>
+            }
+            @if (item.IsPreview)
+            {
+            <a data-name=btnPreview href="@item.PreviewUrl" class="" title="@item.PreviewText" target="_blank"><span class="fa fa--search"></span></a>
+            }
+            @if (item.IsComment)
+            {
+                string commentcss = item.UnauthorizedCommentExists ? "commentre" : (item.AuthorizedCommentExists ? "commentgr" : "comment");
+            <a data-name="btnComment" href="#" class="@commentcss" title="@item.CommentsText" data-bind="click: onGetComments"><span class="fa fa-comment"></span></a>
+            }
+            @if (item.IsEdit)
+            {
+            <a data-name="btnEdit" href="#" title="@item.EditText" data-bind="click: onEdit"><span class="fa fa-cog"></span></a>
+            }
+            @if (item.IsStock)
+            {
+            <a data-name="btnStock" href="#" title="@item.StockText" data-bind="click: onStock"><span class="fa fa-cube"></span></a>
+            }
+            @if (item.IsEditImages)
+            {
+            <a data-name="btnEditImage" href="#" title="@item.EditImagesText" data-bind="click: onEditImage"><span class="fa fa-image"></span></a>
+            }
+            @if (item.IsManage)
+            {
+            <a data-name="btnManage" href="#" title="@item.ManageText" data-bind="click: onManage"><span class="fa fa-link"></span></a>
+            }
+            @if (item.IsAssociation)
+            {
+            <a data-name="btnAssociation" href="#"  title="@item.AssociationText" data-bind="click: onAssociate"><span class="fa fa-cogs"></span></a>
+            }
+            @if (item.IsDelete)
+            {
+            <a data-name="btnDelete" href="#" title="@item.DeleteText" data-bind="click: onDelete"><span class="fa fa-times-circle hover-warning"></span></a>
+            }  
+        </span>
+    </div>
+        if (item.SubMenuItems != null && item.SubMenuItems.Count > 0)
+        {
+            nestingLevel++;
+    <ul class="@(item.IsExpand ? "hidden" : String.Empty)">
+        @foreach (var subItem in item.SubMenuItems)
+        {
+        <li>
+            @CMSMenuItem(subItem, nestingLevel)
+        </li>
+        }
+    </ul>
+        }
+}
+
+@helper CMSTopMenu(List<CMS.UI.Models.WebsiteMenuModel> menu, string currentUrl)
+{
+        var html = (WebPageContext.Current.Page as System.Web.Mvc.WebViewPage).Html;
+    
+    <ul class="topmenu">
+        @foreach (var item in menu)
+        {
+            <li>
+                @if (String.IsNullOrEmpty(item.Url))
+                {
+                    @item.Title                   
+                }
+                else
+                {
+                    <a href="@item.Url" @(String.IsNullOrEmpty(item.Target) ? string.Empty : String.Format("target={0}", item.Target))>
+                        @item.Title
+                         
+                        @if (item.SubMenuItems != null && item.SubMenuItems.Count > 0)
+                        {
+                             @html.Raw(" <span class=\"fa fa-chevron-down\"></span>") 
+                        }
+
+                        @if (@item.Title == "Open Website")
+                        {
+                          @html.Raw(" <span class=\"fa fa-external-link\"></span>") 
+                        }
+                        else if (@item.Title == "Logout")
+                        {
+                          @html.Raw(" <span class=\"fa fa-sign-out\"></span>") 
+                        }
+                    </a>
+                }
+                @if (item.SubMenuItems != null && item.SubMenuItems.Count > 0)
+                {
+                    @CMSTopMenu(item.SubMenuItems, currentUrl);
+                }
+            </li>
+        }
+    </ul>   
+}
+
+
+
+@helper WebsiteMenu(List<CMS.UI.Models.WebsiteMenuModel> menu, string currentUrl, int level = 1)
+{
+        foreach (var item in menu)
+        {
+        <li>
+            <a href="@('/' + (String.IsNullOrEmpty(item.Url) ? String.Empty : item.Url.Trim('/')))" class="@(item.Url != null && item.Url.Equals(currentUrl) ? "active" : String.Empty)" title="@item.Title">@item.Name</a>
+            @if (item.SubMenuItems.Count > 0)
+            {
+                <ul>
+                @WebsiteMenu(item.SubMenuItems, currentUrl, level + 1)
+                </ul>
+            }
+        </li>
+        }
+}
+
+
+@helper WebsiteBreadcrumbs(string companyName, List<CMS.UI.Models.WebsiteMenuModel> breadcrumbs)
+{
+        if (breadcrumbs.Count > 0)
+        {
+        <ol class="breadcrumb">
+            <li><a href="/" title="@companyName">@companyName</a></li>
+            @for (int i = 0; i < breadcrumbs.Count; i++)
+            {
+                if (i < breadcrumbs.Count - 1)
+                {
+                   <li><a href="@breadcrumbs[i].Url" title="@breadcrumbs[i].Title">@breadcrumbs[i].Name</a></li>
+                }
+                else
+                {
+                    <li><span title="@breadcrumbs[i].Title">@breadcrumbs[i].Name</span></li>
+                }
+            }
+        </ol>
+        }
+}
+
+@helper FormItems(IEnumerable<CMS.BL.Entity.tbl_FormItem> items, bool isCustomerEmail = true)
+{
+        foreach (var item in items)
+        {
+            if (item.tbl_FormItemType.FIT_Name == "Email" && isCustomerEmail)
+            {
+         @FormEmail(item);
+                         isCustomerEmail = false;
+            }
+            else if (item.tbl_FormItemType.FIT_Name == "Subscribe checkbox" && isCustomerEmail)
+            {
+                if (!Request.IsAuthenticated)
+                {
+          <div class="contactFormRow">   
+        <label for="customeremail" >Provide your email</label>
+        <input id="customeremail" name="customeremail" type="email"
+            data-val="true" data-val-email="Email Address should have correct email form." placeholder="@item.FI_Placeholder" />
+          </div>
+                }
+         @FormItem(item);
+                        isCustomerEmail = false;
+            }
+            else
+            {
+         @FormItem(item);
+            }
+        }
+        if (items.Any(i => i.tbl_FormItemType.FIT_Name.Equals("Datebox")))
+        {
+        <script type="text/javascript">
+            $(function () {
+                $('[data-date="true"]').datepicker();
+            });
+        </script>
+        }
+}
+@helper FormEmail(CMS.BL.Entity.tbl_FormItem item)
+{
+        string email = User as CMS.Utils.CustomPrincipal != null ? (User as CMS.Utils.CustomPrincipal).Email : "";
+        <div class="form-group">
+            <label for="@item.FormItemID">@item.FI_Text @(item.FI_Required ? " *" : String.Empty)</label>
+            <input id="@item.FormItemID" name="@item.FI_Name" type="email" @(item.FI_Required ? "required=required" : String.Empty) 
+            data-val="true" data-val-email="Email Address should have correct email form."  value="@email" class="form-control" placeholder="@item.FI_Placeholder" />
+        </div>
+}
+
+@helper FormItem(CMS.BL.Entity.tbl_FormItem item)
+{
+    
+    <div class="contactFormRow">
+    @switch (item.tbl_FormItemType.FIT_Name)
+    {
+        case "Textbox":
+            <div class="form-group">
+                <label for="@item.FormItemID">@item.FI_Text @(item.FI_Required ? " *" : String.Empty)</label>
+                <input id="@item.FormItemID" name="@item.FI_Name" type="text" @(item.FI_Required ? "required=required" : String.Empty) class="form-control" placeholder="@item.FI_Placeholder" />
+            </div>
+            break;
+        case "Datebox":
+            <div class="form-group">
+                <label for="@item.FormItemID">@item.FI_Text @(item.FI_Required ? " *" : String.Empty)</label>
+                <div>
+                    <input id="@item.FormItemID" name="@item.FI_Name" type="text" @(item.FI_Required ? "required=required" : String.Empty) class="form-control" data-date="true" placeholder="@item.FI_Placeholder" />
+                </div>
+            </div>
+            break;
+        case "Email":
+            <div class="form-group">
+                <label for="@item.FormItemID">@item.FI_Text @(item.FI_Required ? " *" : String.Empty)</label>
+                <input id="@item.FormItemID" name="@item.FI_Name" type="email" @(item.FI_Required ? "required=required" : String.Empty) 
+                data-val="true" data-val-email="Email Address should have correct email form." class="form-control" placeholder="@item.FI_Placeholder" />
+            </div>
+            break;
+        case "Textarea":
+            <div class="form-group">
+                <label for="@item.FormItemID">@item.FI_Text @(item.FI_Required ? " *" : String.Empty)</label>
+                <textarea id="@item.FormItemID" name="@item.FI_Name" @(item.FI_Required ? "required=required" : String.Empty) class="form-control" placeholder="@item.FI_Placeholder"></textarea>
+            </div>
+            break;
+        case "Select":
+            <div class="form-group">
+                <label for="@item.FormItemID">@item.FI_Text @(item.FI_Required ? " *" : String.Empty)</label>
+                <select id="@item.FormItemID" name="@("select" + item.FormItemID)" @(item.FI_Required ? "required=required" : String.Empty) class="form-control">
+                    @foreach (CMS.BL.Entity.tbl_FormItemValues value in item.tbl_FormItemValues.OrderBy(v => v.FIV_Order))
+                    {
+		            <option value="@value.FIV_Value" @(value.FIV_Selected ? "selected=selected" : String.Empty) >@value.FIV_Text</option>
+                    }
+                </select>
+            </div>
+                        break;
+        case "Checkbox":
+            <div class="form-group">
+                <label>@item.FI_Text @(item.FI_Required ? " *" : String.Empty)</label>
+                <div class="valuesContainer">
+                @foreach (CMS.BL.Entity.tbl_FormItemValues value in item.tbl_FormItemValues.OrderBy(v => v.FIV_Order))
+                {   
+                    <div>
+		                <input id="@value.FormItemValueID" type="checkbox" name="@("checkbox" + value.FIV_FormItemID)" value="@value.FIV_Value" @(item.FI_Required ? "required=required" : String.Empty) @(value.FIV_Selected ? "checked=checked" : String.Empty) /> 
+                        <label for="@value.FormItemValueID" class="checkboxLabel">@value.FIV_Text</label>
+                    </div>
+                }
+                </div>
+            </div>
+                    break;
+        case "Radio":
+            <div class="form-group">
+                <label>@item.FI_Text @(item.FI_Required ? " *" : String.Empty)</label>
+                <div class="valuesContainer">
+                @foreach (CMS.BL.Entity.tbl_FormItemValues value in item.tbl_FormItemValues.OrderBy(v => v.FIV_Order))
+                {
+                    <div>
+		                <input id="@value.FormItemValueID" type="radio" value="@value.FIV_Value" name="@("radio" + value.FIV_FormItemID)" @(item.FI_Required ? "required=required" : String.Empty)  @(value.FIV_Selected ? "checked=checked" : String.Empty) />
+                        <label for="@value.FormItemValueID" class="checkboxLabel">@value.FIV_Text</label>
+                    </div>
+                }
+                </div>
+            </div>
+                    break;
+        case "Subscribe checkbox":
+            <div class="form-group">
+                <label for="@item.FormItemID" class="col-sm-2 control-label">@item.FI_Text</label> 
+                <div class="col-sm-5">
+                    <input type="checkbox" id="@item.FormItemID" name="subscribe" value="true" />
+                </div>
+            </div>
+                    break;
+        case "Divider":
+            <h2>@item.FI_Text</h2>
+                    break;
+        default:
+                    break;
+    }
+    </div>
+}
+
+@helper Copyright(int startYear)
+{
+    int currentYear = DateTime.Now.Year;
+    if(startYear == currentYear)
+    {
+        @:&copy; @startYear
+    }
+    else
+    {
+        @:&copy; @startYear - @currentYear
+    }
+}

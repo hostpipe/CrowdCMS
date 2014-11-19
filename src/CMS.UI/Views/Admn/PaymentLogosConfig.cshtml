@@ -1,0 +1,36 @@
+﻿@model List<CMS.UI.Models.PaymentLogoModel>
+<div class="sectionHeader">Payment Logos Configuration</div>
+<div class="sectionWindow">
+    <div class="btnToggleSection">Upload Images +</div>
+    <div class="sectionContent">
+        @foreach (var item in Model)
+        {
+            <label><b>@item.Name</b></label>
+            <div style="vertical-align: middle;">
+                <div class="inlineImage">
+                    <div class="logoWrapper">
+                        <img id="@item.Code" src="@item.FilePath" class="paymentLogo" alt="@item.Name" />
+                    </div>
+                    <form class="sectionContent ImageUpload" action="@Url.Action("SavePaymentLogo", "Admn")" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="PaymentDomainID" value="@item.PaymentDomainID" />
+                        <input type="hidden" name="Code" value="@item.Code" />
+                        <input type="file" name="file" accept="image/*" />
+                        <input type="hidden" name="DomainID" value="@item.DomainID" />
+                        <button type="submit" class="btnGreyMenu short">Upload Image</button>
+                    </form>
+                    <form class="sectionContent ImageDelete" action="@Url.Action("DeletePaymentLogo", "Admn")" method="post">
+                        <input type="hidden" name="PaymentDomainID" value="@item.PaymentDomainID" />
+                        <input type="hidden" name="Code" value="@item.Code" />
+                        <input type="hidden" name="DomainID" value="@item.DomainID" />
+                        <button type="submit" class="btnGreyRed short">Delete</button>
+                    </form>
+                </div>
+            </div>
+            <hr />
+        }
+    </div>
+</div>
+<div id="UploadWindow">
+    <div>Image is being uploaded.</div>
+    <div id="Progressbar"></div>
+</div>

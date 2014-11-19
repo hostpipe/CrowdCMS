@@ -1,0 +1,88 @@
+﻿@model CMS.BL.Entity.tbl_Products
+
+<div class="tableContainer">
+    <table class="hTable">
+        <thead>
+            <tr>
+                <td><input type="checkbox" class="selectAll" data-bind="event: { change: onCheckAll }" /></td>
+                <td>SKU</td>
+                <td>RRP (@CultureInfo.CurrentCulture.NumberFormat.CurrencySymbol)</td>
+                <td>Price (@CultureInfo.CurrentCulture.NumberFormat.CurrencySymbol)</td>
+                <td>Sale Price (@CultureInfo.CurrentCulture.NumberFormat.CurrencySymbol)</td>
+                <td>Price for regular (@CultureInfo.CurrentCulture.NumberFormat.CurrencySymbol)</td>
+                <td>On Sale?</td>
+                <td>Stock</td>
+                <td>Barcode</td>
+                <td>Weight (g)</td>
+            @if (Model != null && Model.tbl_ProductTypes.PT_Name.Equals(CMS.BL.ProductType.Event.ToString()))
+            {
+                <td>Event Start Date</td>  
+                <td>Event End Date</td>  
+                <td>Sale Details</td>
+            }
+            @foreach (var attr in Model.tbl_ProdAttLink.Select(pal => pal.tbl_ProdAttributes))
+            {
+                <td>@attr.A_Title (@attr.AttributeID)</td>    
+            }
+                <td>Actions</td>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var price in Model.tbl_ProductPrice)
+        {
+            <tr data-priceID="@price.PriceID">
+                <td><input type="checkbox" class="selected" name="selected" /></td>
+                <td><input type="text" name="SKU" value="@price.PR_SKU" /></td>
+                <td><input type="text" name="RRP" value="@price.PR_RRP" /></td>
+                <td><input type="text" name="Price" value="@price.PR_Price" /></td>
+                <td><input type="text" name="SalePrice" value="@price.PR_SalePrice" /></td>
+                <td><input type="text" name="PriceForRegularPlan" value="@price.PR_PriceForRegularPlan" /></td>
+                <td><input type="checkbox" name="OnSale" value="@price.PR_OnSale" @(price.PR_OnSale ? "checked=\"checked\"" : String.Empty) /></td>
+                <td><input type="text" name="Stock" value="@price.PR_Stock" /></td>
+                <td><input type="text" name="Barcode" value="@price.PR_Barcode" /></td>
+                <td><input type="text" name="Weight" value="@price.PR_Weight" /></td>
+            @if (Model != null && Model.tbl_ProductTypes.PT_Name.Equals(CMS.BL.ProductType.Event.ToString()))
+            {
+                <td><input type="text" name="StartDate" data-input-type="dateTime" value="@(price.PR_EventStartDate.HasValue ? price.PR_EventStartDate.Value.ToCustomDateTimeString() : "")" /></td>  
+                <td><input type="text" name="EndDate" data-input-type="dateTime" value="@(price.PR_EventEndDate.HasValue ? price.PR_EventEndDate.Value.ToCustomDateTimeString() : "")" /></td>  
+                <td>
+                @if (price.tbl_ProductPriceTimeWindow.Count == 0)
+                {
+                    @:Empty
+                }
+                @foreach (var sale in price.tbl_ProductPriceTimeWindow)
+	            {
+		            <div class="oneLineText">
+                        from @sale.TW_StartDate.ToCustomDateTimeString()
+                        @(sale.TW_EndDate.HasValue ? "to " + sale.TW_EndDate.Value.ToCustomDateTimeString() : String.Empty)
+                        price @sale.TW_Price
+                    </div>
+	            }
+                </td>
+            }
+            @foreach (var attr in Model.tbl_ProdAttLink.Select(pal => pal.tbl_ProdAttributes))
+            {
+                <td>
+                    <select name="@attr.AttributeID">
+                    @foreach (var attrValue in attr.tbl_ProdAttValue)
+                    {
+                        <option value="@attrValue.AttributeValueID" @(price.tbl_ProdPriceAttributes.Any(ppa => ppa.PPA_ProdAttValID == attrValue.AttributeValueID) ? "selected=\"selected\"" : String.Empty)>@attrValue.AV_Value</option>
+                    }
+                    </select>
+                </td>    
+            }
+                <td>
+                    <input type="button" class="btnGreyGreen" value="Save" data-bind="click: onSaveStockUnit" />
+                    <input type="button" class="btnGreyRed" value="Delete" data-bind="click: onDeleteStockUnit" />
+                @if (Model != null && Model.tbl_ProductTypes.PT_Name.Equals(CMS.BL.ProductType.Event.ToString()))
+                {
+                    <input type="button" class="btnGreyGreen" value="Manage Sale Time" data-bind="click: onManageSaleTime" />
+                }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+<div id="TimeWindowPopup" class="hidden">    
+</div>

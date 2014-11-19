@@ -1,0 +1,22 @@
+﻿@model CMS.BL.Entity.tbl_Gallery
+
+@{
+    ViewBag.Title = "Gallery";
+}
+
+@section metatags {
+    @{Html.RenderPartial("/Views/Partials/MetaTags.cshtml", new CMS.UI.Models.MetadataModel());}
+}
+@section sidebar {
+    @{
+        Html.RenderPartial("../Partials/SearchPanel");
+        Html.RenderAction("ContactUsPartial", "Website");
+    }
+}
+
+<h2>@Model.G_Title</h2>
+@foreach(CMS.BL.Entity.tbl_GalleryImage image in Model.tbl_GalleryImage)
+{
+        <img src="@Html.ImageProvider(CMS.BL.ImageVersionName.galleryThumb, @image.tbl_Image.I_Thumb,String.Empty)" alt="@image.tbl_Image.I_Description" />
+}
+

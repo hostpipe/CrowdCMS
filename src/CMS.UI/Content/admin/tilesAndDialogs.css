@@ -1,0 +1,223 @@
+﻿.serviceTile {
+    -webkit-box-shadow: 2px 2px 1px 0px rgba(50, 50, 50, 0.55);
+    -moz-box-shadow: 2px 2px 1px 0px rgba(50, 50, 50, 0.55);
+    box-shadow: 2px 2px 1px 0px rgba(50, 50, 50, 0.55);
+    display: inline-block;
+    width: 300px;
+    height: 110px;
+    background-color: white;
+    margin: 15px;
+    vertical-align: middle;
+    padding: 15px;
+}
+
+
+.dialogTile {
+    display: none;
+    z-index: 10;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.dialogTile > div {
+    -webkit-box-shadow: 4px 4px 1px 0px rgba(50, 50, 50, 0.55);
+    -moz-box-shadow:    4px 4px 1px 0px rgba(50, 50, 50, 0.55);
+    box-shadow:         4px 4px 1px 0px rgba(50, 50, 50, 0.55);
+
+    padding: 20px;
+    border: 1px solid rgb(240,240,240);
+    background-color: white;
+    position: absolute;
+    width: 600px;
+    top: 20%;
+    margin: auto;
+    left: 0;
+    right: 0;
+}
+
+    .dialogTile > div.wider {
+    width: 650px;
+    }
+
+.closingX {
+    position:absolute;
+    right:0px;
+    top:0px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.closingX * {
+    cursor: pointer;
+}
+
+.configureAnchor {
+    position: relative;
+    top: 6px;
+    font-size: 1.25em;
+    cursor: pointer;
+    color: rgb(53, 53, 53);
+    text-decoration: underline;
+}
+
+.greyedOut {
+    color: rgb(198, 198, 198);
+    cursor: default;
+}
+
+.toggleSection {
+    float: right;
+    text-align: center;
+}
+
+.toggleBtn {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    position: relative;
+    height: 30px;
+    cursor: pointer;
+    border: 1px solid rgb(210,210,210);
+}
+
+.toggleBtnONOFF {
+    width: 40px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 15px;
+    float: left;
+    color: white;
+}
+
+.toggleBtnON {
+    background-color: green;
+    background-image: -webkit-gradient( linear, left top, left bottom, color-stop(0, #5E9C3E), color-stop(1, #9BED71) );
+    background-image: -o-linear-gradient(bottom, #5E9C3E 0%, #9BED71 100%);
+    background-image: -moz-linear-gradient(bottom, #5E9C3E 0%, #9BED71 100%);
+    background-image: -webkit-linear-gradient(bottom, #5E9C3E 0%, #9BED71 100%);
+    background-image: -ms-linear-gradient(bottom, #5E9C3E 0%, #9BED71 100%);
+    background-image: linear-gradient(to bottom, #5E9C3E 0%, #9BED71 100%);
+}
+
+.toggleBtnOFF {
+    background-color: red;
+    background-image: -webkit-gradient( linear, left top, left bottom, color-stop(0, #9C0000), color-stop(1, #F20000) );
+    background-image: -o-linear-gradient(bottom, #9C0000 0%, #F20000 100%);
+    background-image: -moz-linear-gradient(bottom, #9C0000 0%, #F20000 100%);
+    background-image: -webkit-linear-gradient(bottom, #9C0000 0%, #F20000 100%);
+    background-image: -ms-linear-gradient(bottom, #9C0000 0%, #F20000 100%);
+    background-image: linear-gradient(to bottom, #9C0000 0%, #F20000 100%);
+}
+
+.toggleBtnSlider {
+    background-color: lightgrey;
+    background-image: -webkit-gradient( linear, left top, left bottom, color-stop(0, #F2F2F2), color-stop(1, #C7C7C7) );
+    background-image: -o-linear-gradient(bottom, #F2F2F2 0%, #C7C7C7 100%);
+    background-image: -moz-linear-gradient(bottom, #F2F2F2 0%, #C7C7C7 100%);
+    background-image: -webkit-linear-gradient(bottom, #F2F2F2 0%, #C7C7C7 100%);
+    background-image: -ms-linear-gradient(bottom, #F2F2F2 0%, #C7C7C7 100%);
+    background-image: linear-gradient(to bottom, #F2F2F2 0%, #C7C7C7 100%);
+    position: absolute;
+    width: 40px;
+    height: 30px;
+}
+
+.toggleBtnSliderRight {
+    right: 0px;
+}
+
+.tileContent > div {
+overflow: hidden;
+}
+.tileContent > * {
+margin: 8px 0;
+min-height: 26px;
+}
+
+.tileContent label {
+width: 200px;
+text-align: right !important;
+margin-right: 15px;
+display: inline-block;
+}
+
+.tileContent > div > * {
+vertical-align: middle;
+}
+
+.tileContent select {
+vertical-align: initial;
+}
+
+.tileContent input[type="text"], .tileContent select {
+width: 215px;
+margin-right: 10px;
+box-sizing: border-box;
+-moz-box-sizing: border-box;
+-webkit-box-sizing: border-box;
+}
+
+.tileContent input[type="text"].short {
+width: 100px;
+}
+
+.tileContent input[type="text"].veryshort {
+width: 50px;
+}
+
+.tileContent textarea.verylong {
+width: 400px;
+height: 100px;
+}
+
+.tileContent textarea {
+width: 215px;
+margin-right: 10px;
+vertical-align: text-top;
+}
+
+.tilesBackground {
+    background-color: rgb(240,240,240);
+}
+
+div.serviceTile img {
+max-width: 180px;
+}
+
+.configureTxt {
+    margin-left: 218px;
+    position: absolute;
+    height: 30px;
+    line-height: 30px;
+    top: 50%;
+    margin-top: -15px;
+    font-size: 21px;
+}
+
+.dialogTile img {
+    float: left;
+}
+
+.imageAndConfigureContainer {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+    .imageAndConfigureContainer img { max-width:200px; }
+
+.centerButton {
+    text-align: center;
+    margin-top: 25px;
+}
+
+.centerButton button {
+    padding-left: 15px;
+    padding-right: 15px;
+}

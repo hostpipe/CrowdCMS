@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{41F4D3C2-7BC8-48DD-B99F-E13DAF81BCDA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CMS.Services</RootNamespace>
+    <AssemblyName>CMS.Services</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AntiXssLibrary">
+      <HintPath>..\packages\AntiXSS.4.2.1\lib\net40\AntiXssLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlSanitizationLibrary">
+      <HintPath>..\packages\AntiXSS.4.2.1\lib\net40\HtmlSanitizationLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="MailChimp">
+      <HintPath>..\packages\MailChimp.NET.1.0.0.6\lib\net40\MailChimp.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Text">
+      <HintPath>..\packages\ServiceStack.Text.3.9.69\lib\net35\ServiceStack.Text.dll</HintPath>
+    </Reference>
+    <Reference Include="Stripe.net, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Stripe.net.2.3.0\lib\net40\Stripe.net.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Extensions\ExtensionMethodes.cs" />
+    <Compile Include="Interfaces\IGallery.cs" />
+    <Compile Include="Interfaces\ICRM.cs" />
+    <Compile Include="Interfaces\IPOI.cs" />
+    <Compile Include="Interfaces\IPortfolio.cs" />
+    <Compile Include="Interfaces\IStripe.cs" />
+    <Compile Include="Interfaces\ITemplate.cs" />
+    <Compile Include="Model\StripeResult.cs" />
+    <Compile Include="Model\StripeCheckoutModel.cs" />
+    <Compile Include="Model\TagCountModel.cs" />
+    <Compile Include="PriceManager.cs" />
+    <Compile Include="Interfaces\IDomain.cs" />
+    <Compile Include="Interfaces\IECommerce.cs" />
+    <Compile Include="Interfaces\IUser.cs" />
+    <Compile Include="Interfaces\IWebContent.cs" />
+    <Compile Include="Interfaces\IWebPages.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\CommuniGatorService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="ServiceBase.cs" />
+    <Compile Include="Services\Gallery.cs" />
+    <Compile Include="Services\CommuniGator.cs" />
+    <Compile Include="Services\Domain.cs" />
+    <Compile Include="Services\ECommerce.cs" />
+    <Compile Include="Services\MailChimp.cs" />
+    <Compile Include="Services\POI.cs" />
+    <Compile Include="Services\Portfolio.cs" />
+    <Compile Include="Services\Stripe.cs" />
+    <Compile Include="Services\Template.cs" />
+    <Compile Include="Services\User.cs" />
+    <Compile Include="Services\WebContent.cs" />
+    <Compile Include="Services\WebPages.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CMS.BL\CMS.BL.csproj">
+      <Project>{9B9F4F3D-901B-4E7D-9515-3A5763814A39}</Project>
+      <Name>CMS.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CMS.DAL\CMS.DAL.csproj">
+      <Project>{93722CEF-B9B2-43A5-8200-F2D3E26A1D02}</Project>
+      <Name>CMS.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CMS.Utils\CMS.Utils.csproj">
+      <Project>{279358D3-5C4D-4F58-BED8-CBBD81B9ED34}</Project>
+      <Name>CMS.Utils</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="Properties\DataSources\System.Data.DataSet.datasource" />
+    <None Include="Service References\CommuniGatorService\SDK.wsdl" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\CommuniGatorService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CommuniGatorService\SDK.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CommuniGatorService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CommuniGatorService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CommuniGatorService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

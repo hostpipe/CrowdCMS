@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<project name="MCManager" default="build">
+	<property name="title" value="MCManager"/>
+	<property name="debug" value="false"/>
+	<property name="build.dir" value="../bin" />
+	<property name="nant.settings.currentframework" value="net-2.0" />
+
+	<target name="gomono">
+		<property name="nant.settings.currentframework" value="mono-2.0" />
+	</target>
+
+	<target name="go2.0">
+		<property name="nant.settings.currentframework" value="net-2.0" />
+	</target>
+
+	<target name="godebug">
+		<property name="debug" value="true"/>
+	</target>
+
+	<target name="clean">
+		<nant target="clean">
+			<buildfiles>
+				<include name="csharp/Manager/default.build" />
+				<include name="csharp/FileManager/default.build" />
+				<include name="csharp/ImageManager/default.build" />
+			</buildfiles>
+		</nant>
+	</target>
+
+	<target name="ndoc">
+		<nant target="ndoc">
+			<buildfiles>
+				<include name="csharp/Manager/default.build" />
+				<include name="csharp/FileManager/default.build" />
+				<include name="csharp/ImageManager/default.build" />
+			</buildfiles>
+		</nant>
+	</target>
+
+	<target name="build-mono" depends="gomono,build">
+	</target>
+
+	<target name="build">
+		<nant target="build">
+			<buildfiles>
+				<include name="csharp/Manager/default.build" />
+				<include name="csharp/FileManager/default.build" />
+				<include name="csharp/ImageManager/default.build" />
+			</buildfiles>
+		</nant>
+
+		<!-- Copy external assemblies -->
+		<copy todir="${build.dir}">
+			<fileset basedir="lib/${nant.settings.currentframework}">
+				<include name="*.dll" />
+			</fileset>
+		</copy>
+	</target>
+</project>

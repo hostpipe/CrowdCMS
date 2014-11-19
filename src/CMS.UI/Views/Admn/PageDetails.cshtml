@@ -1,0 +1,82 @@
+﻿@model CMS.UI.Models.PageDetailsModel
+
+<div class="sectionWindow">
+    <div class="btnToggleSection">Page Details +</div>
+    <form id="DetailsForm" action="#" class="sectionContent">
+        <div>
+            @Html.LabelFor(m => m.DomainID)
+            @Html.DropDownListFor(m => m.DomainID, this.ViewBag.Domains as SelectList, new { @class = "short", data_bind = "event: { change: onGetSections }" })
+            <span class="fa fa-info-circle" title="Choose the domain for this page"></span>
+            @Html.HiddenFor(m => m.ContentID)
+            @Html.HiddenFor(m => m.SiteMapID)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.Name)
+            @Html.TextBoxFor(m => m.Name)
+            @Html.ValidationMessageFor(m => m.Name)
+            <span class="fa fa-info-circle" title="The name will show in the left admin menu and is used to generte the URL."></span>
+        </div>
+        <div>
+            @Html.LabelFor(m => m.MenuText)
+            @Html.TextBoxFor(m => m.MenuText)
+            <span class="fa fa-info-circle" title="The 'Menu Text' will be what shows on the front end of the website, the user will see this."></span>
+        </div>
+        <div>
+            @Html.LabelFor(m=> m.CustomLayout)
+            @Html.DropDownListFor(m => m.CustomLayout, this.ViewBag.CustomLayouts as SelectList, new { @class = "short" })
+            <span class="fa fa-info-circle" title="Choose the page layout for this page."></span>
+        </div>
+        <hr />
+        <h2>Put this page</h2>
+        <div>
+            <label for="TopLevelRadio">Top Level</label>
+            @Html.RadioButtonFor(m => m.TopLevel, true, new { id = "TopLevelRadio", data_bind = "click: onLevelRadioClick" })
+            <span class="fa fa-info-circle" title="Select 'Top Level' to make this a parent page (main page)"></span>
+        </div>
+        <div>
+            <label for="ChildLevelRadio">Under Parent Page...</label>
+            @Html.RadioButtonFor(m => m.TopLevel, false, new { id = "ChildLevelRadio", data_bind = "click: onLevelRadioClick" })
+            <span class="fa fa-info-circle" title="Select this option to make this a sub-page, place the page under an existing parent page."></span>
+        </div>
+        <div data-bind="visible: isChildLevel">
+            @Html.LabelFor(m => m.ParentID)
+            <select id="ParentID" name="ParentID" class="short" data-bind="options: sections, optionsValue: 'Value', optionsText: 'Text', value: parentID, event: { change: onGetParentUrl }"></select>
+        </div>
+        <hr />
+        <h2>@(Model != null ? Model.Name : String.Empty)</h2>
+        <div>
+            @Html.LabelFor(m => m.Path)
+            @if(!Model.IsHomePage)
+            {
+            <span data-bind="text: parentURL"></span> 
+            @Html.TextBoxFor(m => m.Path, new { @class = "short", disabled = "disabled" })
+            @Html.ValidationMessageFor(m => m.Path)
+            <a href="#" data-bind="click: onEditUrl">Edit</a>
+            <span class="fa fa-info-circle" title="This is what will show in the URL of the website. Example: /about-us/"> </span>
+            }
+            else
+            {
+            <span>Home page</span>
+            @Html.HiddenFor(m => m.Path)
+            }
+        </div>
+        <hr />
+        <h2>Show this page in</h2>
+        <div>
+            @Html.LabelFor(m => m.Menu)
+            @Html.RadioButtonFor(m => m.Menu, true, new { id = "radioMenuYes" })
+            @Html.Label("LabelYes", "Yes", new { @for = "radioMenuYes", @class = "checkboxLabel" })
+            @Html.RadioButtonFor(m => m.Menu, false, new { id = "radioMenuNo" })
+            @Html.Label("LabelNo", "No", new { @for = "radioMenuNo", @class = "checkboxLabel" })
+            <span class="fa fa-info-circle" title="Show this page in the menu of the website."></span>
+        </div>
+        <div>
+            @Html.LabelFor(m => m.Footer, "Footer")
+            @Html.RadioButtonFor(m => m.Footer, true, new { id = "radioFooterYes" })
+            @Html.Label("LabelYes", "Yes", new { @for = "radioFooterYes", @class = "checkboxLabel" })
+            @Html.RadioButtonFor(m => m.Footer, false, new { id = "radioFooterNo" })
+            @Html.Label("LabelNo", "No", new { @for = "radioFooterNo", @class = "checkboxLabel" })
+            <span class="fa fa-info-circle" title="Show this page in the footer of the website."></span>
+        </div>
+    </form>
+</div>

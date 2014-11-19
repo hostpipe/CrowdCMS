@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "Domains";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@section scripts {
+    @Scripts.Render("~/bundles/domains")
+}
+
+<div id="DomainContent"
+    data-addDomain-url="@Url.Action("AddDomain", "Admn")"
+    data-addDomainLink-url="@Url.Action("AddDomainLink", "Admn")"
+    data-deleteDomain-url="@Url.Action("DeleteDomain", "Admn")"
+    data-deleteDomainLinks-url="@Url.Action("DeleteDomainLinks", "Admn")"
+    data-getSettings-url="@Url.Action("Settings", "Admn")"
+    data-getDomainLinks-url="@Url.Action("DomainLinks", "Admn")"
+    data-getDomain-url="@Url.Action("DomainSettings", "Admn")"
+    data-getPaymentLogos-url="@Url.Action("PaymentLogosConfig", "Admn")"
+    data-getSelectSettingsOptions-url="@Url.Action("GetSelectSettingsOptions", "Admn")"
+    data-updateSettings-url="@Url.Action("UpdateSettings", "Admn")"
+    data-updateDomain-url="@Url.Action("UpdateDomain", "Admn")"
+    >
+    <div class="leftMenuContainer">
+        <div class="btnGreyMenu" data-bind="click: onNewDomain">Add Domain</div>
+        @Html.Action("LeftMenu", "Admn")
+    </div>
+    <div class="mainContainer">
+    </div>
+</div>

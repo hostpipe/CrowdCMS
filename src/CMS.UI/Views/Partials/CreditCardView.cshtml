@@ -1,0 +1,42 @@
+﻿@model CMS.UI.Models.CreditCardModel
+
+<h2>Credit card information</h2>
+<div>
+    @Html.LabelFor(m => m.CardType)
+    @Html.DropDownListFor(m => m.CardType, this.ViewBag.CardTypes as List<SelectListItem>, "Select type")
+    @Html.ValidationMessageFor(m => m.CardType)
+</div>
+<div>
+    @Html.LabelFor(m => m.CardHolder)
+    @Html.TextBoxFor(m => m.CardHolder)
+    @Html.ValidationMessageFor(m => m.CardHolder)
+</div>
+<div>
+    @Html.LabelFor(m => m.CardNumber)
+    @Html.TextBoxFor(m => m.CardNumber)
+    <span>(With no spaces or separators)</span>
+    @Html.ValidationMessageFor(m => m.CardNumber)
+</div>
+<div>
+    @Html.LabelFor(m => m.StartDate)
+    @Html.TextBoxFor(m => m.StartDate, new { @class = "monthPicker", data_datepicker = "true" })
+    <span>(Where available)</span>
+    @Html.ValidationMessageFor(m => m.StartDate)
+</div>
+<div>
+    @Html.LabelFor(m => m.ExpiryDate)
+    @Html.TextBoxFor(m => m.ExpiryDate, new { @class = "monthPicker", data_datepicker = "true" })
+    @Html.ValidationMessageFor(m => m.ExpiryDate)
+</div>
+<div>
+    @Html.LabelFor(m => m.IssueNumber)
+    @Html.TextBoxFor(m => m.IssueNumber)
+    <span>(Older Switch cards. 1 or 2 digits as on the card)</span>
+    @Html.ValidationMessageFor(m => m.IssueNumber)
+</div>
+<div>
+    @Html.LabelFor(m => m.CV2)
+    @Html.TextBoxFor(m => m.CV2)
+    <span>(3 digit code on back of card)</span>
+    @Html.ValidationMessageFor(m => m.CV2)
+</div>

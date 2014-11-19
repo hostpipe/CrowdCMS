@@ -1,0 +1,54 @@
+﻿@model CMS.UI.Models.AdminMenuItemModel
+@{
+    ViewBag.Title = "AdminMenu";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@section scripts {
+    @Scripts.Render("~/bundles/adminmenu")
+}
+
+<div id="ModuleContent" 
+    data-addModule-url="@Url.Action("AddMenuItem", "Admn")"
+    data-deleteModule-url="@Url.Action("DeleteMenuItem", "Admn")"
+    data-getModule-url="@Url.Action("GetMenuItem", "Admn")"
+    data-getMenuItems-url="@Url.Action("GetMenuItems", "Admn")"
+    data-saveOrder-url="@Url.Action("SaveOrder", "Admn")"
+    data-saveVisibility-url="@Url.Action("ToggleVisibility", "Admn")"
+    data-updateModule-url="@Url.Action("UpdateMenuItem", "Admn")"
+    >
+    <div class="leftMenuContainer">
+        <div class="btnGreyMenu short" data-bind="click: onSaveOrder"><span id="orderIndicator" class="icon-ok"></span>Save Sort Order</div>
+        <div class="btnGreyMenu short" data-bind="click: onNewModule">Add Menu Item</div>
+        @Html.Action("LeftMenu", "Admn")
+    </div>
+    <div class="mainContainer">
+        <div class="sectionHeader" data-bind="text: sectionHeader"></div>
+        <div class="sectionWindow">
+            <div class="btnToggleSection">Page Details +</div>
+            <form id="MenuItemForm" class="sectionContent" action="#" method="post" data-bind="submit: onSubmit">
+                <div>
+                    @Html.LabelFor(m => m.MenuText)
+                    @Html.TextBoxFor(m => m.MenuText, new { data_bind = "value: menuText" })
+                    @Html.ValidationMessageFor(m => m.MenuText)
+                    @Html.HiddenFor(m => m.AdminMenuID, new { data_bind = "value: menuItemID" })
+                </div>
+                <div>
+                    @Html.LabelFor(m => m.URL)
+                    @Html.TextBoxFor(m => m.URL, new { data_bind = "value: url" })
+                    @Html.ValidationMessageFor(m => m.URL)
+                </div>
+                <div>
+                    @Html.LabelFor(m => m.ParentID)
+                    <select id="ParentID" name="ParentID" data-bind="value: parentID, foreach: menuItems">
+                        <option data-bind="value: Value, html: Text, attr: { selected: Selected }"></option>
+                    </select>
+                </div>
+                <div class="btnContainer">
+                    <button type="submit" class="btnGreen" data-bind="visible: isNewMenuItem">Add New Menu Item</button>
+                    <button type="submit" class="btnGreen" data-bind="visible: !isNewMenuItem()">Update Menu Item</button>
+                    <button type="button" class="btnRed" data-bind="click: onNewModule">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

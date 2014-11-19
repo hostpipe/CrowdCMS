@@ -1,0 +1,50 @@
+﻿@model CMS.UI.Models.CommentModel
+@using Recaptcha.Web.Mvc
+
+<form id="CommentForm" action="@Url.Action("SaveComment", "Website")" method="post" class="commentForm form-horizontal">
+    <h3>Leave a Reply</h3>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Name, new {@class="col-sm-2 control-label"})
+        <div class="col-sm-5">
+            @Html.TextBoxFor(m => m.Name, new {@class="form-control"})
+            <span class="info">(Required)</span>
+            @Html.ValidationMessageFor(m => m.Name)
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email, new {@class="col-sm-2 control-label"})
+        <div class="col-sm-5">
+            @Html.TextBoxFor(m => m.Email, new {@class="form-control"})
+            <span class="info">(Required, not published)</span>
+            @Html.ValidationMessageFor(m => m.Email)
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Website, new {@class="col-sm-2 control-label"})
+        <div class="col-sm-5">
+            @Html.TextBoxFor(m => m.Website, new {@class="form-control"})
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Message, new {@class="col-sm-2 control-label"})
+        <div class="col-sm-5">
+            @Html.TextAreaFor(m => m.Message, new {@class="form-control"})
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-5">
+            @Html.Recaptcha(publicKey: ViewBag.PublicKey as string, theme: Recaptcha.Web.RecaptchaTheme.White)
+            <span id="validationSummary" class="validation-summary-errors"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-5">
+            <input type="hidden" name="sitemapID" value="@ViewBag.SitemapID" />
+            <button type="submit" class="btn btn-success" >Submit Comment</button>
+        </div>
+    </div>
+</form>
+<div id="CommentSaved" style="display: none;">
+    <h3>Comment Submitted!</h3>
+    <p>Your comment has been submitted for moderation!</p>
+</div>

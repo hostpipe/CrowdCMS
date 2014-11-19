@@ -1,0 +1,70 @@
+﻿@model CMS.UI.Models.TestimonialModel
+@{
+    ViewBag.Title = "Testimonials";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@section scripts {
+    <script type="text/javascript" src="/Scripts/tinymce/jquery.tinymce.min.js"></script>
+    @Scripts.Render("~/bundles/testimonials")
+}
+
+<div id="TestimonialsContent"
+    data-addTestimonial-url="@Url.Action("AddTestimonial", "Admn")"
+    data-approveTestimonial-url="@Url.Action("ApproveTestimonialVersion", "Admn")"
+    data-deleteTestimonial-url="@Url.Action("DeleteTestimonial", "Admn")"
+    data-getTestimonial-url="@Url.Action("GetTestimonial", "Admn")"
+    data-updateTestimonial-url="@Url.Action("UpdateTestimonial", "Admn")"
+    data-saveTestimonialOrder-url="@Url.Action("SaveTestimonialOrder", "Admn")"
+    data-saveTestimonialVisibility-url="@Url.Action("ToggleTestimonialVisibility", "Admn")"
+    data-domainCSSFile="@ViewBag.DomainCSSFile"
+    data-getCustomEditorObjects-url="@Url.Action("CustomEditorObjects", "Website")"
+    >
+    <div class="leftMenuContainer">
+        <div class="btnGreyMenu" data-bind="click: onNewTestimonial">New Testimonial</div>
+        @Html.Action("LeftMenu", "Admn")
+    </div>
+    <div class="mainContainer">
+        <div class="sectionHeader" data-bind="text: sectionHeader"></div>
+        <form id="TestimonialForm" action="#">
+            <input id="testimonialID" name="testimonialID" type="hidden" data-bind="value: testimonialID" />
+            <div class="sectionWindow">
+                <div class="btnToggleSection">Testimonial Details +</div>
+                <div class="sectionContent">           
+                    <h2>Date Of The Testimonial Entry</h2>
+                    <div>
+                        @Html.LabelFor(m => m.TestimonialDate)
+                        @Html.TextBoxFor(m => m.TestimonialDate, new { data_input_type = "dateTime", data_bind = "value: date" })
+                        <span>dd/mm/yyyy hh:mm</span>
+                        <span class="fa fa-info-circle" title="Date of the testimonial post, this will date will be shown on the front end."></span>
+                        @Html.ValidationMessageFor(m => m.TestimonialDate)
+                    </div>
+                    <hr />
+                    <div>
+                        @Html.LabelFor(m => m.Client)
+                        @Html.TextBoxFor(m => m.Client, new { @class = "long", data_bind = "value: client" })
+                        @Html.ValidationMessageFor(m => m.Client)
+                    </div>
+                    <div>
+                        @Html.LabelFor(m => m.Company)
+                        @Html.TextBoxFor(m => m.Company, new { @class = "long", data_bind = "value: company" })
+                        @Html.ValidationMessageFor(m => m.Company)
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="sectionWindow">
+            <div class="btnToggleSection">Testimonial Content +</div>
+            <div class="sectionContent">
+                <div>
+                    @Html.TextAreaFor(m => m.TestimonialContent, new { @class = "tinyMCEEditor", data_count = "true", data_minWords = "1" })
+                    <span data-for="TestimonialContent" class="counter"><span data-name="icon" title="Your Page Contents must be at least 1 word long!"></span><span data-name="text"></span></span>
+                </div>
+            </div>
+        </div>
+        <div>
+            <input type="button" class="btnGreen" value="Add Testimonial" data-bind="click: onSubmit, visible: !isEdit()"/>
+            <input type="button" class="btnGreen" value="Update Testimonial" data-bind="click: onSubmit, visible: isEdit"/>
+            <input type="reset" name="Cancel" class="btnRed" value="Cancel" data-bind="click: onNewTestimonial" />
+        </div>
+    </div>
+</div>

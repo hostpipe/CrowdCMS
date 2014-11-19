@@ -1,0 +1,101 @@
+﻿@using CMS.Services.Model
+<!-- RIGHT COLUMN -->
+    <!-- RECENT,POPULAR -->
+    <div class="widget">
+
+        <!-- TABS -->
+        <div class="tabs nomargin-top">
+
+            <!-- tabs -->
+            <ul class="nav nav-tabs">
+                <li class="active">
+                    <a href="#tab1" data-toggle="tab">Recent Posts
+                    </a>
+                </li>
+                <li>
+                    <a href="#tab2" data-toggle="tab">Archives
+                    </a>
+                </li>
+            </ul>
+
+            <!-- tabs content -->
+            <div class="tab-content">
+                <div id="tab1" class="tab-pane active">
+                    <ul>
+                        @if ((this.ViewBag.RecentPosts as List<CMS.BL.Entity.tbl_Content>).Count() > 0)
+                        {
+                            foreach (var post in this.ViewBag.RecentPosts as List<CMS.BL.Entity.tbl_Content>)
+                            {
+                            <li><a href="@String.Format("/{0}/{1}", ViewBag.BlogUrl, post.tbl_SiteMap.SM_URL.Trim('/'))"><i class="fa fa-sign-out"></i>@post.C_Title</a> <small>@post.tbl_SiteMap.SM_Date.GetValueOrDefault().ToLongDateString()/ @post.tbl_SiteMap.SM_Date.GetValueOrDefault().ToShortTimeString()</small></li>
+                            }
+                        }
+                        else
+                        {
+                            <li>No Posts Exists</li>
+                        }
+                    </ul>
+                </div>
+
+                <div id="tab2" class="tab-pane">
+                    <!-- tab content -->
+                    <ul>
+                        @if ((this.ViewBag.Archive as List<DateTime>).Count > 0)
+                        {
+                            foreach (var date in this.ViewBag.Archive as List<DateTime>)
+                            {
+                                <li><a href="@(String.Format("/{0}/{1}/{2}", ViewBag.BlogUrl, date.Year, date.Month))">@date.ToString("MMMM yyyy")</a></li>
+                            }
+                        }
+                        else
+                        {
+                            <li>No Archives Exists</li>
+                        }
+                    </ul>
+                </div>
+                
+                <div id="tab3">
+                    <ul>
+                       @if ((this.ViewBag.UniqueTags as List<CMS.Services.Model.TagCountModel>).Any())
+                        {
+                            foreach (var tag in this.ViewBag.UniqueTags as List<CMS.Services.Model.TagCountModel>)
+                            {
+                                <li><a href="@(String.Format("/{0}/tag/{1}", ViewBag.BlogUrl, tag.Url))">@tag.Title (@tag.Count.ToString(CultureInfo.InvariantCulture))</a></li>
+                            }
+                        }
+                        else
+                        {
+                            <li>No Tags Exists</li>
+                        }
+                        </ul>
+                </div>
+            </div>
+
+        </div>
+        <!-- /TABS -->
+
+    </div>
+    <!-- /RECENT,POPULAR -->
+
+
+    <!-- categories -->
+    <div class="widget">
+        <h4>CATEGORIES</h4>
+        <ul class="nav nav-list">
+            @if ((this.ViewBag.Categories as List<CMS.BL.Entity.tbl_Categories>).Count > 0)
+            {
+                foreach (var category in this.ViewBag.Categories as List<CMS.BL.Entity.tbl_Categories>)
+                {
+                <li><a href="@(String.Format("/{0}/{1}/{2}", ViewBag.BlogUrl, CMS.UI.SettingsManager.Blog.CategoryUrl.Trim('/'), category.CA_URL))"><i class="fa fa-angle-right"></i>@category.CA_Title</a></li>
+                }
+
+            }
+            else
+            {
+                <li>No Categories Exists</li>
+            }
+        </ul>
+    </div>        
+    <h4><a class="rssLink" href="/@ViewBag.BlogUrl/feed">RSS Feed</a></h4>
+
+<!-- /RIGHT COLUMN -->
+

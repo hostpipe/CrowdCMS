@@ -1,0 +1,21 @@
+﻿@{
+    Layout = null;
+}
+<html>
+    <head>
+        <title>3D Secure Verification</title>
+        <script type="text/javascript">
+            function OnLoadEvent() { document.form.submit(); }
+        </script>
+    </head>
+    <body OnLoad="OnLoadEvent();">
+        <FORM name="form" action="@ViewBag.Url" method="POST" target="_top">
+        <NOSCRIPT>
+            <center>
+                <p>Please click button below to finish payment process</p>
+                <input type="submit" value="Go"/>
+            </center>
+        </NOSCRIPT>
+        </form>
+    </body>
+</html>

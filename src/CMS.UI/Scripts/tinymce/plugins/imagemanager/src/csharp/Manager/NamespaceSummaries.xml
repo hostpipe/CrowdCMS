@@ -1,0 +1,14 @@
+<namespaces>
+	<namespace name="Moxiecode.FileManager.Authenticators">
+		This namespace contains all logic used for access verification.
+	</namespace>
+	<namespace name="Moxiecode.FileManager.FileSystems">
+		This namespace contains all logic used for file system management.
+	</namespace>
+	<namespace name="Moxiecode.FileManager.Utils">
+		This namespace contains various utility classes.
+	</namespace>
+	<namespace name="Moxiecode.FileManager.Web">
+		This namespace contains classes for managing the Web layout.
+	</namespace>
+</namespaces>

@@ -1,0 +1,49 @@
+﻿@model CMS.UI.Models.FormModel
+
+<div class="sectionHeader" data-bind="text: sectionHeader"></div>
+<div class="sectionWindow">
+    <div class="btnToggleSection">Form Details +</div>
+    <form id="DetailsForm" action="#" class="sectionContent" method="post" data-bind="submit: onSubmit">
+        <div>
+            @Html.Label("ddlDomain", "Domain")
+            @Html.DropDownListFor(m => m.DomainID, ViewBag.Domains as SelectList, new { @class = "short", id = "ddlDomain", data_bind = "event: { change: onGetSections }" })
+            @Html.HiddenFor(m => m.FormID)
+        </div>
+        <div>
+            @Html.Label("tbTitle", "Form Title")
+            @Html.TextBoxFor(m => m.Name, new { id = "tbTitle", maxlength = "50" })
+            @Html.ValidationMessageFor(m => m.Name)
+            <span class="fa fa-info-circle" title="Give your form a sensible title"></span>
+        </div>
+        <div>
+            @Html.Label("tbDesc", "Description")
+            @Html.TextAreaFor(m => m.Description, new { @class = "long", id = "tbDesc", maxlength = "250" })
+            <span class="fa fa-info-circle" title="A brief description o fthe form's purpose"></span>
+        </div>
+        <div>
+            @Html.LabelFor(m => m.Captcha, "Reduce spam, display CAPTCHA")
+            @Html.RadioButton("Captcha", true, Model != null ? Model.Captcha : true, new { id = "radioCaptchaYes" })
+            @Html.Label("LabelYes", "Yes", new { @for = "radioCaptchaYes", @class = "checkboxLabel" })
+            @Html.RadioButton("Captcha", false, Model != null ? !Model.Captcha : false, new { id = "radioCaptchaNo" })
+            @Html.Label("LabelNo", "No", new { @for = "radioCaptchaNo", @class = "checkboxLabel" })
+            <span class="fa fa-info-circle" title="A CAPTCHA will help reduce spam form submissions. CAPTCHAs are only readable by humans."></span>
+        </div>
+        <div>
+            @Html.LabelFor(m => m.DestinationPageID)
+            <select id="DestinationPageID" name="DestinationPageID" class="short" data-bind="options: sections, optionsValue: 'Value', optionsText: 'Text', value: sectionID"></select>
+            <span class="fa fa-info-circle" title="Select the page your form will redirect to after a successful submission"></span>
+            <input type="hidden" value="@(Model!= null ? Model.DestinationPageID.ToString() : "0")" name="currentSitemapID" id="currentSitemapID" />
+        </div>
+        <div>
+            @Html.LabelFor(m => m.TrackingCode)
+            @Html.TextAreaFor(m => m.TrackingCode, new { @class = "long", id = "tbTracking", maxlength = "1000" })
+            <span class="fa fa-info-circle" title="Any tracking code will be included on the destination page between &lt;script&gt; tags"></span>
+        </div>
+
+        <div class="btnContainer">
+            <button type="submit" id="btnNewForm" name="NewForm" class="btnGreen" data-bind="visible: !isEdit()">Add form</button>
+            <button type="submit" id="btnSaveForm" name="SaveForm" class="btnGreen" data-bind="visible: isEdit">Update form</button>
+            <button type="button" id="btnCancel" name="Cancel" class="btnRed" data-bind="click: onNewForm">Cancel</button>
+        </div>
+    </form>
+</div>

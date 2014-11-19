@@ -1,0 +1,39 @@
+﻿@model CMS.UI.Models.DomainLinkModel
+
+<div class="sectionHeader">Domain Links</div>
+<div class="sectionWindow">
+    <div class="btnToggleSection">Add Domain Link to @(ViewBag.Domain != null ? ViewBag.Domain.DO_Domain : String.Empty) +</div>
+    <form id="DomainLinksForm" class="sectionContent" action="#" method="post" data-bind="submit: onSubmit">
+        <div>
+            @Html.LabelFor(m => m.DomainLink)
+            @Html.TextBoxFor(m => m.DomainLink)
+            @Html.ValidationMessageFor(m => m.DomainLink)
+            @Html.HiddenFor(m => m.DomainID)
+        </div>
+        <div class="btnContainer">
+            <button type="submit" class="btnGreen">Add New Domain Link</button>
+            <button type="reset" class="btnGrey">Cancel</button>
+        </div>
+    </form>
+</div>
+<div class="sectionWindow">
+    <div class="btnToggleSection">Domains linked to @(ViewBag.Domain != null ? ViewBag.Domain.DO_Domain : String.Empty ) +</div>
+    <div class="sectionContent">
+    @if (ViewBag.Domain != null)
+    {
+        foreach (var link in ViewBag.Domain.tbl_DomainLink)
+        {
+        <div>
+            <input type="checkbox" value="@link.DomainLinkID" />
+            <span>@link.DL_Domain</span>
+        </div>
+        }
+        if (ViewBag.Domain.tbl_DomainLink.Count > 0)
+        {
+        <div class="btnContainer">
+            <button type="button" class="btnRed" data-bind="click: onDeleteDomainLinks">Delete</button>
+        </div>
+        }
+    }
+    </div>
+</div>

@@ -1,0 +1,14 @@
+﻿<div id="SubscribeForm" data-saveSubscription-url="@Url.Action("Subscribe", "Website")">
+    <form action="#" method="post" data-bind="visible: !successSubscription()">
+        <input type="email" data-bind="value: emailSubscription" placeholder="Subscribe our newsletter!"
+            data-val="true" data-val-email="Email Address should have correct email form."
+            data-val-required="Email is required" />
+        <input type="submit" data-bind="click: saveSubscription" value="Subscribe" />
+    </form>
+    <div data-bind="visible: successSubscription">
+        <h3>
+            Thank you for subscribe to our newsletter!</h3>
+    </div>
+    <div data-bind="visible: errorSubscription">
+        There was an error on server saving your newsletter. Please try again later.</div>
+</div>

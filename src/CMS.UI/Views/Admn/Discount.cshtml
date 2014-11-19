@@ -1,0 +1,72 @@
+﻿@model CMS.UI.Models.DiscountModel
+@{
+    ViewBag.Title = "Discounts";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@section scripts {
+    @Scripts.Render("~/bundles/discount")
+}
+
+<div id="DiscountContent" 
+    data-addDiscount-Url="@Url.Action("AddDiscount", "Admn")"
+    data-deleteDiscount-Url="@Url.Action("DeleteDiscount", "Admn")"
+    data-getDiscount-Url="@Url.Action("GetDiscount", "Admn")"
+    data-getDomains-url="@Url.Action("GetDomainsList", "Admn")"
+    data-updateDiscount-Url="@Url.Action("UpdateDiscount", "Admn")"
+    >
+    <div class="leftMenuContainer">
+        <div class="btnGreyMenu short" data-bind="click: onNewDiscount">Add Discount</div>
+        <select data-bind="options: domains, optionsText: 'Text', optionsValue: 'Value', optionsCaption: 'All domains', value: lDomainID, event: { change: onLDomainChange }"></select>
+       @Html.Partial("~/Views/Partials/Loader.cshtml")
+    </div>
+    <div class="mainContainer">
+        <div class="sectionHeader" data-bind="text: sectionHeader"></div>
+        <div class="sectionWindow">
+            <div class="btnToggleSection">Discount Information +</div>
+            <form id="DiscountForm" action="#" class="sectionContent">
+                <div>
+                    @Html.LabelFor(m => m.Code)
+                    @Html.TextBoxFor(m => m.Code, new { data_bind = "value: code", maxlength = "20" })
+                    @Html.ValidationMessageFor(m => m.Code)
+                    @Html.HiddenFor(m => m.DiscountID, new { data_bind = "value: discountID" })
+                </div>
+                <div>
+                    @Html.LabelFor(m => m.Title)
+                    @Html.TextBoxFor(m => m.Title, new { data_bind = "value: title", maxlength = "100" })
+                    @Html.ValidationMessageFor(m => m.Title)
+                </div>
+                <div>
+                    @Html.LabelFor(m => m.Description)
+                    @Html.TextBoxFor(m => m.Description, new { data_bind = "value: desc" })
+                </div>
+                <div>
+                    @Html.LabelFor(m => m.Value)
+                    @Html.TextBoxFor(m => m.Value, new { type = "number", data_bind = "value: value", min = "0" })
+                    @Html.ValidationMessageFor(m => m.Value)
+                </div>
+                <div>
+                    @Html.LabelFor(m => m.IsPercentage)
+                    <input type="checkbox" id="IsPercentage" name="IsPercentage" value="true" data-bind="checked: isPercentage" />
+                </div>
+                <div>
+                    @Html.LabelFor(m => m.Start)
+                    @Html.TextBoxFor(m => m.Start, new { data_input_type = "date", data_bind = "value: start" })
+                </div>
+                <div>
+                    @Html.LabelFor(m => m.Expire)
+                    @Html.TextBoxFor(m => m.Expire, new { data_input_type = "date", data_bind = "value: expire" })
+                </div>
+                <div>
+                    @Html.LabelFor(m => m.DomainID)
+                    @Html.DropDownListFor(m => m.DomainID, new List<SelectListItem>(), new { data_bind = "options: domains, optionsText: 'Text', optionsValue: 'Value', value: domainID" })
+                    @Html.ValidationMessageFor(m => m.DomainID)
+                </div>
+                <div class="btnContainer">
+                    <input type="button" id="btnNewDiscount" name="NewDiscount" class="btnGreen" value="Add discount" data-bind="click: onSubmit, visible: !isEdit()"/>
+                    <input type="button" id="btnSaveDiscount" name="SaveDiscount" class="btnGreen" value="Update discount" data-bind="click: onSubmit, visible: isEdit"/>
+                    <input type="reset" id="btnCancel" name="Cancel" class="btnRed" value="Cancel" data-bind="click: onNewDiscount" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "RegisterConfirmation";
+}
+@section metatags {
+    @{Html.RenderPartial("/Views/Partials/MetaTags.cshtml", new CMS.UI.Models.MetadataModel());}
+}
+@section sidebar {
+    @{
+        Html.RenderPartial("../Partials/SearchPanel");
+        Html.RenderAction("ContactUsPartial", "Website");
+    }
+}
+
+
+<h2>Hi @(((CMS.Utils.CustomPrincipal)User).UserName)</h2>
+
+<h3>
+    Thank you for registering in our system.
+</h3>
+<div>
+    Now you can view all your orders submitted in our shop.
+    Furthermore you can define some addresses in our system to use them when submitting order.
+</div>

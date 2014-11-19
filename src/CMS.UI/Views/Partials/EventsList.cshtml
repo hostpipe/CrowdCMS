@@ -1,0 +1,41 @@
+﻿@model List<CMS.BL.Entity.tbl_Products>
+
+@if (Model != null && Model.Count > 0)
+{
+    <ul class="eventList">
+        @foreach (var product in Model)
+        {
+        <li class="eventListItem">
+            <a href="@(ViewBag.ShopUrl + product.tbl_SiteMap.SM_URL.Trim('/'))">
+                <span class="eventImage">
+                    @if (product.tbl_ProductImageLink.Count > 0)
+                    {
+                        <img alt="@product.tbl_ProductImageLink.FirstOrDefault().tbl_ProductImages.I_View" src="@Html.ImageProvider(CMS.BL.ImageVersionName.productThumb, product.tbl_ProductImageLink.FirstOrDefault().tbl_ProductImages.I_Name, String.Empty)" />
+                    }
+                </span>
+                <span class="eventDescWrapper">
+                    <span class="eventTitle">@product.P_Title</span>
+                    <span class="eventCode">(@product.P_ProductCode)</span>
+                    @*<span class="eventDesc">@Html.Raw(product.tbl_SiteMap.tbl_Content.Where(c => c.C_Approved && !c.C_Deleted).OrderByDescending(c => c.C_ModificationDate).Select(c => c.C_Content).FirstOrDefault())</span>*@
+                    @if (product.tbl_ProductPrice.Count == 1 || (product.tbl_ProductPrice.Count > 1 && product.tbl_ProductPrice.Select(m => m.GetCurrentPriceForEvent()).Min() == product.tbl_ProductPrice.Select(m => m.GetCurrentPriceForEvent()).Max()))
+                    {
+                        <span class="eventPrice">@product.tbl_ProductPrice.First().GetPriceString()</span>
+                    }
+                    else if (product.tbl_ProductPrice.Count > 1)
+                    {
+                        <span class="eventPrice">
+                            from @product.tbl_ProductPrice.Order().First().GetPriceString()
+                            to @product.tbl_ProductPrice.Order().Last().GetPriceString()
+                        </span>
+                    }
+                </span>
+                <input type="button" class="btnViolet small" value="View" />
+            </a>
+        </li>
+        }
+    </ul>
+}
+else
+{
+    <div>There is no event in this category.</div>
+}

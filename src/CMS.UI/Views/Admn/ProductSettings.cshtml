@@ -1,0 +1,121 @@
+﻿@model CMS.UI.Models.ProductModel
+
+<div class="sectionHeader" data-bind="text: sectionHeader"></div>
+<div class="sectionWindow">
+    <div class="btnToggleSection">@(Model != null && Model.ProductType == CMS.BL.ProductType.Event ? "Event" : "Product") Details +</div>
+    <form id="DetailsForm" action="#" class="sectionContent">
+        <div>
+            @Html.LabelFor(m => m.DomainID)
+            @Html.DropDownListFor(m => m.DomainID, ViewBag.Domains as SelectList, new { @class = "short", data_bind = "value: domainID, event: {change: onDomainChange}" })
+            @Html.HiddenFor(m => m.SitemapID)
+            @Html.HiddenFor(m => m.ContentID)
+            @Html.HiddenFor(m => m.ProductID)
+            @Html.HiddenFor(m => m.ProductType)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.ProductTitle)
+            @Html.TextBoxFor(m => m.ProductTitle, new { @class = "long" })
+            <span class="fa fa-info-circle" title="This is the main title of your product."></span>
+            @Html.ValidationMessageFor(m => m.ProductTitle)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.ProductCode)
+            @Html.TextBoxFor(m => m.ProductCode)
+            <span class="fa fa-info-circle" title="Enter a product code for this product."></span>
+            @Html.ValidationMessageFor(m => m.ProductCode)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.CategoryID)
+            @Html.DropDownListFor(m => m.CategoryID, new List<SelectListItem>(), new { data_bind = "options: categories, optionsText: 'Text', optionsValue: 'Value', optionsCaption: 'Select Category', value: categoryID" })
+            <span class="fa fa-info-circle" title="Choose a product category."></span>
+            @Html.ValidationMessageFor(m => m.CategoryID)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.TaxID)
+            @Html.DropDownListFor(m => m.TaxID, ViewBag.Taxes as List<SelectListItem>)
+            <span class="fa fa-info-circle" title="Choose a tax rate."></span>
+            @Html.ValidationMessageFor(m => m.TaxID)
+        </div>
+        @if (Model != null && Model.ProductType == CMS.BL.ProductType.Event)
+        {
+            <div>
+                @Html.LabelFor(m => m.EventTypeID)
+                @Html.DropDownListFor(m => m.EventTypeID, ViewBag.EventTypes as SelectList, new { data_bind = "options: eventTypes, optionsText: 'Title', optionsValue: 'EventTypeID', optionsCaption: 'Select Event Type', value: eventTypeID" })
+                <input type="button" class="btnGreyGreen" value="Add" data-bind="click: onEditEventType" />
+                <input type="button" class="btnGreyGreen" value="Edit" data-bind="click: onViewEventType, visible: eventTypeID() > 0" />
+                @Html.ValidationMessageFor(m => m.EventTypeID)
+            </div>
+        }
+        <div>
+            @Html.LabelFor(m => m.Live)
+            @Html.RadioButton("Live", true, Model != null ? Model.Live : false, new { id = "radioLiveYes" })
+            @Html.Label("LabelYes", "Yes", new { @for = "radioLiveYes", @class = "checkboxLabel" })
+            @Html.RadioButton("Live", false, Model != null ? !Model.Live : true, new { id = "radioLiveNo" })
+            @Html.Label("LabelNo", "No", new { @for = "radioLiveNo", @class = "checkboxLabel" })
+            <span class="fa fa-info-circle" title="Show or hide this product on the front end of the site."></span>
+        </div>
+        <div>
+            @Html.LabelFor(m => m.Offer)
+            @Html.RadioButton("Offer", true, Model != null ? Model.Offer : false, new { id = "radioOfferYes" })
+            @Html.Label("LabelYes", "Yes", new { @for = "radioOfferYes", @class = "checkboxLabel" })
+            @Html.RadioButton("Offer", false, Model != null ? !Model.Offer : true, new { id = "radioOfferNo" })
+            @Html.Label("LabelNo", "No", new { @for = "radioOfferNo", @class = "checkboxLabel" })
+            <span class="fa fa-info-circle" title="If this product part of a special offer."></span>
+        </div>
+        <div>
+            @Html.LabelFor(m => m.StockControl)
+            @Html.RadioButton("StockControl", true, Model != null ? Model.StockControl : false, new { id = "radioStockControlYes" })
+            @Html.Label("LabelYes", "Yes", new { @for = "radioStockControlYes", @class = "checkboxLabel" })
+            @Html.RadioButton("StockControl", false, Model != null ? !Model.StockControl : true, new { id = "radioStockControlNo" })
+            @Html.Label("LabelNo", "No", new { @for = "radioStockControlNo", @class = "checkboxLabel" })
+            <span class="fa fa-info-circle" title="Choose whether to track stock for this product or not."></span>
+        </div>
+        <div>
+            @Html.LabelFor(m => m.Deliverable)
+            @Html.RadioButton("Deliverable", true, Model != null ? Model.Deliverable : false, new { id = "radioDeliverableYes" })
+            @Html.Label("LabelYes", "Yes", new { @for = "radioDeliverableYes", @class = "checkboxLabel" })
+            @Html.RadioButton("Deliverable", false, Model != null ? !Model.Deliverable : true, new { id = "radioDeliverableNo" })
+            @Html.Label("LabelNo", "No", new { @for = "radioDeliverableNo", @class = "checkboxLabel" })
+            <span class="fa fa-info-circle" title="Choose whether this product is deliverable or downloadable."></span>
+        </div>
+        <div>
+            @Html.LabelFor(m => m.Purchasable)
+            @Html.RadioButton("Purchasable", true, Model != null ? Model.Purchasable : false, new { id = "radioPurchasableYes" })
+            @Html.Label("LabelYes", "Yes", new { @for = "radioPurchasableYes", @class = "checkboxLabel" })
+            @Html.RadioButton("Purchasable", false, Model != null ? !Model.Purchasable : true, new { id = "radioPurchasableNo" })
+            @Html.Label("LabelNo", "No", new { @for = "radioPurchasableNo", @class = "checkboxLabel" })
+            <span class="fa fa-info-circle" title="Choose whether this product can be purchased."></span>
+        </div>
+        <div>
+            @Html.LabelFor(m => m.Featured)
+            @Html.RadioButton("Featured", true, Model != null ? Model.Featured : false, new { id = "radioFeaturedYes" })
+            @Html.Label("LabelYes", "Yes", new { @for = "radioFeaturedYes", @class = "checkboxLabel" })
+            @Html.RadioButton("Featured", false, Model != null ? !Model.Featured : true, new { id = "radioFeaturedNo" })
+            @Html.Label("LabelNo", "No", new { @for = "radioFeaturedNo", @class = "checkboxLabel" })
+            <span class="fa fa-info-circle" title="Choose whether this product is included in featred products"></span>
+        </div>
+        <div>
+            @Html.LabelFor(m => m.AffiliateLink)
+            @Html.TextBoxFor(m => m.AffiliateLink, new { @class = "long" })
+            <span class="fa fa-info-circle" title="Use this for affiliate links from organisations such as Amazon"></span>
+            @Html.ValidationMessageFor(m => m.AffiliateLink)
+        </div>
+    </form>
+</div>
+@Html.Action("SEOProductFields", "Admn", new { contentID = Model != null ? Model.ContentID : 0 })
+<div class="sectionWindow">
+    <div class="btnToggleSection">Page Content +</div>
+    <div class="sectionContent">
+        <div>
+            <textarea id="ProductContent" name="ProductContent" class="tinyMCEEditor" data-count="true" data-minwords="250">@(Model != null ? Model.Content : ViewBag.DefaultWyswigContent)</textarea>
+            <span data-for="ProductContent" class="counter"><span data-name="icon" title="Your Page Contents must be at least 250 words long, ideally approaching 400 words!"></span><span data-name="text"></span></span>
+        </div>
+    </div>
+</div>
+@Html.Action("ProductContentVersion", "Admn", new { sectionID = Model != null ? Model.SitemapID : 0, contentID = Model != null ? Model.ContentID : 0 })
+<div>
+    <input type="button" id="btnNewProduct" name="NewProduct" class="btnGreen" value="Add @(Model != null && Model.ProductType == CMS.BL.ProductType.Event ? "event" : "product")" data-bind="click: onSubmit, visible: !isEdit()" />
+    <input type="button" id="btnSaveProduct" name="SaveProduct" class="btnGreen" value="Update @(Model != null && Model.ProductType == CMS.BL.ProductType.Event ? "event" : "product")" data-bind="click: onSubmit, visible: isEdit" />
+    <input type="button" id="btnApproveProduct" name="ApproveProduct" class="btnGrey" value="Approve Content" data-bind="click: onApprove, visible: isEdit" />
+    <input type="button" id="btnCancel" name="Cancel" class="btnRed" value="Cancel" data-bind="click: onNewProduct" />
+</div>

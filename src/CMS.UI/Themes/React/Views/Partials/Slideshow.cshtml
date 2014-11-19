@@ -1,0 +1,37 @@
+﻿@model List<CMS.BL.Entity.tbl_Image>
+@{
+    List<CMS.BL.Entity.tbl_Image> images;
+    int i = 0;
+    if (Model.Count > 0)
+    {
+        images = Model;
+    }
+    else
+    { //get homepage images
+        CMS.Services.WebContent WebContentService = new CMS.Services.WebContent();
+        CMS.BL.Entity.tbl_Content homepagecontent = WebContentService.GetContentBySitemapID(ViewBag.HomepageID);
+        images = homepagecontent.tbl_SiteMap.SitemapImages.ToList();
+    }
+    if (images.Count > 0)
+    {
+        var image = images.Take(1).FirstOrDefault();
+        <div id="hero"  style="background-image:url('@Html.ImageProvider(CMS.BL.ImageVersionName.medium, image.I_Thumb, String.Empty)');">
+            <div class="container">
+                <h1 class="hero-text animated fadeInDown">The best interfaces
+                    <br />
+                    for your web & mobile apps
+			        </h1>
+                <p class="sub-text animated fadeInDown">
+                    Get a complete existing website with great design up and running in no time.
+			   
+                </p>
+                <div class="cta animated fadeInDown">
+                    <a href="features.html" class="button-outline">See the tour</a>
+                    <a href="signup.html" class="button">Sign up free</a>
+                </div>
+                <div style="background-image:url('@Html.ImageProvider(CMS.BL.ImageVersionName.medium, image.I_Thumb, String.Empty)');"></div>
+            </div>
+        </div>
+            
+    }
+}

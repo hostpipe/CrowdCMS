@@ -1,0 +1,23 @@
+﻿@model List<CMS.UI.Models.WebsiteMenuModel>
+
+@{
+    ViewBag.Title = "404 Page Not Found";
+}
+@section metatags {
+    @{Html.RenderPartial("/Views/Partials/MetaTags.cshtml", new CMS.UI.Models.MetadataModel());}
+}
+@section sidebar {
+    @{
+        Html.RenderPartial("../Partials/SearchPanel");
+        Html.RenderAction("ContactUsPartial", "Website");
+    }
+}
+
+<div class="sitemap">
+    <h1>Page cannot be found (404 Error)</h1>
+    <p>The page you are looking for has been moved or deleted. The following sitemap may help you to find what you are looking for.</p>
+    <br />
+    <ul>
+        @CMSHelpers.WebsiteMenu(Model, Request.Url.AbsolutePath)
+    </ul>
+</div>

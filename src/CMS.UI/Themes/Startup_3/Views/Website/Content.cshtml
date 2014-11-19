@@ -1,0 +1,22 @@
+﻿@model CMS.UI.Models.ContentModel
+@section metatags {
+    @{ Html.RenderPartial("/Views/Partials/MetaTags.cshtml", new CMS.UI.Models.MetadataModel(Model.Content));}
+}
+@section styles {
+    @Html.Raw(Model != null ? Model.CSS : String.Empty)
+}
+@section scripts {
+
+}
+@section sidebar {
+    @{
+        Html.RenderPartial("../Partials/SearchPanel");
+        @*Html.RenderAction("TestimonialsPartial", "Website");*@
+        Html.RenderAction("ContactUsPartial", "Website");
+    }
+}
+
+@if (Model != null)
+{
+    Html.RenderPartial("~/Views/Partials/ContentPartial.cshtml", Model.HtmlElements);
+}

@@ -1,0 +1,43 @@
+﻿@model List<CMS.BL.Entity.tbl_Portfolio>
+@{string lastPortfolioCatTitle = "";}
+
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="title2">
+                <h3>You may also like...</h3>
+            </div>
+			<div class="divider half-margins"><!-- divider --></div>
+			<ul class="bxslider">
+                @foreach (var portfolio in Model)
+                {
+                    <li>
+                        <a href="@(ViewBag.PortfolioUrl + portfolio.PO_Link)" title="View @portfolio.PO_Title">
+                            @if (portfolio.tbl_PortfolioImage != null)
+                            {
+                                foreach(var portfolioImage in portfolio.tbl_PortfolioImage.OrderBy(pi => pi.PI_Order).Take(1))
+                                {
+                                    <img src="@Html.ImageProvider(CMS.BL.ImageVersionName.portfolio, portfolioImage.tbl_Image.I_Thumb,String.Empty)" alt="@portfolio.PO_Title" class="img-responsive" />
+                                }
+                            }
+                        </a>
+                    </li>
+                    lastPortfolioCatTitle = portfolio.tbl_PortfolioCategory.POC_Title;
+                }
+            </ul>
+        </div>
+    </div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        // bxslider options:
+        $('.bxslider').bxSlider({
+            minSlides: 3,
+            maxSlides: 4,
+            slideWidth: 170,
+            slideMargin: 10,
+            pager: false
+        });
+    });
+</script>

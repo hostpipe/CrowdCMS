@@ -1,0 +1,58 @@
+﻿@model List<CMS.BL.Entity.tbl_DonationInfo>
+@{
+    ViewBag.Title = "Donation Categories";
+    CMS.BL.Entity.tbl_Content categoryPage = ViewBag.CategoriesPage as CMS.BL.Entity.tbl_Content;
+}
+@section metatags {
+    @{ Html.RenderPartial("/Views/Partials/MetaTags.cshtml", new CMS.UI.Models.MetadataModel(categoryPage)); }
+}
+@section styles {
+    @Html.Raw(categoryPage != null ? categoryPage.tbl_SiteMap.SM_CSS : String.Empty)
+}
+@section scripts {
+@*    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.donationTile').mouseenter(function () {
+                $(this).find('.donationDesc').stop().animate({ height: '90px' }, { duration: 600, queue: false });
+            });
+            $('.donationTile').mouseleave(function () {
+                $(this).find('.donationDesc').stop().animate({ height: '0px' }, { duration: 600, queue: false });
+            });
+        });
+    </script>*@
+    @Scripts.Render("~/bundles/otherLibs")
+    @Scripts.Render("~/bundles/donationWebManager")
+}
+@section sidebar {
+    @{
+        Html.RenderPartial("../Partials/SearchPanel");
+        Html.RenderAction("ContactUsPartial", "Website");
+    }
+}
+<div class="row">
+    <div id="Donation" class="col-sm-12">
+        <h1>Donations</h1>
+        @*<div>I want to make @Html.DropDownList("DonationType", ViewBag.DonationsType as SelectList, new { data_bind = "value: donationType" }) donation for: </div>*@
+        @foreach (var item in ViewBag.DonationsType as SelectList)
+        {
+            <div class="categories" data-bind="visible: donationType() == '@item.Text'">
+                @Html.Partial("~/Views/Partials/DonationTiles.cshtml", Model.Where(m => m.DI_DonationTypeID == Int32.Parse(item.Value)))
+            </div>
+        }
+        <div class="form-group">
+            <label for="iCustomAmount">Custom Donation Amount <span class="currencySign">@CultureInfo.CurrentCulture.NumberFormat.CurrencySymbol</span></label>
+            <div class="input-group">
+                <input type="text" name="customAmount" id="iCustomAmount" class="form-control" data-bind="event: { blur: onCustomAmount }" />
+                <div class="input-group-btn">
+                    <a href="@Url.RouteUrl("DonateCheckout", new { type = "Single", amount = Model != null && Model.Count > 0 ? Model.First().DI_Amount : 0 })" id="btnDonate" class="btn btn-success">Donate now</a>
+                </div>
+            </div>
+        </div>
+        @if (categoryPage != null)
+        {
+            <div class="siteContent">
+                @Html.Raw(categoryPage.C_Content)
+            </div>
+        }
+    </div>
+</div>

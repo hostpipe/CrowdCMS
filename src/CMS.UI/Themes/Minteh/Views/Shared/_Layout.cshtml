@@ -1,0 +1,43 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section metatags {
+    @RenderSection("metatags", true)
+}
+
+@section scripts {
+    @Html.Partial("_ScriptsSection")
+    @RenderSection("scripts", false)
+}
+
+@section analytics {
+    @Html.Partial("_AnalyticsSection")
+    @RenderSection("analytics", false)
+}
+
+@section styles {
+    @Html.Partial("_StylesSection")
+    @RenderSection("styles", false)    
+}
+
+@Html.Partial("Header")
+
+@RenderSection("slideshow", false)
+
+<section>
+    <div class="billboard">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8">
+                    @RenderBody()
+                </div>
+                <div class="col-sm-4">
+                    @RenderSection("sidebar", false)
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@{Html.RenderAction("Footer", "Website");}

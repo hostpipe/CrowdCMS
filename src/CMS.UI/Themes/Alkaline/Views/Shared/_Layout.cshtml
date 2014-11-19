@@ -1,0 +1,151 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section metatags {
+    @RenderSection("metatags", true)
+}
+@section scripts {
+    @Scripts.Render("~/bundles/jquery/web", "~/bundles/jqueryUI", "~/bundles/jqueryVal", "~/bundles/bootstrap", "~/bundles/web")
+    @RenderSection("scripts", false)
+    @if (!Request.IsAuthenticated && (ViewBag.SubscriptionEnabled ?? false))
+    {
+        @Scripts.Render("~/bundles/subscriptionManager")
+    }
+}
+@section analytics {
+    @if (ViewBag.IsGoogleAnalytics && !(bool)this.ViewBag.NoIndex)
+    {
+        <script type="text/javascript">
+            @Html.Raw(ViewBag.GoogleAnalytics)
+        </script>
+    }
+}
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800" rel="stylesheet" type="text/css" />
+
+@section styles {
+    @Styles.Render("~/Content/web.css", "~/Content/themes/base/ui.css", String.Format("~/Theme/{0}/css", (string)this.ViewBag.Theme))
+    @RenderSection("styles", false)
+}
+
+<script type="text/javascript" src="/Themes/Alkaline/plugins/modernizr.min.js"></script>
+
+<a class="accessible" href="#middle">[Skip to Content]</a>
+
+<!-- TOP BAR -->
+<div id="topBar">
+    <div class="container">
+        <span class="hidden-xs">Welcome to Crowd CMS: 01453 884 100</span>
+    </div>
+</div>
+<!-- /TOP BAR -->
+
+<!-- HEADER -->
+<header id="header">
+    <div class="container">
+
+        <!-- LOGO -->
+        <a href="/" class="logo">
+            <img alt="Alkaline" src="/Themes/Alkaline/images/logo.png" height="60" /></a>
+        <!-- LOGO -->
+
+        <!-- OPTIONS -->
+        <ul id="topOptions">
+            <li>
+                <!-- Mobile Menu Button -->
+                <button class="btn btn-mobile" data-toggle="collapse" data-target=".nav-main-collapse">
+                    <i class="fa fa-bars"></i>
+                </button>
+            </li>
+        </ul>
+        <!-- /OPTIONS -->
+
+
+        <!-- TOP MENU -->
+        <div class="navbar-collapse nav-main-collapse collapse pull-left">
+            <nav class="nav-main">
+                <ul class="nav nav-pills nav-main scroll-menu" id="topMain">
+                    @Html.Action("Menu", "Website")
+                </ul>
+            </nav>
+        </div>
+        <!-- /TOP MENU -->
+
+    </div>
+</header>
+<!-- /HEADER -->
+
+@RenderSection("slideshow", false)
+
+@if (!(bool)ViewBag.IsHomePage)
+{
+    <div id="middle" class="container">
+        <div class="white">
+			<div class="page-header">
+				<h1>@ViewBag.Title</h1>
+			</div>
+			<div class="row">
+                <div class="col-sm-12">
+                    @RenderBody()
+
+                    @RenderSection("sidebar", false)
+                </div>
+            </div>
+        </div>
+    </div>
+}
+    @{Html.RenderAction("Footer", "Website");}
+
+
+
+
+<!-- JAVASCRIPT FILES -->
+<script type="text/javascript" src="/Themes/Alkaline/plugins/jquery.easing.1.3.js"></script>
+<script type="text/javascript" src="/Themes/Alkaline/plugins/jquery.appear.js"></script>
+<script type="text/javascript" src="/Themes/Alkaline/plugins/jquery.isotope.js"></script>
+<script type="text/javascript" src="/Themes/Alkaline/plugins/jquery.nicescroll.min.js"></script>
+
+<script type="text/javascript" src="/Themes/Alkaline/plugins/magnific-popup/jquery.magnific-popup.min.js"></script>
+<script type="text/javascript" src="/Themes/Alkaline/plugins/owl-carousel/owl.carousel.min.js"></script>
+<script type="text/javascript" src="/Themes/Alkaline/plugins/knob/js/jquery.knob.js"></script>
+<script type="text/javascript" src="/Themes/Alkaline/js/jquery.bxslider.min.js"></script>
+<!-- MAXIMAGE SLIDER -->
+<script type="text/javascript" src="/Themes/Alkaline/plugins/maximage/js/jquery.cycle.all.min.js"></script>
+<script type="text/javascript" src="/Themes/Alkaline/plugins/maximage/js/jquery.maximage.min.js"></script>
+
+<script type="text/javascript" src="/Themes/Alkaline/js/scripts.js"></script>
+
+
+
+
+
+
+@*<<div style="display: none;">
+
+    @Html.Action("Breadcrumbs", "Website")
+
+    @Html.Action("SubMenu", "Website", new { sitemapID = ViewBag.PageID })
+
+    @Html.Action("GetAllSubCats", "Website")
+
+    @Html.Action("FeaturedProducts", "Website")
+
+
+    @{Html.RenderAction("Footer", "Website");}
+</div>
+div class="account col-sm-2">
+    @if (Request.IsAuthenticated)
+    {
+        <a href="@Url.RouteUrl("Account")">Your account</a>
+        <ul>
+            <li><a href="@Url.RouteUrl("EditMyDetails")">Edit My Details</a></li>
+            <li><a href="@Url.RouteUrl("OrderHistory")">Your order history</a></li>
+        </ul>
+        <a href="@Url.RouteUrl("Logout")">Logout</a>
+    }
+    else
+    {
+        <a href="@Url.RouteUrl("Login")">Login</a>
+        <a href="@Url.RouteUrl("Registration")">Register</a>
+    }
+</div> *@
+

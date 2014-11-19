@@ -1,0 +1,63 @@
+﻿@model CMS.UI.Models.ProdAttributeModel
+@{
+    ViewBag.Title = "Product Attributes";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@section scripts {
+    @Scripts.Render("~/bundles/prodAttributes")
+}
+
+<div id="ProdAttributesContent"
+    data-addAttribute-url="@Url.Action("AddAttribute", "Admn")"
+    data-addAttValue-url="@Url.Action("AddAttributeValue", "Admn")"
+    data-deleteAttribute-url="@Url.Action("DeleteAttribute", "Admn")"
+    data-deleteAttValue-url="@Url.Action("DeleteAttributeValue", "Admn")"
+    data-getAttribute-url="@Url.Action("GetAttribute", "Admn")"
+    data-updateAttribute-url="@Url.Action("UpdateAttribute", "Admn")"
+    data-updateAttValue-url="@Url.Action("UpdateAttributeValue", "Admn")"
+    >
+    <div class="leftMenuContainer">
+        <div class="btnGreyMenu" data-bind="click: onNewAttribute">Add Attribute</div>
+        @Html.Action("LeftMenu", "Admn")
+    </div>
+    <div class="mainContainer">
+        <div class="sectionHeader" data-bind="text: sectionHeader"></div>
+        <div class="sectionWindow">
+            <div class="btnToggleSection">Attribute Details +</div>
+            <form id="DetailsForm" action="#" class="sectionContent">
+                <div>
+                    @Html.LabelFor(m => m.Title)
+                    @Html.TextBoxFor(m => m.Title, new { data_bind = "value: title" })
+                    @Html.ValidationMessageFor(m => m.Title)
+                    @Html.HiddenFor(m => m.AttributeID, new { data_bind = "value: attributeID" })
+                </div>
+                <div class="btnContainer">
+                    <button id="btnNewAttribute" name="NewAttribute" class="btnGreen" data-bind="click: onSubmit, visible: !isEdit()" >Add attribute</button>
+                    <button id="btnSaveAttribute" name="SaveAttribute" class="btnGreen" data-bind="click: onSubmit, visible: isEdit" >Update attribute</button>
+                    <button id="btnCancel" name="Cancel" class="btnRed" data-bind="click: onNewAttribute" >Cancel</button>
+                </div>
+            </form>
+        </div>
+        <div class="sectionWindow" data-bind="visible: isEdit">
+            <div class="btnToggleSection">Attribute Values +</div>
+            <div class="sectionContent">
+                <div data-bind="foreach: attrValues">
+                    <form data-bind="attr: { 'data-valueID': ValueID }">
+                        <input type="text" data-bind="value: Value" />
+                        <button class="btnGreyGreen" data-bind="click: $root.onSaveValue">Save</button>
+                        <button class="btnGreyRed" data-bind="click: $root.onDeleteValue">Delete</button>
+                    </form>
+                </div>
+                <div>
+                    <button id="btnNewValue" name="NewValue" class="btnGreen" data-bind="click: onNewValue" >Add new attribute value</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form id="NewValue" class="hidden">
+        @Html.LabelFor(m => m.Value)
+        @Html.TextBoxFor(m => m.Value, new { id = "tbNewValue" })
+        <button class="btnGreyGreen" data-bind="click: onSaveValue">Save</button>
+        @Html.ValidationMessageFor(m => m.Value)
+    </form>
+</div>

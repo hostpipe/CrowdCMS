@@ -1,0 +1,79 @@
+﻿@model CMS.UI.Models.AddressModel
+@{
+    ViewBag.Title = "Add new addres";
+}
+@section metatags {
+    @{Html.RenderPartial("/Views/Partials/MetaTags.cshtml", new CMS.UI.Models.MetadataModel());}
+}
+@section sidebar {
+    @{
+        Html.RenderPartial("../Partials/SearchPanel");
+        Html.RenderAction("ContactUsPartial", "Website");
+    }
+}
+
+<form id="AddressForm" class="webForm" action="#" method="post">
+    <h1>@(Model != null && Model.AddressID > 0 ? "Update Address" : "Add Address")</h1>
+    <div class="noLabel">
+        @Html.ValidationSummary(true)
+    </div>
+    @Html.HiddenFor(m => m.AddressID)
+    <div>
+        @Html.LabelFor(m => m.Title)
+        @Html.EditorFor(m => m.Title)
+        @Html.ValidationMessageFor(m => m.Title)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.FirstName)
+        @Html.EditorFor(m => m.FirstName)
+        @Html.ValidationMessageFor(m => m.FirstName)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.Surname)
+        @Html.EditorFor(m => m.Surname)
+        @Html.ValidationMessageFor(m => m.Surname)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.Phone)
+        @Html.EditorFor(m => m.Phone)
+        @Html.ValidationMessageFor(m => m.Phone)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.Address1)
+        @Html.EditorFor(m => m.Address1)
+        @Html.ValidationMessageFor(m => m.Address1)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.Address2)
+        @Html.EditorFor(m => m.Address2)
+        @Html.ValidationMessageFor(m => m.Address2)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.Address3)
+        @Html.EditorFor(m => m.Address3)
+        @Html.ValidationMessageFor(m => m.Address3)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.Town)
+        @Html.EditorFor(m => m.Town)
+        @Html.ValidationMessageFor(m => m.Town)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.County)
+        @Html.EditorFor(m => m.County)
+        @Html.ValidationMessageFor(m => m.County)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.Postcode)
+        @Html.EditorFor(m => m.Postcode)
+        @Html.ValidationMessageFor(m => m.Postcode)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.CountryID)
+        @Html.DropDownListFor(m => m.CountryID, Model.countryList, "Select country from the list")
+        @Html.ValidationMessageFor(m => m.CountryID)
+    </div>
+    <div class="noLabel">
+        <input type="submit" value="@(Model != null && Model.AddressID > 0 ? "Update" : "Add")" />
+    </div>
+</form>

@@ -1,0 +1,23 @@
+<html>
+<head>
+<title>MCFileManager Example</title>
+<script language="javascript" type="text/javascript" src="../../js/mcfilemanager.js"></script>
+<script language="javascript" type="text/javascript">
+function insertURL(url, info) {
+	alert("URL: " + url + ", mycustomfield: " + info.custom.mycustomfield);
+	document.forms['example'].url.value = url;
+}
+</script>
+</head>
+<body>
+
+<h3>Custom JavaScript insert script:</h3>
+<p>This example shows how you can recive a custom info field in JavaScript.</p>
+
+<form name="example">
+<input type="text" name="url" value="" size="80" />
+<a href="javascript:mcFileManager.open('example','url','','insertURL');">[MCFileManager]</a>
+</form>
+
+</body>
+</html>

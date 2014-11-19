@@ -1,0 +1,289 @@
+﻿@model CMS.UI.Models.NewOrderModel
+
+<div class="sectionHeader">Add New Order</div>
+<div class="sectionWindow" data-bind="visible: isStep1">
+    <div class="btnToggleSection">Domain +</div>
+    <div class="sectionContent">
+        <div>
+            <label for="ddlDomain">Domain</label>
+            @Html.DropDownList("ddlDomain", ViewBag.Domains as SelectList, new { data_bind = "value: domainID" })
+            <span class="fa fa-info-circle" title="You will not be able to change domain without deleting current order."></span>
+        </div>
+    </div>
+</div>
+<form id="OrderForm" method="post" action="#">
+    <div class="sectionWindow" data-bind="visible: isStep2">
+        <div class="btnToggleSection">Customer +</div>
+        <div class="sectionContent">
+            <div>
+                @Html.LabelFor(model => model.CustomerID)
+                <input placeholder="start typing" type="text" data-bind="jqAuto: { autoFocus: true }, jqAutoSource: customers, jqAutoSourceValue: 'Value', jqAutoSourceLabel: 'Text', jqAutoValue: customerID, jqAutoSourceInputValue: 'Text'" />
+                @Html.TextBoxFor(model => model.CustomerID, new { data_bind = "value: customerID", @class = "hidden" })
+                @Html.ValidationMessageFor(model => model.CustomerID)
+            </div>
+            <div data-bind="visible: addresses().length > 0">
+                @Html.LabelFor(model => model.AddressID)
+                @Html.DropDownListFor(model => model.AddressID, new List<SelectListItem>(), new { data_bind = "options: addresses, optionsText: 'Text', optionsValue: 'Value', optionsCaption: 'Select address', value: addressID" })
+                @Html.ValidationMessageFor(model => model.AddressID)
+            </div>
+            <div>
+                @Html.LabelFor(model => model.CustomerEmail)
+                @Html.TextBoxFor(model => model.CustomerEmail, new { data_bind = "value: email" })
+                @Html.ValidationMessageFor(model => model.CustomerEmail)
+            </div>
+            <div>
+                @Html.LabelFor(model => model.VatNumber)
+                @Html.TextBoxFor(model => model.VatNumber)
+            </div>
+        </div>
+    </div>
+    <div class="sectionWindow" data-bind="visible: isStep2">
+        <div class="btnToggleSection">Discount +</div>
+        <div class="sectionContent">
+            <div data-bind="visible: !isDiscount()">
+                @Html.LabelFor(model => model.DiscountCode)
+                @Html.TextBoxFor(model => model.DiscountCode, new { data_bind = "value: discountCode" })
+                <button type="button" class="btnGreyGreen" data-bind="click: onAddDiscount">Add</button>
+            </div>
+            <div data-bind="visible: isDiscount">
+                <label>Promotional Code:</label>
+                <span data-bind="text: discountText"></span>
+                <button type="button" class="btnViolet small" data-bind="click: onRemoveDiscount">Remove</button>
+            </div>
+        </div>
+    </div>
+    <div class="sectionWindow" data-bind="visible: isStep2">
+        <div class="btnToggleSection">Addresses +</div>
+        <div class="sectionContent">
+            <div class="sectionColumn">
+                <h2>Delivery Address</h2>
+                <div>
+                    @Html.LabelFor(model => model.DeliveryTitle)
+                    @Html.TextBoxFor(model => model.DeliveryTitle, new { data_bind = "value: dTitle" })
+                    @Html.ValidationMessageFor(model => model.DeliveryTitle)
+                </div>
+                <div>
+                    @Html.LabelFor(model => model.DeliveryFirstName)
+                    @Html.TextBoxFor(model => model.DeliveryFirstName, new { data_bind = "value: dFirstName" })
+                    @Html.ValidationMessageFor(model => model.DeliveryFirstName)
+                </div>
+                <div>
+                    @Html.LabelFor(model => model.DeliverySurname)
+                    @Html.TextBoxFor(model => model.DeliverySurname, new { data_bind = "value: dSurname" })
+                    @Html.ValidationMessageFor(model => model.DeliverySurname)
+                </div>
+                <div>
+                    @Html.LabelFor(model => model.DeliveryPhone)
+                    @Html.TextBoxFor(model => model.DeliveryPhone, new { data_bind = "value: dPhone" })
+                    @Html.ValidationMessageFor(model => model.DeliveryPhone)
+                </div>
+                <div>
+                    @Html.LabelFor(model => model.DeliveryAddress1)
+                    @Html.TextBoxFor(model => model.DeliveryAddress1, new { data_bind = "value: dAdd1" })
+                    @Html.ValidationMessageFor(model => model.DeliveryAddress1)
+                </div>
+                <div>
+                    @Html.LabelFor(model => model.DeliveryAddress2)
+                    @Html.TextBoxFor(model => model.DeliveryAddress2, new { data_bind = "value: dAdd2" })
+                    @Html.ValidationMessageFor(model => model.DeliveryAddress2)
+                </div>
+                <div>
+                    @Html.LabelFor(model => model.DeliveryAddress3)
+                    @Html.TextBoxFor(model => model.DeliveryAddress3, new { data_bind = "value: dAdd3" })
+                    @Html.ValidationMessageFor(model => model.DeliveryAddress3)
+                </div>
+                <div>
+                    @Html.LabelFor(model => model.DeliveryCity)
+                    @Html.TextBoxFor(model => model.DeliveryCity, new { data_bind = "value: dCity" })
+                    @Html.ValidationMessageFor(model => model.DeliveryCity)
+                </div>
+                <div>
+                    @Html.LabelFor(model => model.DeliveryPostcode)
+                    @Html.TextBoxFor(model => model.DeliveryPostcode, new { data_bind = "value: dPostcode" })
+                    @Html.ValidationMessageFor(model => model.DeliveryPostcode)
+                </div>
+                <div>
+                    @Html.LabelFor(model => model.DeliveryState)
+                    @Html.TextBoxFor(model => model.DeliveryState, new { data_bind = "value: dCounty" })
+                    @Html.ValidationMessageFor(model => model.DeliveryState)
+                </div>
+                <div>
+                    @Html.LabelFor(model => model.DeliveryCountryID)
+                    @Html.DropDownListFor(model => model.DeliveryCountryID, new List<SelectListItem>(), new { data_bind = "options: deliveryCountries, optionsText: 'Text', optionsValue: 'Value', optionsCaption: 'Select Delivery Country', value: dCountryID" })
+                    @Html.ValidationMessageFor(model => model.DeliveryCountryID)
+                </div>
+            </div>
+            <div class="sectionColumn">
+                <h2>Billing Address (this section provides data to add or update customer)</h2>
+                <div>
+                    @Html.LabelFor(model => model.BillingAddressTheSame)
+                    @Html.CheckBoxFor(model => model.BillingAddressTheSame, new { data_bind = "checked: addressTheSame" })
+                </div>
+                <div>
+                    @Html.LabelFor(model => model.BillingTitle)
+                    @Html.TextBoxFor(model => model.BillingTitle, new { data_bind = "value: bTitle" })
+                    @Html.ValidationMessageFor(model => model.BillingTitle)
+                </div>
+                <div>
+                    @Html.LabelFor(model => model.BillingFirstName)
+                    @Html.TextBoxFor(model => model.BillingFirstName, new { data_bind = "value: bFirstName" })
+                    @Html.ValidationMessageFor(model => model.BillingFirstName)
+                </div>
+                <div>
+                    @Html.LabelFor(model => model.BillingSurname)
+                    @Html.TextBoxFor(model => model.BillingSurname, new { data_bind = "value: bSurname" })
+                    @Html.ValidationMessageFor(model => model.BillingSurname)
+                </div>
+                <div>
+                    @Html.LabelFor(model => model.BillingPhone)
+                    @Html.TextBoxFor(model => model.BillingPhone, new { data_bind = "value: bPhone" })
+                    @Html.ValidationMessageFor(model => model.BillingPhone)
+                </div>
+                <div>
+                    @Html.LabelFor(model => model.BillingAddress1)
+                    @Html.TextBoxFor(model => model.BillingAddress1, new { data_bind = "value: bAdd1" })
+                    @Html.ValidationMessageFor(model => model.BillingAddress1)
+                </div>
+                <div>
+                    @Html.LabelFor(model => model.BillingAddress2)
+                    @Html.TextBoxFor(model => model.BillingAddress2, new { data_bind = "value: bAdd2" })
+                    @Html.ValidationMessageFor(model => model.BillingAddress2)
+                </div>
+                <div>
+                    @Html.LabelFor(model => model.BillingAddress3)
+                    @Html.TextBoxFor(model => model.BillingAddress3, new { data_bind = "value: bAdd3" })
+                    @Html.ValidationMessageFor(model => model.BillingAddress3)
+                </div>
+                <div>
+                    @Html.LabelFor(model => model.BillingCity)
+                    @Html.TextBoxFor(model => model.BillingCity, new { data_bind = "value: bCity" })
+                    @Html.ValidationMessageFor(model => model.BillingCity)
+                </div>
+                <div>
+                    @Html.LabelFor(model => model.BillingPostcode)
+                    @Html.TextBoxFor(model => model.BillingPostcode, new { data_bind = "value: bPostcode" })
+                    @Html.ValidationMessageFor(model => model.BillingPostcode)
+                </div>
+                <div>
+                    @Html.LabelFor(model => model.BillingState)
+                    @Html.TextBoxFor(model => model.BillingState, new { data_bind = "value: bCounty" })
+                    @Html.ValidationMessageFor(model => model.BillingState)
+                </div>
+                <div>
+                    @Html.LabelFor(model => model.BillingCountryID)
+                    @Html.DropDownListFor(model => model.BillingCountryID, new List<SelectListItem>(), new { data_bind = "options: billingCountries, optionsText: 'Text', optionsValue: 'Value', optionsCaption: 'Select Billing Country', value: bCountryID" })
+                    @Html.ValidationMessageFor(model => model.BillingCountryID)
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="sectionWindow" data-bind="visible: isStep2() || isStep3()">
+    <div class="btnToggleSection">Products +</div>
+    <div class="sectionContent">
+        <div data-bind="visible: isStep2">
+            <select data-bind="options: categories, optionsText: 'Text', optionsValue: 'Value', optionsCaption: 'Select Category', value: categoryID"></select>
+            <select data-bind="options: products, optionsText: 'Text', optionsValue: 'Value', optionsCaption: 'Select Product', value: prodID"></select>
+            <select data-bind="options: prices, optionsText: 'Text', optionsValue: 'Value', optionsCaption: 'Select Product Attributes', value: priceID"></select>
+            <input type="number" value="1" min="1" data-bind="value: amount" />
+            <input type="button" value="Add" class="btnGreyGreen" data-bind="click: onAddProduct" />
+        </div>
+        <div class="tableContainer">
+            <table class="hTable">
+                <thead>
+                    <tr>
+                        <td>Product</td>
+                        <td>Quantity</td>
+                        <td>Price (@CultureInfo.CurrentCulture.NumberFormat.CurrencySymbol)</td>
+                        <td>Sub Total (@CultureInfo.CurrentCulture.NumberFormat.CurrencySymbol)</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- ko foreach: orderedProducts -->
+                    <tr>
+                        <td>
+                            <span data-bind="text: name"></span>
+                            <br />
+                            <span data-bind="text: attributes"></span>
+                        </td>
+                        <td><span data-bind="text: amount"></span></td>
+                        <td><span data-bind="text: itemPrice"></span></td>
+                        <td><span data-bind="text: price"></span></td>
+                        <td><input type="button" class="btnGreyRed" value="Delete" data-bind="click: $root.onDeleteProduct, attr: { 'data-basketContentID': basketContent }, visible: $root.isStep2" /></td>
+                    </tr>
+                    <!-- /ko -->
+                    <tr data-bind="visible: isStep3">
+                        <td colspan="3">Delivery</td>
+                        <td colspan="2"><span data-bind="text: deliveryCost"></span></td>
+                    </tr>
+                    <tr data-bind="visible: isDiscount">
+                        <td colspan="3">Discount</td>
+                        <td colspan="2"><span data-bind="text: discount"></span></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">TOTAL</td>
+                        <td colspan="2"><span data-bind="text: totalPrice"></span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="sectionWindow" data-bind="visible: isStep3">
+    <div class="btnToggleSection">Delivery Info +</div>
+    <div class="sectionContent">
+        <div>
+            <label for="ddlPostage">Select Postage</label>
+            <select data-bind="options: postages, optionsText: 'Text', optionsValue: 'Value', optionsCaption: 'Select Postage', value: postageID"></select>
+        </div>
+        <div>
+            @Html.LabelFor(model => model.Instructions)
+            @Html.TextAreaFor(model => model.Instructions, new { @class = "long", data_bind = "value: instructions" })
+        </div>
+    </div>
+</div>
+<div class="sectionWindow" data-bind="visible: isStep3">
+    <div class="btnToggleSection">Payment +</div>
+    <div class="sectionContent">
+        <div>
+            @Html.LabelFor(m => m.IsCustomPrice)
+            @Html.CheckBoxFor(m => m.IsCustomPrice, new { data_bind = "checked: isCustomPrice" })
+            @Html.TextBoxFor(m => m.CustomPrice, new { data_bind = "visible: isCustomPrice, value: customPrice" })
+        </div>
+        <div>
+            @Html.LabelFor(model => model.IsPayment)
+            @Html.CheckBoxFor(model => model.IsPayment, new { data_bind = "checked: isPayment" })
+        </div>
+        <div data-bind="visible: !isPayment()">
+            @Html.LabelFor(model => model.CashPayment)
+            @Html.RadioButtonFor(model => model.CashPayment, (int)CMS.BL.CashPayment.Cash, new { data_bind = "checked: cashPayment", id = CMS.BL.CashPayment.Cash.ToString() })
+            <label class="checkboxLabel" for="@CMS.BL.CashPayment.Cash.ToString()">Cash</label>
+            @Html.RadioButtonFor(model => model.CashPayment, (int)CMS.BL.CashPayment.Cheque, new { data_bind = "checked: cashPayment", id = CMS.BL.CashPayment.Cheque.ToString() })
+            <label class="checkboxLabel" for="@CMS.BL.CashPayment.Cheque.ToString()">Cheque</label>
+        </div>
+        <div data-bind="visible: isPayment">
+            @Html.LabelFor(model => model.PaymentDomainID)
+            @Html.DropDownListFor(model => model.PaymentDomainID, new List<SelectListItem>(), new { data_bind = "options: payments, optionsText: 'Text', optionsValue: 'Value', value: paymentID" })
+            @Html.ValidationMessageFor(model => model.PaymentDomainID)
+        </div>
+        <form id="formCreditCard" action="#" data-bind="visible: isDirect() && (paymentID() == sagePayDomainID())">
+            @Html.Partial("~/Views/Partials/CreditCardView.cshtml", new CMS.UI.Models.CreditCardModel())
+        </form>
+    </div>
+</div>
+<div class="sectionWindow" data-bind="visible: isStep3">
+    <div class="btnToggleSection">Summary +</div>
+    <div class="sectionContent">
+        <div>
+            <label>Total price</label>
+            <span data-bind="text: totalPrice"></span>
+        </div>
+    </div>
+</div>
+<div>
+    <input type="button" value="Back To Step 2" class="btnRed" data-bind="visible: isStep3, click: onStep2Back" />
+    <input type="button" value="Proceed To Step 2" class="btnGreen" data-bind="visible: isStep1, click: onStep2" />
+    <input type="button" value="Proceed To Step 3" class="btnGreen" data-bind="visible: isStep2, click: onStep3" />
+    <input type="button" value="Add Order" class="btnGreen" data-bind="visible: isStep3, click: onAddOrder" />
+</div>

@@ -1,0 +1,27 @@
+﻿<div class="sec_2">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 pull-right">
+                <div id="carousel-testimonial" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        @{
+                        int i = 0;
+                        }
+                        @foreach (var testimonial in Model)
+                        {
+                            <div class="item@(i == 0 ? " active" : String.Empty)" >
+                                <div class="h1">
+                                    @Html.Raw(@testimonial.TE_Content) 
+                                </div>
+                                <div class="client pull-right">
+                                    <p><strong>@testimonial.TE_Client, @testimonial.TE_Company</strong></p>
+                                </div>
+                            </div>
+                        i++;
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

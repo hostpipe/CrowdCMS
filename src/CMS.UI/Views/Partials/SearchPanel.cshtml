@@ -1,0 +1,13 @@
+﻿<div class="search">
+    @using (Html.BeginRouteForm("Search", new { controller = "Website", action = "Search"}, FormMethod.Get))
+    { 
+    <div class="input-group">
+        @Html.TextBox("keyword", null, new { @class = "tbsearch form-control" })
+	    <div class="input-group-btn">
+	        <button type="submit" class="btn btn-success"><span class="fa fa-search"></span></button>
+	    </div>
+    </div>
+    }
+</div>
+
+

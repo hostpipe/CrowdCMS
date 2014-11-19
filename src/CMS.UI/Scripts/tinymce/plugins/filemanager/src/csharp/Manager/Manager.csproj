@@ -1,0 +1,103 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{6573E7D9-A1D9-496B-A61F-C46C5DD1CE73}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Moxiecode.Manager</RootNamespace>
+    <AssemblyName>MCManager</AssemblyName>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <NoStdLib>False</NoStdLib>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <NoWarn>0618</NoWarn>
+    <DocumentationFile>..\..\..\bin\MCManager.xml</DocumentationFile>
+    <TargetFrameworkVersion>v1.1</TargetFrameworkVersion>
+    <BaseIntermediateOutputPath>tmp\</BaseIntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>..\..\..\bin\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <Optimize>False</Optimize>
+    <IntermediateOutputPath>tmp\</IntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <BaseAddress>4194304</BaseAddress>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <FileAlignment>4096</FileAlignment>
+  </PropertyGroup>
+  <Import Project="$(SharpDevelopBinPath)\SharpDevelop.Build.CSharp.targets" />
+  <ItemGroup>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\..\..\bin\ICSharpCode.SharpZipLib.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Authenticators\IPAuthenticator.cs" />
+    <Compile Include="ConfigHandler.cs" />
+    <Compile Include="CorePlugin.cs" />
+    <Compile Include="FileSystems\BaseFile.cs" />
+    <Compile Include="FileSystems\CombinedFileFilter.cs" />
+    <Compile Include="FileSystems\IFileFactory.cs" />
+    <Compile Include="IPlugin.cs" />
+    <Compile Include="ManagerConfig.cs" />
+    <Compile Include="ManagerEngine.cs" />
+    <Compile Include="ManagerException.cs" />
+    <Compile Include="Plugin.cs" />
+    <Compile Include="Utils\AssemblyLoader.cs" />
+    <Compile Include="Utils\ClientResources.cs" />
+    <Compile Include="Utils\CSSCompressor.cs" />
+    <Compile Include="Utils\InstanceFactory.cs" />
+    <Compile Include="Utils\JSCompressor.cs" />
+    <Compile Include="Utils\JavaScriptMinifier.cs" />
+    <Compile Include="Utils\JSON.cs" />
+    <Compile Include="Utils\JSONReader.cs" />
+    <Compile Include="Utils\JSONWriter.cs" />
+    <Compile Include="Utils\LanguagePack.cs" />
+    <Compile Include="Utils\Logger.cs" />
+    <Compile Include="Utils\MimeTypes.cs" />
+    <Compile Include="Utils\NetUtils.cs" />
+    <Compile Include="Utils\PathUtils.cs" />
+    <Compile Include="Utils\Properties.cs" />
+    <Compile Include="Utils\ResultSet.cs" />
+    <Compile Include="Utils\StringUtils.cs" />
+    <Compile Include="FileSystems\BasicFileFilter.cs" />
+    <Compile Include="FileSystems\FileAction.cs" />
+    <Compile Include="FileSystems\IFile.cs" />
+    <Compile Include="FileSystems\IFileFilter.cs" />
+    <Compile Include="FileSystems\LocalFile.cs" />
+    <Compile Include="Authenticators\ASPNETAuthenticator.cs" />
+    <Compile Include="Authenticators\SessionAuthenticator.cs" />
+    <Compile Include="Utils\IOUtils.cs" />
+    <None Include="default.build" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Utils" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="FileSystems" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Authenticators" />
+  </ItemGroup>
+</Project>

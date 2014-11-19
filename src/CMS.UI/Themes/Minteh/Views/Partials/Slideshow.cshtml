@@ -1,0 +1,96 @@
+﻿@model List<CMS.BL.Entity.tbl_Image>
+    <div id="carousel-main" class="carousel slide" data-ride="carousel">
+
+        @{
+            List<CMS.BL.Entity.tbl_Image> images;
+            int i = 0;
+            if (Model.Count > 0)
+            {
+                images = Model;
+            }
+            else
+            { //get homepage images
+                CMS.Services.WebContent WebContentService = new CMS.Services.WebContent();
+                CMS.BL.Entity.tbl_Content homepagecontent = WebContentService.GetContentBySitemapID(ViewBag.HomepageID);
+                images = homepagecontent.tbl_SiteMap.SitemapImages.ToList();
+            }
+            if (images.Count > 0)
+            {
+                if ((bool)ViewBag.IsHomePage)
+                {
+                <div class="billboard">
+                    @if (images.Count > 1)
+                    {
+                    <ol class="carousel-indicators">
+                        @foreach (CMS.BL.Entity.tbl_Image image in images)
+                        {
+                        
+                            <li data-target="#carousel-main" data-slide-to="@(i)"@(i == 0 ? " class=\"active\"" : String.Empty)></li>
+                            i++;
+                        }
+                    </ol>
+                    }
+                    @{i = 0;}
+                    <div class="carousel-inner">
+                        @foreach (CMS.BL.Entity.tbl_Image image in images)
+                        {
+                            <div class="item@(i == 0 ? " active" : String.Empty)" >
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <h1>@(Html.Raw(image.I_Heading))</h1>
+                                            <p>@(Html.Raw(image.I_Description))</p>
+                                            <div class="btn-toolbar">
+                                                <a href="@image.SitemapLink.SM_URL" class="btn btn-large btn-head-1" >@image.SitemapLink.SM_MenuText</a>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="fancy_placeholder"><img src="@Html.ImageProvider(CMS.BL.ImageVersionName.large, image.I_Thumb, String.Empty)" class="img-responsive" alt="@(Html.Raw(image.I_Heading))"/></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        i++;
+                        }
+                    </div>
+                    @if (Model.Count > 1)
+                    {
+                    <a class="left carousel-control" href="#carousel-main" data-slide="prev">
+                        <span class="fa fa-arrow-left"></span>
+                    </a>
+                    <a class="right carousel-control" href="#carousel-main" data-slide="next">
+                        <span class="fa fa-arrow-right"></span>
+                    </a>
+                    }
+                </div>
+                }
+                
+                else
+                {
+                var image = images.Take(1).FirstOrDefault();
+                    <div class="sec_abt">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <p class="h1">@(Html.Raw(image.I_Heading))</p>
+                                    <p>@(Html.Raw(image.I_Description))</p>
+
+                                </div>
+    @*                            <div class="col-sm-6">
+                                    <div class="fancy_placeholder">
+                                        <img src="" class="img-responsive" alt="@(Html.Raw(image.I_Heading))"/>
+                                    </div>
+                                </div>*@
+                                <div class="col-sm-3 pull-right">
+                                    <div class="fancycaption fancycaption-fade">
+                                        <img class="fade" width="300" src="@Html.ImageProvider(CMS.BL.ImageVersionName.large, image.I_Thumb, String.Empty)" alt="@(Html.Raw(image.I_Heading))" style="opacity: 1;">
+                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        }
+    </div>
+

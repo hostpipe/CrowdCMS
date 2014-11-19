@@ -1,0 +1,270 @@
+Version 3.1.6 (2012-07-17)
+	Fixed file selection bug when check all is pressed.
+Version 3.1.5 (2012-04-03)
+	Fixed external authenticator issues.
+Version 3.1.4 (2012-01-02)
+	Fixed bug where switching between im/fm would break the insert file logic.
+Version 3.1.2.10 (2011-11-28)
+	Fixed issue where the IM/FM switch wouldn't run the right callback function.
+Version 3.1.2.9.1 (2011-11-17)
+	Fixed bug where IE8 wouldn't properly close dialogs.
+	Fixed bug where Chrome would crash when previewing PDF files.
+Version 3.1.2.9 (2011-10-19)
+	Fixed bug where delete didn't work correctly.
+	Fixed bug where IE would produce an error when closing the upload dialog.
+Version 3.1.2.8 (2011-03-21)
+	Fixed bug with IE 9 not closing the dialog without an error.
+Version 3.1.2.6 (2010-11-01)
+	Fixed bug where the preview.wwwroot setting couldn't be overridden in a plugin.
+Version 3.1.2.5 (2010-08-26)
+	Fixed bug where FF 4 would not handle templates correctly due to a change in the JS runtime.
+	Fixed bug where editing anchor only urls would produce an JS exception.
+Version 3.1.2.4 (2010-05-06)
+	Fixed bug where some items in the mc_access file format wasn't parsed correctly.
+Version 3.1.2.3 (2010-04-19)
+	Fixed bug where files would be reported as uploaded when they where blocked due to size restrictions.
+	Fixed bug where mc_access files couldn't contain "=" characters in the property values.
+Version 3.1.2.2 (2010-03-08)
+	Fixed bug where Silverlight uploader failed to upload chunked contents.
+Version 3.1.2.1 (2010-03-05)
+	Fixed bug where uploads would fail if there was chunking in Flash/Silverlight.
+	Fixed bug where Plupload was leaking memory in Flash and Silverlight.
+Version 3.1.2 (2010-03-03)
+	Fixed a bug with Favorites plugin where path in cookie was not encrypted.
+	Added a new plugin called Uploaded that allows you to view your own recently uploaded files.
+	Added plupload as the upload runtime. Plupload has more runtimes such as BrowserPlus and Google Gears.
+	Fixed bug where focus wasn't properly handled on IE 8.
+Version 3.1.1.2 (2010-01-10)
+	Fixed bug where it wasn't possible to disable context menu tools.
+	Fixed bug where Flash wasn't transparent in WebKit again.
+Version 3.1.1.1 (2009-11-16)
+	Fixed bug where upload wouldn't work correctly on IE using Flash runtime.
+Version 3.1.1 (2009-09-09)
+	Fixed so the MCFileManager DLLs are strongly named with the AllowPartiallyTrustedCallers flag.
+	Fixed bug where selection inside the rename input wouldn't work on IE.
+Version 3.1.0.7.1 (2009-03-30)
+	Fixed bug where the multiple upload function wouldn't work properly on IE and using Flash.
+	Fixed bug where Server.Transfer method not working any more in .NET.
+Version 3.1.0.7 (2009-03-25)
+	Fixed bug where the double click insert action was still enabled even if insert was disabled.
+Version 3.1.0.6 (2009-03-23)
+	Fixed bug where overriding the filesystem.rootpath with multiple paths using the External authenticator would fail.
+	Fixed bug where selection would move to beginning of TinyMCE area if a link was directly inserted.
+Version 3.1.0.5 (2009-01-22)
+	Added new custom_query option. To enable you to add custom query parameters to initial page request.
+	Added new docx word icon and mime type item to mime.types.
+	Fixed so that the upload form closes automatically if all files was uploaded correctly.
+	Fixed bug where inserting links would fail the second time if the inlinepopups wasn't used in TinyMCE.
+	Fixed bug where a request to menu_icons.gif where produced and it produced a 404 web server error.
+	Fixed issue where the zip.valid_extensions where defaulted to gif only.
+	Fixed bug where the Flash uploader was sending an incorrect application/x-www-form-urlencoded content type.
+	Fixed bug where the BeforeRPC event wasn't fired before other RPC calls.
+	Fixed bug where a multiple path value for the session override of the filesystem.rootpath item would fail.
+	Fixed bug where opening a standalone instance while having TinyMCE on the same page would produce incorrect callback results.
+	Fixed bug where the remove_script_host option wouldn't work correctly.
+Version 3.1.0.4 (2008-11-27)
+	Fixed bug where the Flash uploader was compiled with debugging on.
+	Fixed bug where downloading of files with spaces didn't work correctly.
+	Fixed bug where it wouldn't load correctly correctly in old TinyMCE 2.x versions.
+Version 3.1.0.3 (2008-11-20)
+	Fixed bug where inline dialogs wasn't opened correctly when loading the product cross domain.
+	Fixed bug where the multiple upload feature didn't work correctly when * was used for the valid extensions settings.
+	Fixed bug where it was always overwriting files if you used the multiple upload feature.
+	Fixed bug where language packs wasn't loading correctly when TinyMCE was compressed using the gzip compressor.
+	Fixed bug where switching from FileManager to ImageManager would fail some times when used with TinyMCE.
+Version 3.1.0.2 (2008-11-13)
+	Added new possibility to have a custom function for the filemanager_insert_template option.
+	Fixed bug where errors passed back from the server would be ignored by the Google gears implementation.
+	Fixed bug where the file upload progress bar wasn't moving if upload errors occured.
+	Fixed bug where domain relaxing didn't work when TinyMCE and the FileManager was loaded from another domain.
+Version 3.1.0.1 (2008-11-10)
+	Fixed bug where overriding the filesystem.rootpath using SessionAuthenticator could produce errors.
+	Fixed bug where the upload.chunk_size option didn't work correctly.
+	Fixed bug where the onchange event wasn't fired as it was before when form items was changed by a browse call.
+	Fixed bug where it was impossible to enable remember_last_path by default.
+	Fixed bug where the category list and special folders list where separated by an odd margin in IE.
+	Fixed so it's possible to see the current upload runtime when enablig the general.debug option.
+Version 3.1 (2008-11-06)
+	Fixed bug where the toolbar would get a trailing focus rectangle on Gecko.
+	Fixed bug with using the filemanager on a non default http port.
+	Fixed bug where single upload didn't work correctly.
+	Fixed so all new integration callback functions have a file object.
+Version 3.1b2 (2008-10-30)
+	Added new file path presentation for edit file dialog.
+	Added new disabled_tools js option enables you to disable specific tools from page level or TinyMCE.
+	Added new tools js option enables you specify tools from page level or TinyMCE.
+	Fixed bug where createdir wasn't reloading the file list ones a directory was created.
+	Fixed bug where it wasn't possible to override general.language using an external authenticator.
+	Fixed bug where keepAlive handler was missing. It will not hit the backend each 5 minutes.
+	Fixed bug where Gecko browsers would produce an traling focus border for toolbar items.
+	Fixed bug where directory path would be on two lines if it was very long.
+	Fixed bug where it wasn't possible to override path and rootpath settings from TinyMCE init.
+	Fixed bug where rootpath names didn't work when specified in javascript options.
+	Fixed bug where links would be inserted to beginning of editor instances on IE.
+	Fixed bug where singe file uploads wasn't working correctly.
+	Fixed bug where native windows wasn't move to top.
+	Fixed bug where upload with upper case extensions would fail.
+	Replaced upload.replace_diacritics with filesystem.clean_names. To make it more general and also take care of whitespace.
+Version 3.1b1 (2008-10-23)
+	Added new multiple file upload uses Flash, Google Gears and Silverlight. Chunks large files by default.
+	Added new edit file support. Files can now be edited in plain text.
+	Added new edit tool item so the edit function can be enabled/disabled.
+	Added new API for client side plugin logic. You can now add menu items, dialogs and buttons from plugins.
+	Added new resources.xml file for all themes and plugins. These are used to compress and concat js and css files.
+	Added new support for file and directory filtering from page level.
+	Added new upload.replace_diacritics option. Replaces national characters like והצü to aaou.
+	Added new upload.multiple_upload option. Enables you to disable/enable this support.
+	Added new upload.chunk_size option. Enables you to change the chunk size for each request.
+	Added new support for cross sub domain usage by relaxing the document.domain field.
+	Added new edit.include_file_pattern option. Enables you to include only specific files for editing.
+	Added new edit.exclude_file_pattern option. Enables you to exclude specific files for editing.
+	Added new edit.extensions option. Enables you to only include specific files for editing.
+	Added new zip.include_file_pattern option. Enables you to include only specific files for zip compression.
+	Added new zip.exclude_file_pattern option. Enables you to exclude specific files from zip compression.
+	Added new zip.extensions option. Enables you to only include specific files for compression.
+	Added new unzip.include_file_pattern option. Enables you to include only specific files for zip uncompression.
+	Added new unzip.exclude_file_pattern option. Enables you to exclude specific files from zip uncompression.
+	Added new unzip.extensions option. Enables you to only include specific files for uncompression.
+	Added new target_frame option. Enables you to open any part of the FileManager in a custom iframe or frame.
+	Added new browse method to the mcFileManager.js file that replaces the old open method.
+	Added new createDir method to the mcFileManager.js file. Enables you to open the create directory dialog directly from page.
+	Added new createDoc method to the mcFileManager.js file. Enables you to open the create document dialog directly from page.
+	Added new createZip method to the mcFileManager.js file. Enables you to open the create zip dialog directly from page.
+	Added new upload method to the mcFileManager.js file. Enables you to open the upload dialog directly from page.
+	Added new edit method to the mcFileManager.js file. Enables you to open the edit file dialog directly from page.
+	Added new functionality to retrive all the selected files to the page level callback function.
+	Fixed bug where selection of files could be incorrect if shift key was used.
+	Fixed so the mcfilemanager.js file is merged into the editor_plugin.js file to increase gzip compression.
+	Fixed so preview of documents in the createdoc dialog are in inline windows.
+	Fixed so all dialogs adds a shim for the background items.
+	Fixed so the user can't change file extension on files they rename.
+	Fixed so the remember_last_path option is disabled by default.
+	Fixed bug where the buttons in dialogs would look incorrect in FF 3.
+	Fixed bug where paste menu item wasn't disabled if there was no contents in clipboard.
+	Fixed bug where it wouldn't display the input path in error message if it couldn't find a specific filesystem.
+	Fixed bug where an exception about server.mappath would be thrown while running in the .NET Development Server.
+	Fixed so the third party zip assembly doesn't use strong names. Since most hosting environments doesn't give you access to the gac.
+Version 3.0.9.2 (2008-09-11)
+	Fixed bug where the an exception would be produced if you used the standalone mode on a page where TinyMCE was included but not loaded.
+	Fixed bug the default insert template didn't respect the TinyMCE url settings.
+Version 3.0.9.1 (2008-07-09)
+	Fixed bug where Firefox 3 would produce an exception about empty id passed to getElementById.
+	Fixed bug where Firefox 3 would produce an exception about window.console being undefined.
+	Fixed bug where the insertfile command didn't work correctly if you didn't specify an template.
+Version 3.0.9 (2008-07-02)
+	Added new support for adding multiple templates for the insertfile button.
+	Fixed bug where loading the FileManager on demand didn't load the language packs correctly.
+	Fixed so it's not possible to open a hidden directory. It will automatically go to the parent of that dir.
+	Fixed issue where it wouldn't setup an correct baseURL if the script was loaded dynamically.
+Version 3.0.8 (2008-04-29)
+	Fixed bug where the filemanager was producing an dialog on IE if it was loaded over https.
+	Fixed bug where using the standalone integration on a page with TinyMCE without any editor instances would produce an error.
+	Fixed so the SessionAuthenticator is enabled by default since people tend to miss adding any authentication.
+Version 3.0.7 (2008-03-20)
+	Fixed so the plugin info is displayed correctly in TinyMCE 3.0 about dialog.
+Version 3.0.6.1 (2008-02-21)
+	Fixed compatibility issue with the TinyMCE gzip compressor.
+	Fixed bug where the FileManager didn't work if the inlinepopups wasn't used in TinyMCE 3.
+Version 3.0.6 (2008-02-21)
+	Added support for loading the TinyMCE plugin from an external location.
+	Added support for inlinepopups if used with TinyMCE 3.x.
+	Added detection for proxies that doesn't support non encoded HTTP posts.
+	Added new insert_filter option enabled you to filter data passed back from FM before it's inserted.
+	Fixed bug where it was impossible to unselect files.
+	Fixed bug where loading non english language packs for the TinyMCE insertfile icon didn't work.
+Version 3.0.5 (2007-11-22)
+	Added new filemanager_handle option to the TinyMCE editor plugin.
+	Fixed compatibility with the TinyMCE 3.0b1 API.
+	Fixed bug where _vti_cnf was scanned for assembly DLLs.
+	Fixed security issue thanks to a report from Michel Weimerskirch.
+Version 3.0.4 (2007-11-02)
+	Added new ExternalAuthenticator.session_prefix option to ExternalAuthenticator to separate sessions.
+	Added new compatibility with TinyMCE 3.x.
+	Fixed bug where the FileManager tried to look for plugins outside the application directory.
+	Fixed bug where large files bigger than 100MB didn't download correctly due to MS problem with response streams.
+	Fixed bug where switch to imagemanager made it impossible to select file.
+	Fixed so that the external authentication page is runned each time the FileManager opens.
+Version 3.0.3 (2007-08-21)
+	Added new external authenticator enables you to authenticate between backend and cross domains.
+	Added new asp and jsp example authentication pages for the external authenticator.
+	Added new non flash upload que since the flash uploader was to buggy.
+	Fixed issue with the need to have index.php as the default document.
+	Fixed bug where the mcFileManager.init call didn't work as expected.
+	Fixed bug where custom insert callback functions also execured default logic.
+	Fixed bug where create zip failed when using check all link.
+	Fixed bug where ~/ paths couldn't be used for filesystem.rootpath.
+	Fixed problems with older versions of the gzip compressor.
+	Fixed so the upload.use_flash is now set to false by default.
+Version 3.0.2 (2007-06-20)
+	Added new logging options, enables you to specify level, format, rotation, max size.
+	Added new safe versions of the DLLs these work under lower trust levels but have more limited media support.
+	Added new config_prefix option to the SessionAuthenticator class, enables you to override any config option with a session.
+	Added new valid/invalid/extensions options for previewing of files. For example PDF:s can now be excluded from a preview.
+	Added cancel buttons to all dialogs for usability reasons.
+	Fixed so that all dialogs are closed when a operation is completed successfully.
+	Fixed so the template selection box gets removed if no templates are specified.
+	Fixed so the dialogs will open more nicely, less visual maniplulation.
+	Fixed so URL convertion logic is executed before custom callbacks.
+	Fixed so the element names can be element id's in a mcFileManager.open call.
+	Fixed bug where the animation of the fading menus didn't finish correctly some times.
+	Fixed bug where a trailing slash was required when using the preview.wwwroot option.
+	Fixed bug where it wasn't possible to override path and root path using authenticators.
+	Fixed bug where the filemanager wasn't loading correctly if it was compressed using the TinyMCE Gzip compressor.
+	Fixed so the preview.urlsuffix gets added to the end of output URLs when you select a file.
+Version 3.0.1 (2007-05-21)
+	Added new upload.use_flash option, enables you to disable the flash uploader.
+	Added new use_url_path JS integration option.
+	Added new use path from url functionalty.
+	Fixed so that the preview isn't enabled when the user clicks on a checkbox in file list.
+	Fixed issue with IE producing warning message if it was loaded over HTTPS.
+	Fixed issue where the remember_last_path feature remembered favorites and history as well.
+	Fixed bug where thread locking was required on the config collection.
+Version 3.0 (2007-05-15)
+	Moved the general.login_page option to authenticator.login_page.
+	Added new _Template plugin, this is a example plugin.
+	Fixed bug in Safari where it was impossible to scroll the file list.
+	Fixed bug where zip files couldn't be inserted or downloaded.
+	Fixed so that you can change the default file system impelementation.
+	Fixed so that downloading is forced by replacing the content type.
+	Added better support for national characters like והצ in filenames.
+Version 3.0b3 (2007-05-10)
+	Added new CustomInfoExample plugin. Displays how to inject custom file information.
+	Added new include/exclude/extensions config options for stream section.
+	Added better error handling when loading XML language packs.
+	Added missing language items for add file(s) in flash upload dialog.
+	Added more rapid demo mode response. It only ask the server once.
+	Fixed so upload button is disabled until the user selects a file.
+	Fixed bug where utf-8 encodings of language packs didn't work correctly.
+	Fixed bug where a error was displayed if a remembered path got deleted.
+	Fixed so the translation of the page is faster, so it doesn't flicker.
+	Renamed all "directory" to "folder" in the English language pack. 
+Version 3.0b2 (2007-05-04)
+	Private beta released to selected customers.
+Version 3.0b1 (2007-04-13)
+	First beta release of the complete rewrite of the FileManager .NET.
+Version 1.4 (2005-11-11)
+	Added a new DLL version, this DLL uses calls to kernel32.dll to workaround some .NET issues.
+	Added new download options, enables you to control what files users may download.
+	Fixed so the MCFileManager is a plugin for TinyMCE, makes the installation process easier.
+	Fixed so all theme specific paths are updated if a new theme is created.
+	Fixed so the preview frame gets updated if a user creates a directory/document or uploads a file.
+	Fixed bug where filesystem.force_directory_template option wasn't working correctly.
+	Fixed bug where valid extensions wasn't presented correctly in the upload form.
+	Fixed issue where the preview page was displayed instead of a blank page in createdoc preview.
+	Added German language pack contributed by Markus Vetten.
+	Added French language pack contributed by Olivier Gaillot.
+Version 1.3 (2005-09-30)
+	Fixed bug where relative urls on directories with escaped chars wasn't working correctly.
+	Added new path, rootpath and remember_last_path JavaScript options.
+	Added new examples on how the filemanager can be used in standalone mode.
+	Added new language pack support, current translations English and Swedish.
+	Added multiple upload of files.
+Version 1.2 (2005-09-12)
+	Added new authenticator.session.user_key option to SessionAuthenticator.
+	Added new ${user} variable that gets replaced in the SessionAuthenticator/ASPNETAuthenticator.
+Version 1.1 (2005-08-01)
+	Fixed bug where authenticators in external assemblies wasn't working.
+	Fixed issue with case sensitive extensions, both in DLL and upload template.
+	Fixed bug with not being able to specify a absolute wwwroot.
+	Fixed issue with case sensitive preview URLs.
+	Added new VB authenticator example to manuals and as a zip file.

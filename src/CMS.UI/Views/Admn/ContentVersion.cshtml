@@ -1,0 +1,30 @@
+﻿@model CMS.BL.Entity.tbl_SiteMap
+
+<div class="sectionWindow" data-bind="visible: isEdit">
+    <div class="btnToggleSection">Page Versions +</div>
+    <div class="sectionContent">
+        <div>
+            <label>Loaded Version</label>
+            <span>@(Model != null ? Model.tbl_Content.Where(c => c.ContentID == (int)ViewBag.ContentID).Select(c => c.C_ModificationDate.ToString()).FirstOrDefault() : String.Empty)</span>
+        </div>
+        <div>
+            <label>Version Approved</label>
+            <span class="@(Model != null ? Model.tbl_Content.Where(c => c.ContentID == (int)ViewBag.ContentID).Select(c => c.C_Approved).FirstOrDefault() ? "icon-info" : "icon-warning" : "icon-warning")"></span>
+            <span>@(Model != null ? Model.tbl_Content.Where(c => c.ContentID == (int)ViewBag.ContentID).Select(c => c.C_Approved).FirstOrDefault() ? "Yes" : "No" : "No")</span>
+        </div>
+        <hr />
+        <div>
+            <label for="sVersions">Select Other Version</label>
+            @Html.DropDownList("sVersions", Model != null ? Model.tbl_Content.Where(c => !c.C_Deleted).OrderByDescending(c => c.C_ModificationDate).Select(c =>
+                         new SelectListItem { Text = c.C_ModificationDate.ToString() + " " + (c.C_Approved ? "(approved)" : ""), Value = c.ContentID.ToString(), Selected = c.ContentID == (int)ViewBag.ContentID }) : new List<SelectListItem>())
+        </div>
+        <div class="btnContainer">
+            <button type="button" class="btnGrey" data-bind="click: onLoadContent">Load Content</button>
+            <button type="button" class="btnGreen" data-bind="click: onPreviewContent">Preview Selected Content</button>
+            @if ((bool)this.ViewBag.CanDeleteVersion)
+            {
+            <button type="button" class="btnRed" data-bind="click: onDeleteContent">Delete Selected Content</button>
+            }
+        </div>
+    </div>
+</div>

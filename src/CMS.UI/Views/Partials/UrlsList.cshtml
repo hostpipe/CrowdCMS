@@ -1,0 +1,13 @@
+﻿@model List<LinkListItem>
+
+var tinyMCELinkList = new Array(
+    @if (Model.Count > 0)
+    {
+        @:["@Model.First().title", "@Model.First().value"]
+        Model.RemoveAt(0);
+        foreach (var item in Model)
+	    {
+		    @:,["@item.title", "@item.value"]
+	    }
+    }
+);

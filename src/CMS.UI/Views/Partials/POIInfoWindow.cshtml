@@ -1,0 +1,19 @@
+﻿@model CMS.BL.Entity.tbl_POI
+
+@if (Model != null)
+{
+    <div class="container">
+        <h4><strong>@Model.POI_Title</strong> <small>(@Model.tbl_POICategories.POIC_Title)</small></h4>
+        <p><strong><abbr title="Phone">Phone:</abbr> @Model.POI_Phone</strong></p>
+        <p>@Model.POI_Description</p>
+        @*<p><small>@Html.Raw(Model.POI_Content)</small></p>*@
+        @if (Model.tbl_SiteMap != null)
+        {
+        <p><a href="@Model.tbl_SiteMap.SM_URL" class="btn btn-info">More Info</a></p>
+        }
+    </div>
+}
+else
+{
+    <div>System can not find point of interest assigned to this marker.</div>
+}

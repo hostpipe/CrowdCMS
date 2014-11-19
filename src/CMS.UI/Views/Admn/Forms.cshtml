@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "Forms";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@section scripts {
+    @Scripts.Render("~/bundles/forms")
+}
+
+<div id="FormsContent"
+    data-getForm-url = "@Url.Action("FormSettings", "Admn")"
+    data-getFormItem-url = "@Url.Action("FormItemSettings", "Admn")"
+    data-getDomainsList-url="@Url.Action("GetDomainsList", "Admn")"
+    data-deleteForm-url = "@Url.Action("DeleteForm", "Admn")"
+    data-deleteFormItem-url = "@Url.Action("DeleteFormItem", "Admn")"
+    data-deleteFormItemValue-url = "@Url.Action("DeleteFormItemValue", "Admn")"
+    data-saveForm-url = "@Url.Action("SaveForm", "Admn")"    
+    data-saveFormItem-url = "@Url.Action("SaveFormItem", "Admn")"
+    data-saveFormItemVisibility-url = "@Url.Action("SaveFormItemVisibility", "Admn")"
+    data-saveFormItemValues-url = "@Url.Action("SaveFormItemValues", "Admn")"    
+    data-saveFormItemOrder-url = "@Url.Action("SaveFormItemOrder", "Admn")"    
+    data-textBox="@ViewBag.TextBox"
+    data-textArea="@ViewBag.TextArea"
+    data-subscribe="@ViewBag.Subscribe"
+    data-datebox="@ViewBag.Datebox"
+    data-divider="@ViewBag.Divider"
+    data-getSections-url="@Url.Action("GetSitemapListByDomain", "Admn")"
+    >
+    <div class="leftMenuContainer fourBtns">        
+        <div class="btnGreyMenu short" data-bind="click: onNewForm">New form</div>
+        <select data-bind="options: domains, optionsText: 'Text', optionsValue: 'Value', optionsCaption: 'All domains', value: lDomainID, event: {change: onLDomainChange}">
+        </select>
+        <div class="btnGreyMenu short" data-bind="click: onNewFormItem">New form item</div>
+        <div class="btnGreyMenu short" data-bind="click: onSaveOrder"><span id="orderIndicator" class="icon-ok"></span>Save Sort Order</div>
+        @Html.Partial("~/Views/Partials/Loader.cshtml")
+    </div>
+    <div class="mainContainer">
+    </div>
+</div>

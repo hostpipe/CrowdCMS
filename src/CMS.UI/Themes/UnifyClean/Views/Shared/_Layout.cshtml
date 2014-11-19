@@ -1,0 +1,156 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section metatags {
+    @RenderSection("metatags", true)
+}
+@section scripts {
+    @Scripts.Render("~/bundles/jquery/web", "~/bundles/jqueryUI", "~/bundles/jqueryVal","~/bundles/bootstrap", "~/bundles/web")
+    @RenderSection("scripts", false)
+    @if (!Request.IsAuthenticated && (ViewBag.SubscriptionEnabled ?? false))
+    {
+        @Scripts.Render("~/bundles/subscriptionManager")
+    }
+}
+@section analytics {
+    @if (ViewBag.IsGoogleAnalytics && !(bool)this.ViewBag.NoIndex)
+    {
+        <script type="text/javascript">
+            @Html.Raw(ViewBag.GoogleAnalytics)
+        </script>
+    }
+}
+
+@section styles {
+    @Styles.Render("~/Content/web.css", "~/Content/themes/base/ui.css", "~/Theme/UnifyClean/css")
+    @RenderSection("styles", false)
+}
+
+<header>
+    <div class="container">
+        <div class="topbar">
+            <div class="container">
+                <!-- Topbar Navigation -->
+                <ul class="loginbar pull-right">
+                    @if (Request.IsAuthenticated)
+                    {
+                        <li>
+                            <a href="@Url.RouteUrl("Account")">Your account</a>
+                            <ul>
+                                <li><a href="@Url.RouteUrl("EditMyDetails")">Edit My Details</a></li>
+                                <li><a href="@Url.RouteUrl("OrderHistory")">Your order history</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="@Url.RouteUrl("Logout")">Logout</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="@Url.RouteUrl("Login")">Login</a> |</li>
+                        <li><a href="@Url.RouteUrl("Registration")">Register</a></li>
+                    }
+                </ul>
+                <!-- End Topbar Navigation -->
+            </div>
+        </div>
+        <div class="row">
+            <div id="logo" class="col-xs-8 col-sm-4">
+                <a href="/" title="Return to Home Page">Start Up Template</a>
+            </div>
+            <div class="col-xs-4 visible-xs menu-icon">
+                <div class="navbar-default hidden-md">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="row">
+                    <nav class="navbar-collapse collapse">
+                        <div class="menu">
+                            <ul>
+                               @Html.Action("Menu", "Website")
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</header>
+@RenderSection("slideshow", false)
+
+<div class="breadcrumb-bg">
+    <div class="container">
+        @Html.Action("Breadcrumbs", "Website")
+    </div>
+</div>
+
+<div class="container col-sm-12">
+    <div class="row">
+        @if ((bool)ViewBag.IsHomePage){
+        <div class="cta clearfix">
+            <div class="col-sm-12"><h1>Our Services</h1></div>
+            <div class="col-sm-4">
+                <a href="#servicelink" title="">
+                    <img src="/Themes/UnifyClean/img/cta/clouds.jpg" alt="Clouds" class="img-rounded img-responsive"/>
+                    <span class="circle"><span class="glyphicon glyphicon-plus"></span></span>
+                </a>
+                <h2>Proin Sed Mauris</h2>
+                <p>Duis pulvinar elit vel consectetur hendrerit. Nullam quis nulla sollicitudin dolor lobortis pulvinar. Sed nec metus suscipit, laoreet ipsum nec, condimentum eros.</p>
+            </div>
+            <div class="col-sm-4">
+                <a href="#servicelink" title="">
+                    <img src="/Themes/UnifyClean/img/cta/lightining.jpg" alt="Lightning" class="img-rounded img-responsive"/>
+                    <span class="circle"><span class="glyphicon glyphicon-plus"></span></span>
+                </a>
+                <h2>Cras Sed Feugiat</h2>
+                <p>Duis pulvinar elit vel consectetur hendrerit. Nullam quis nulla sollicitudin dolor lobortis pulvinar. Sed nec metus suscipit, laoreet ipsum nec, condimentum eros.</p>
+            </div>
+            <div class="col-sm-4">
+                <a href="#servicelink" title="">
+                    <img src="/Themes/UnifyClean/img/cta/solarclipse2.jpg" alt="Solar" class="img-rounded img-responsive"/>
+                    <span class="circle"><span class="glyphicon glyphicon-plus"></span></span>
+                </a>
+                <h2>Fusce Orci Tellus</h2>
+                <p>Duis pulvinar elit vel consectetur hendrerit. Nullam quis nulla sollicitudin dolor lobortis pulvinar. Sed nec metus suscipit, laoreet ipsum nec, condimentum eros.</p>
+            </div>
+        </div>
+        <div class="clearfix">
+            <div class="divider"></div>
+            <div id="carousel-example-generic" class="carousel slide clients" data-ride="carousel">
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner">
+                    <div class="item active">
+                        <img src="/Themes/UnifyClean/img/logos/forbes.png" alt="Forbes">
+                        <img src="/Themes/UnifyClean/img/logos/guardian.png" alt="Guardian">
+                        <img src="/Themes/UnifyClean/img/logos/mashable.png" alt="Mashable">
+                        <img src="/Themes/UnifyClean/img/logos/ny-times.png" alt="NY Times">
+                        <img src="/Themes/UnifyClean/img/logos/red-bull.png" alt="RedBull">
+                    </div>
+
+                    <div class="item">
+                        <img src="/Themes/UnifyClean/img/logos/guardian.png" alt="Guardian">
+                        <img src="/Themes/UnifyClean/img/logos/ny-times.png" alt="NY Times">
+                        <img src="/Themes/UnifyClean/img/logos/forbes.png" alt="Forbes">
+                        <img src="/Themes/UnifyClean/img/logos/mashable.png" alt="mashable">
+                        <img src="/Themes/UnifyClean/img/logos/red-bull.png" alt="RedBull">
+                    </div>
+                </div>
+            </div>
+            <div class="divider"></div>
+        </div>
+        }
+        <div class="col-sm-9">
+            @RenderBody()
+        </div>
+        <div class="col-sm-3">
+            @RenderSection("sidebar", false)
+        </div>
+    </div>
+</div>
+
+ @{Html.RenderAction("Footer", "Website");}
+

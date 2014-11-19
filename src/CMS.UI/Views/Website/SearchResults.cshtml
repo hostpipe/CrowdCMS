@@ -1,0 +1,30 @@
+﻿@model List<CMS.BL.Entity.tbl_Content>
+@section metatags {
+    @{Html.RenderPartial("/Views/Partials/MetaTags.cshtml", new CMS.UI.Models.MetadataModel());}
+}
+@section sidebar {
+    @{
+        Html.RenderPartial("../Partials/SearchPanel");
+        Html.RenderAction("TestimonialsPartial", "Website");
+        Html.RenderAction("ContactUsPartial", "Website");
+    }
+}
+<div class="searchresults">
+    <h1>@ViewBag.Header</h1>
+    @if (!string.IsNullOrEmpty(ViewBag.NoNewsFound))
+    {
+        <span class="no-results">@ViewBag.NoNewsFound</span>
+    }
+    @foreach (var result in Model)
+    {
+        <div class="row">
+            <h2><a href="@((result.tbl_SiteMap.tbl_ContentType.CTP_Value == CMS.BL.ContentType.Blog.ToString() ? ViewBag.BlogUrl : String.Empty) + result.tbl_SiteMap.SM_URL)" title="@result.C_Title">@result.C_Title</a></h2>
+            <p>@result.C_Description</p>
+            <p>
+                @result.tbl_SiteMap.SM_Date.GetValueOrDefault(result.C_ModificationDate).ToLongDateString()
+                at @result.tbl_SiteMap.SM_Date.GetValueOrDefault(result.C_ModificationDate).ToShortTimeString()
+            </p>
+            <p>@Html.Action("Breadcrumbs", "Website", new { url = result.tbl_SiteMap.SM_URL })</p>
+        </div>
+    }
+</div>

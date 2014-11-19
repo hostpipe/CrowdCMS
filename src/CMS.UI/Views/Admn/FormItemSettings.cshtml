@@ -1,0 +1,76 @@
+﻿@model CMS.UI.Models.FormItemModel
+
+<div class="sectionHeader" data-bind="text: sectionHeader"></div>
+<div class="sectionWindow">
+    <div class="btnToggleSection">Form Item Details +</div>
+    <form id="ItemsForm" class="sectionContent" action="@Url.Action("SaveFormItem", "Admn")" method="post" data-bind="submit: onSubmit">
+        <div>
+            @Html.LabelFor(m => m.DomainID, "Domain")
+            @Html.DropDownListFor(m => m.DomainID, ViewBag.Domains as SelectList, new { @class = "short", id = "ddlDomain", data_bind = "event: { change: onDomainChanged }" })
+        </div>
+        <div>
+            @Html.LabelFor(m => m.FormID, "Form title")
+            @Html.DropDownListFor(m => m.FormID, ViewBag.DomainForms as SelectList, new { @class = "short", id = "ddlDomainForms" })
+        </div>
+        <div>
+            @Html.LabelFor(m => m.Name, "Name")
+            @Html.TextBoxFor(m => m.Name, new { @class = "short", id = "tbName", maxlength = "50" })
+            @Html.ValidationMessageFor(m => m.Name)
+            @Html.HiddenFor(m => m.FormItemID, new { id = "hfFormItemID" })
+        </div>
+        <div>
+            @Html.LabelFor(m => m.Text, "Text")
+            @Html.TextBoxFor(m => m.Text, new { @class = "short", id = "tbText", maxlength = "50" })
+            @Html.ValidationMessageFor(m => m.Text)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.Placeholder, "Placeholder")
+            @Html.TextBoxFor(m => m.Placeholder, new { @class = "long", id = "tbPlaceholder", maxlength = "150" })
+            @Html.ValidationMessageFor(m => m.Placeholder)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.TypeID, "Item Type")
+            @Html.DropDownListFor(m => m.TypeID, ViewBag.FormItemTypes as SelectList, new { @class = "short", id = "ddlItemTypes", data_bind = "event: { change: onFormItemTypeChanged }" })
+            <span class="fa fa-info-circle" title="Choose the field type. A 'Divider' only outputs the title.  All other fields are ignored"></span>
+        </div>
+        <div>
+            @Html.LabelFor(m => m.Required, "Is required")
+            @Html.CheckBoxFor(m => m.Required, new { id = "chbRequired" })
+        </div>
+        <div class="btnContainer">
+            <button type="submit" class="btnGreen" data-bind="visible: !isEditFormItem()">Add New Form Item</button>
+            <button type="submit" class="btnGreen" data-bind="visible: isEditFormItem()">Update Form Item</button>
+            <button type="button" class="btnRed" data-bind="click: onNewFormItem">Cancel</button>
+        </div>
+    </form>
+</div>
+<div id="ItemValues" class="sectionWindow">
+    <div class="btnToggleSection">Item Values +</div>
+    <div class="sectionContent">
+        @for (int i = 0; i < Model.ItemValues.Count; i++)
+        {
+            <form action="#" data-bind="attr: { 'data-valueID': @Model.ItemValues[i].FormItemValueID, 'data-itemID': @Model.FormItemID }">
+                @Html.LabelFor(m => m.ItemValues[i].Value, "Value", new { @class = "short" })
+                @Html.TextBoxFor(m => m.ItemValues[i].Value, new { @class = "tiny", data_bind = "attr: { id: 'tbv" + @Model.ItemValues[i].FormItemValueID + "' }" })
+                @Html.LabelFor(m => m.ItemValues[i].Text, "Text", new { @class = "short" })
+                @Html.TextBoxFor(m => m.ItemValues[i].Text, new { data_bind = "attr: { id: 'tbt" + @Model.ItemValues[i].FormItemValueID + "' }" })
+                @Html.LabelFor(m => m.ItemValues[i].Selected, "Selected", new { @class = "short" })
+                @Html.CheckBoxFor(m => m.ItemValues[i].Selected,  new { @checked = @Model.ItemValues[i].Selected })
+                @Html.LabelFor(m => m.ItemValues[i].Order, "Order", new { @class = "short" })
+                @Html.TextBoxFor(m => m.ItemValues[i].Order, new { @class = "tiny", data_bind = "attr: { id: 'tbo" + @Model.ItemValues[i].FormItemValueID + "' }" })
+                <button class="btnGreyGreen" data-bind="click: $root.onSaveFormItemValue">Save</button>
+                <button class="btnGreyRed" data-bind="click: $root.onDeleteFormItemValue">Delete</button>
+
+                @Html.ValidationMessageFor(m => m.ItemValues[i].Value)
+                @Html.ValidationMessageFor(m => m.ItemValues[i].Selected)
+                @Html.ValidationMessageFor(m => m.ItemValues[i].Order)
+            </form>
+        }        
+        <div>
+            <button id="btnNewValue" name="NewValue" class="btnGreen" data-bind="click: onNewFormItemValue" >Add new item value</button>
+        </div>
+    </div>
+</div>
+<div id="NewValue" class="hidden">
+    @Html.Partial("~/Views/Partials/NewFormItemValue.cshtml", new CMS.UI.Models.FormItemValueModel())
+</div>

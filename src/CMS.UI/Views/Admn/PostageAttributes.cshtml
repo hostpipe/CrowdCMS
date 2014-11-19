@@ -1,0 +1,120 @@
+﻿<div class="sectionHeader" data-bind="text: sectionHeader">
+</div>
+<div class="sectionContent">
+    @Html.Label("domainID", "Select domain")
+    @Html.DropDownList("domainID", @ViewBag.domains as SelectList, new { data_bind = "value: domainID, event: { change: onDomainChangeAttributes }" })
+</div>
+<div class="sectionWindow">
+    <div class="btnToggleSection">Band +</div>
+    <div>
+        <form id="BandForm" action="#" class="sectionContent">
+            <input type="hidden" data-bind="value: domainID" name="PB_DomainID" />
+            <div class="postageAttributesMain">
+                <div>
+                    <label for="PB_Lower">Lower</label>
+                    <input id="PB_Lower" name="PB_Lower" type="text" />
+                </div>
+                <div>
+                    <label for="PB_Upper">Higher</label>
+                    <input id="PB_Upper" name="PB_Upper" type="text" />
+                </div>
+            </div>
+            <div class="postageAttributesMain">
+                <input type="button" class="btnGreen" value="Add" data-bind="click: onSaveBand" />
+            </div>
+        </form>
+        <div class="sectionContent">
+            <label class="postageAttributesLabel">
+                Current Bands
+            </label>
+            <div data-bind="foreach: bands" class="postageAttributes">
+                <form action="#">
+                    <input type="hidden" data-bind="value: PB_DomainID" name="PB_DomainID" />
+                    <input type="hidden" data-bind="value: PostageBandID" name="PostageBandID" />
+                    <input data-bind="value: PB_Lower" name="PB_Lower" />
+                    <span>-</span>
+                    <input data-bind="value: PB_Upper" name="PB_Upper" />
+                    <input type="button" class="btnGreyGreen" data-bind="click: $root.onSaveBand" value="Update" />
+                    <input type="button" class="btnGreyRed" data-bind="click: $root.onDeleteBand" value="Delete" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sectionWindow">
+    <div class="btnToggleSection">
+        Weight +
+    </div>
+    <div>
+        <form id="WeightForm" action="#" class="sectionContent">
+            <input type="hidden" data-bind="value: domainID" name="PW_DomainID" />
+            <div class="postageAttributesMain">
+                <div>
+                    <label for="PW_Lower">Lower</label>
+                    <input id="PW_Lower" name="PW_Lower" type="text" />
+                </div>
+                <div>
+                    <label for="PW_Upper">Higher</label>
+                    <input id="PW_Upper" name="PW_Upper" type="text" />
+                </div>
+            </div>
+            <div class="postageAttributesMain">
+                <input type="button" class="btnGreen" value="Add" data-bind="click: onSaveWeight" />
+            </div>
+        </form>
+        <div class="sectionContent">
+            <label class="postageAttributesLabel">
+                Current Weights
+            </label>
+            <div data-bind="foreach: weights" class="postageAttributes">
+                <form action="#">
+                    <input type="hidden" data-bind="value: PW_DomainID" name="PW_DomainID" />
+                    <input type="hidden" data-bind="value: PostageWeightID" name="PostageWeightID" />
+                    <input data-bind="value: PW_Lower" type="number" name="PW_Lower" />
+                    <span>-</span>
+                    <input data-bind="value: PW_Upper" type="number" name="PW_Upper" />
+                    <input type="button" class="btnGreyGreen" data-bind="click: $root.onSaveWeight" value="Update" />
+                    <input type="button" class="btnGreyRed" data-bind="click: $root.onDeleteWeight" value="Delete" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sectionWindow">
+    <div class="btnToggleSection">
+        Zone +
+    </div>
+    <div>
+        <form id="ZoneForm" action="#" class="sectionContent">
+            <input type="hidden" data-bind="value: domainID" name="PZ_DomainID" />
+            <div class="postageAttributesMain">
+                <label for="PZ_Name">Zone</label>
+                <input id="PZ_Name" name="PZ_Name" type="text" />
+            </div>
+            <div class="postageAttributesMain">
+                <input id="PZ_IsDefault" data-bind="click: onDefaultZoneChange" class="PZ_IsDefault" name="PZ_IsDefault" value="true" type="checkbox" />
+                <label class="checkboxLabel" for="PZ_IsDefault">Default</label>
+                <input type="button" class="btnGreen" value="Add" data-bind="click: onSaveZone" />
+            </div>
+        </form>
+        <span class="fa fa-info-circle" title="Select checkbox to define default Postage Zone for domain"></span>
+        <div class="sectionContent">
+            <label class="postageAttributesLabel">
+                Current Zones
+            </label>
+            <div data-bind="foreach: zones" class="postageAttributes">
+                <form action="#">
+                    <div>
+                        <input type="hidden" data-bind="value: PZ_DomainID" name="PZ_DomainID" />
+                        <input type="hidden" data-bind="value: PostageZoneID" name="PostageZoneID" />
+                        <input name="PZ_Name" data-bind="value: PZ_Name" />
+                        <input data-bind="click: $root.onDefaultZoneChange, checked: PZ_IsDefault, attr: { id: 'z' + PostageZoneID }" class="PZ_IsDefault" name="PZ_IsDefault" value="true" type="checkbox" />
+                        <label class="checkboxLabel" data-bind="attr: { for: 'z' + PostageZoneID }">Default</label>
+                        <input data-bind="click: $root.onSaveZone" type="button" value="Update" class="btnGreyGreen" />
+                        <input data-bind="click: $root.onDeleteZone" type="button" value="Delete" class="btnGreyRed" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

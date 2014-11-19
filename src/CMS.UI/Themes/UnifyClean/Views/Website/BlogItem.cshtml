@@ -1,0 +1,89 @@
+﻿@model CMS.BL.Entity.tbl_Content
+@section metatags {
+    @{Html.RenderPartial("/Views/Partials/MetaTags.cshtml", new CMS.UI.Models.MetadataModel(Model));}
+}
+@section scripts {
+    @Scripts.Render("~/bundles/jquery/web/add")
+    @Scripts.Render("~/bundles/blogManager")
+}
+@section styles {
+    @Html.Raw(Model != null ? Model.tbl_SiteMap.SM_CSS : String.Empty)
+}
+@section sidebar {
+    @{
+        Html.RenderPartial("../Partials/SearchPanel");
+        Html.RenderAction("BlogSideBar", "Website");
+    }
+}
+<div class="blog">
+    <h1>@Model.C_Title</h1>
+    <div>
+        @if (Model.tbl_SiteMap.tbl_Image.Count == 1)
+        {
+            <img class="blogImg" src="@(CMS.UI.SettingsManager.Images.PageImagesPath + Model.tbl_SiteMap.tbl_Image.First().I_Thumb)" alt="@Model.tbl_SiteMap.tbl_Image.First().I_Thumb" />
+        }
+        @Html.Partial("~/Views/Partials/ContentPartial.cshtml", ViewBag.Content.HtmlElements as List<object>)
+    </div>
+    <div>
+        @if (Model.tbl_SiteMap.tbl_Tags.Count > 0)
+        {
+            <p>
+                Tags:
+                @for (int n = 0; n < Model.tbl_SiteMap.tbl_Tags.Count; n++)
+                {
+                    if (n != 0)
+                    { <text>|</text> }<a href="@(String.Format("/{0}/{1}/{2}", ViewBag.BlogUrl, CMS.UI.SettingsManager.Blog.TagUrl.Trim('/'), Model.tbl_SiteMap.tbl_Tags.ElementAt(n).TA_URL))" title="@Model.tbl_SiteMap.tbl_Tags.ElementAt(n).TA_Title">@Model.tbl_SiteMap.tbl_Tags.ElementAt(n).TA_Title</a>
+                }
+            </p>
+            <br />
+        }
+        <p>
+            This entry was posted on @Model.tbl_SiteMap.SM_Date.GetValueOrDefault().ToLongDateString()
+            at @Model.tbl_SiteMap.SM_Date.GetValueOrDefault().ToShortTimeString() and is filed
+            under
+            @for (int n = 0; n < Model.tbl_SiteMap.tbl_NewsCategories.Count; n++)
+            {
+                if (n != 0)
+                { <text>|</text> }<a href="@(String.Format("/{0}/{1}/{2}", ViewBag.BlogUrl, CMS.UI.SettingsManager.Blog.CategoryUrl.Trim('/'), Model.tbl_SiteMap.tbl_NewsCategories.ElementAt(n).tbl_Categories.CA_URL))" title="@Model.tbl_SiteMap.tbl_NewsCategories.ElementAt(n).tbl_Categories.CA_Title">@Model.tbl_SiteMap.tbl_NewsCategories.ElementAt(n).tbl_Categories.CA_Title</a>}.
+            You can <a href="#" onclick="manager.scrollToComment()">leave a response</a> here.
+        </p>
+    </div>
+    @if (!String.IsNullOrEmpty((string)ViewBag.ShareThisID))
+    {
+        <div class="bookmarks">
+            <h3>Bookmark with:</h3>
+            <div>
+                <span class="st_sharethis_large"></span><span class="st_facebook_large"></span>
+                <span class="st_twitter_large"></span><span class="st_linkedin_large"></span><span class="st_email_large"></span>
+                <script type="text/javascript">                    var switchTo5x = false;</script>
+                <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+                <script type="text/javascript">
+                    stLight.options({
+                        publisher: "@((string)ViewBag.ShareThisID)",
+                        st_url: "@(String.Format("http://{0}/{1}/{2}", Request.Url.Host, ViewBag.BlogUrl, Model.tbl_SiteMap.SM_URL.Trim('/')))",
+                        doNotHash: false,
+                        doNotCopy: false,
+                        hashAddressBar: false
+                    });
+
+                </script>
+            </div>
+        </div>
+    }
+    @if (Model.tbl_SiteMap.tbl_Comments.Where(c => c.CO_Authorised).Count() > 0)
+    {
+        <h3>@(String.Format("{0} response{1} to '{2}'", Model.tbl_SiteMap.tbl_Comments.Where(c => c.CO_Authorised).Count(), Model.tbl_SiteMap.tbl_Comments.Where(c => c.CO_Authorised).Count() != 1 ? "s" : String.Empty, Model.C_Title))</h3>
+        foreach (var response in Model.tbl_SiteMap.tbl_Comments.Where(c => c.CO_Authorised))
+        {
+            <div>
+                <p><strong>@response.CO_Author says</strong> </p> 
+                <div class="well">
+                    <p>@Html.Raw(response.CO_Comment)</p>
+                    <p class="pull-right"><em>Added on @response.CO_Date.ToLongDateString() at @response.CO_Date.ToShortTimeString()</em></p>
+                </div>
+                
+            </div>
+        }
+    }
+    @Html.Action("CommentForm", "Website", new { sitemapID = Model.tbl_SiteMap.SiteMapID })
+</div>

@@ -1,0 +1,62 @@
+﻿@model List<CMS.BL.Entity.tbl_Image>
+
+@{
+    List<CMS.BL.Entity.tbl_Image> images;
+    int i = 0;
+    if (Model.Count > 0)
+    {
+        images = Model;
+    }
+    else
+    { //get homepage images
+        CMS.Services.WebContent WebContentService = new CMS.Services.WebContent();
+        CMS.BL.Entity.tbl_Content homepagecontent = WebContentService.GetContentBySitemapID(ViewBag.HomepageID);
+        images = homepagecontent.tbl_SiteMap.SitemapImages.ToList();
+    }
+    if (images.Count > 0)
+    {
+    <!-- SLIDER -->
+    <img id="cycle-loader" src="/Themes/Alkaline/images/spinner.gif" alt="loader" />
+        if (images.Count > 1)
+        {
+    <!-- controlls -->
+    <div class="maximage-controls">
+        <a href="#" id="slider_prev"></a>
+        <a href="#" id="slider_next"></a>
+    </div>
+    <!-- /controlls -->
+        }
+    <ul id="slider">
+
+        @if ((bool)ViewBag.IsHomePage)
+        {
+            i = 0;
+            foreach (CMS.BL.Entity.tbl_Image image in images)
+            {
+            <li>
+                <img src="@Html.ImageProvider(CMS.BL.ImageVersionName.large, image.I_Thumb, String.Empty)" />
+                <div class="caption">
+                    <div class="block">
+                        <h2>@(Html.Raw(image.I_Description))</h2>
+                    </div>
+                    <div class="block">
+                    </div>
+                    @if (image.tbl_SiteMap != null)
+                    {
+					<div class="block">
+                        <a href="@ViewBag.GetFullURL(image.SitemapLink.SiteMapID)" class="btn  btn-success">View @image.SitemapLink.SM_MenuText</a>
+                    </div>
+                    }
+                </div>
+            </li>
+                    
+                i++;
+            }
+
+        }
+    </ul>
+    }
+    else
+    {
+    }
+}

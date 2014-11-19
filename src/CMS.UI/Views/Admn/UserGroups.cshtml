@@ -1,0 +1,57 @@
+﻿@model CMS.UI.Models.UserGroupModel
+@{
+    ViewBag.Title = "UserGroups";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@section scripts {
+    @Scripts.Render("~/bundles/usergroups")
+}
+
+<div id="UserGroupContent"
+    data-addGroup-url="@Url.Action("AddUserGroup", "Admn")"
+    data-deleteGroup-url="@Url.Action("DeleteUserGroup", "Admn")"
+    data-getGroup-url="@Url.Action("GetUserGroup", "Admn")"
+    data-updateGroup-url="@Url.Action("UpdateUserGroup", "Admn")"
+    >
+    <div class="leftMenuContainer">
+        <div class="btnGreyMenu" data-bind="click: onNewUserGroup">Add User Group</div>    
+        @Html.Action("LeftMenu", "Admn")
+    </div>
+    <div class="mainContainer">
+        <div class="sectionHeader" data-bind="text: sectionHeader"></div>
+        <div class="sectionWindow">
+            <div class="btnToggleSection">Set Access Levels +</div>
+            <form id="FormUserGroup" class="sectionContent" action="#" method="post" data-bind="submit: onSubmit">
+                <div>
+                    @Html.LabelFor(m => m.GroupName)
+                    @Html.TextBoxFor(m => m.GroupName, new { data_bind = "value: groupName" })
+                    @Html.ValidationMessageFor(m => m.GroupName)
+                    @Html.HiddenFor(m => m.UserGroupID, new { data_bind = "value: groupID" })
+                </div>
+                <div>
+                    <label>Access Rights</label>
+                    <ul class="box" id="MenuItemsList" data-bind="foreach: menuItems">
+                        <li data-bind="style: { paddingLeft: Level * 10 + 'px' }">
+                            <input data-bind="attr: { id: 'MenuItem' + Value, name: Value }, checked: Selected, value: Value" type="checkbox" />
+                            <label class="checkboxLabel" data-bind="attr: { 'for': 'MenuItem' + Value }, text: Text"></label>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <label>Permissions</label>
+                    <ul class="box" id="PermissionsList" data-bind="foreach: permissions">
+                        <li>
+                            <input data-bind="attr: { id: 'Permission' + Value, name: Value }, checked: Selected, value: Value" type="checkbox" />
+                            <label class="checkboxLabel" data-bind="attr: { 'for': 'Permission' + Value }, text: Text"></label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="btnContainer">
+                    <button type="submit" class="btnGreen" data-bind="visible: isNewGroup">Add New Group</button>
+                    <button type="submit" class="btnGreen" data-bind="visible: !isNewGroup()">Update Group</button>
+                    <button type="button" class="btnRed" data-bind="click: onNewUserGroup">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

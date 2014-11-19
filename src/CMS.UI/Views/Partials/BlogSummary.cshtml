@@ -1,0 +1,21 @@
+﻿@model List<CMS.BL.Entity.tbl_Content>
+@if (Model != null && Model.Count() > 0)
+{
+    foreach (CMS.BL.Entity.tbl_Content blog in Model)
+    {
+        if (blog.tbl_SiteMap.SitemapImages.Count == 1)
+        {
+            <img src="@Html.ImageProvider(CMS.BL.ImageVersionName.lifestyle, blog.tbl_SiteMap.SitemapImages.FirstOrDefault().I_Thumb, String.Empty)" class="img-responsive img-thumbnail" />
+        }
+        <a href="@String.Format("/{0}/{1}", ViewBag.BlogUrl, blog.tbl_SiteMap.SM_URL.Trim('/'))" title="@blog.C_Title">
+        @*<a href="@String.Format("{0}/{1}", ViewBag.BlogUrl, blog.tbl_SiteMap.SM_URL.Trim('/'))" title="@blog.C_Title">*@
+        <p>@blog.C_Title</p></a>
+        <p>@blog.C_Description</p>
+    }
+}
+else
+{
+    <span class="right-arrow float-right"></span>
+    <p>No news is good news</p>
+}
+

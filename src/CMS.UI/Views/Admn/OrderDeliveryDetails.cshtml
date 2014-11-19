@@ -1,0 +1,151 @@
+﻿@model CMS.BL.Entity.tbl_Orders
+
+@if (Model == null)
+{
+<div class="sectionHeader">Viewing Order</div>
+<div class="sectionWindow">
+    <div class="btnToggleSection">Order Details +</div>
+    <div class="sectionContent">
+        <div>
+            <span>No such order</span>
+        </div>
+    </div>
+</div>
+}
+else
+{
+<div class="sectionHeader">Viewing Order for @Model.BillingFirstnames @Model.BillingSurname, Order No.@Model.OrderID</div>
+<div class="sectionWindow">
+    <div class="btnToggleSection">Customer / Delivery Details +</div>
+    <div class="sectionContent">
+        <div>
+            <label>Our Customer Name:</label>
+            <span>@Model.DeliveryFirstnames @Model.DeliverySurname</span>
+        </div>
+        <div>
+            <label>Oredr Number:</label>
+            <span>@Model.OrderID</span>
+        </div>
+        <hr />
+        <h2>Delivery Details</h2>
+        <div class="tableContainer">
+            <table class="vTable">
+                <tbody>
+                    <tr>
+                        <td>Contact Number:</td>
+                        <td>@Model.DeliveryPhone</td>
+                    </tr>
+                    <tr>
+                        <td>Contact Name:</td>
+                        <td>@Model.DeliveryFirstnames @Model.DeliverySurname</td>
+                    </tr>
+                    <tr>
+                        <td>Company Name:</td>
+                        <td>@Model.O_OrgName</td>
+                    </tr>
+                    <tr>
+                        <td>Address 1:</td>
+                        <td>@Model.DeliveryAddress1</td>
+                    </tr>
+                    <tr>
+                        <td>Address 2:</td>
+                        <td>@Model.DeliveryAddress2</td>
+                    </tr>
+                    <tr>
+                        <td>Locality:</td>
+                        <td>@Model.DeliveryCity</td>
+                    </tr>
+                    <tr>
+                        <td>County:</td>
+                        <td>@Model.DeliveryState</td>
+                    </tr>
+                    <tr>
+                        <td>Postcode:</td>
+                        <td>@Model.DeliveryPostCode</td>
+                    </tr>
+                    <tr>
+                        <td>Country:</td>
+                        <td>@Model.DeliveryCountry</td>
+                    </tr>
+                    <tr>
+                        <td>Telephone Number:</td>
+                        <td>@Model.DeliveryPhone</td>
+                    </tr>
+                    <tr>
+                        <td>Special Instructions:</td>
+                        <td>@Model.O_DeliveryNotes</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="sectionWindow">
+    <div class="btnToggleSection">Product Details +</div>
+    <div class="sectionContent">
+        <div class="tableContainer">
+            <table class="hTable">
+                <thead>
+                    <tr>
+                        <td>Product Title</td>
+                        <td>Product Description</td>
+                        <td>Quantity</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var oContent in Model.tbl_OrderContent)
+                    {
+                        <tr>
+                            <td>@oContent.OC_Title</td>
+                            <td>
+                                @oContent.OC_ProductAttributes
+                            </td>
+                            <td>@oContent.OC_Quantity</td>
+                        </tr>   
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="sectionWindow">
+    <div class="btnToggleSection">Other +</div>
+    <div class="sectionContent">
+        <h2>Office Use</h2>
+        <div class="tableContainer">
+            <table class="vTable">
+                <tbody>
+                    <tr>
+                        <td>Chcked By</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Dispatch Date</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Carier</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Tracking Number</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>On Opera</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>On Spreadsheet</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div>
+    <input type="button" class="btnGreen" value="Print Packing List" data-bind="click: onPrintPage"/>
+    <input type="button" class="btnRed" value="Go Back" data-bind="click: onEdit" />
+</div>
+}

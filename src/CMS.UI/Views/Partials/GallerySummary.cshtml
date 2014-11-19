@@ -1,0 +1,35 @@
+﻿@model List<CMS.BL.Entity.tbl_Gallery>
+@if (Model != null && Model.Count() > 0)
+{
+    <div class="container" id="gallerysummary">
+        <div id="carousel-gallery" class="carousel slide" data-ride="carousel">
+        @{ 
+    int i = 1;
+    int qtyToShow = 5;
+        }
+        <div class="carousel-inner">
+            @foreach (var gallery in Model)
+            {
+                if (i == 1 || (i % qtyToShow) == 0)
+                {
+                @Html.Raw(String.Format("<div class=\"item{0}\">", (i == 1 ? " active" : String.Empty)));
+                }
+                <div class="col-sm-3">
+                        @if(gallery.tbl_GalleryImage != null && gallery.tbl_GalleryImage.Count() > 0)
+                        {
+                        <a href="@(ViewBag.GalleryUrl + gallery.tbl_SiteMap.SM_URL)" title="@gallery.G_Title">
+                            <img src="@Html.ImageProvider(CMS.BL.ImageVersionName.galleryThumb, gallery.tbl_GalleryImage.FirstOrDefault().tbl_Image.I_Thumb, String.Empty)" alt="@gallery.tbl_GalleryImage.FirstOrDefault().tbl_Image.I_Description" class="thumbnail"/>
+                        </a>
+                        }
+                </div>
+                if (i == Model.Count() || (i < Model.Count() + 1 && ((i + 1) % qtyToShow) == 0))
+                {
+                @Html.Raw("</div>");
+                }
+                i++;
+            }
+        </div>
+    </div>
+    </div>
+}
+

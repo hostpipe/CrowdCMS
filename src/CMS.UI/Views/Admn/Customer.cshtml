@@ -1,0 +1,216 @@
+﻿@model CMS.UI.Models.EditCustomerAdminModel
+@{
+    ViewBag.Title = "Customers";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@section scripts {
+    @Scripts.Render("~/bundles/jqueryDataTable")
+    @Scripts.Render("~/bundles/customers")
+}
+<div id="CustomerContent"
+     data-addaddress-url="@Url.Action("AddAddress", "Admn")"
+     data-getaddresses-url="@Url.Action("GetAddressesByCustomer", "Admn")"
+     data-getcustomer-url="@Url.Action("GetCustomer", "Admn")"
+     data-getcountries-url="@Url.Action("GetCountriesListByDomainID", "Admn")"
+     data-getorderdetails-url="@Url.Action("GetOrderDetails", "Admn")"
+     data-getdomains-url="@Url.Action("GetDomainsList", "Admn")"
+     data-updateaddress-url="@Url.Action("UpdateAddress", "Admn")"
+     data-updatecustomer-url="@Url.Action("UpdateCustomer", "Admn")"
+     data-searchcustomers-url="@Url.Action("CustomersLeftMenu", "Admn")"
+     data-toggledormantflag-url="@Url.Action("ToggleDormantFlag", "Admn")"
+     data-getcustomerstocsv-url="@Url.Action("GetCustomersCSV", "Admn")">
+    <div class="leftMenuContainer sixBtns">
+        <div class="searchPanel">
+            <input type="text" class="short" id="tbSearch" data-bind="event: { keyup: onSearchKeyUp }" />
+            <div class="btnGreyMenu" data-bind="click: onSearch">
+                Search
+            </div>
+        </div>
+
+        <select data-bind="options: domains, optionsText: 'Text', optionsValue: 'Value', optionsCaption: 'All domains', value: lDomainID, event: {change: onLDomainChange}"></select>
+        <div class="btnGreyMenu short" data-bind="click: onFullList">Full Customers List</div>
+        <a href="#" class="btnGreyMenu short" data-bind="click: onGetCustomerCSV">Get Customers CSV</a>
+        <div class="btnGreyMenu short" data-bind="click: onFilter">Filter customers</div>
+        @Html.Partial("~/Views/Partials/Loader.cshtml")
+    </div>
+    
+    <div class="mainContainer" data-bind="visible: visibleMain">
+        
+            <div class="sectionHeader" data-bind="text: sectionHeader">
+            </div>
+            <div class="sectionWindow">
+                <div class="btnToggleSection">Customer Registration Details +</div>
+                <form id="CustomerForm" class="sectionContent" method="post" action="#" data-bind="submit: onSaveCustomer, with: details">
+                    <div>
+                        @Html.LabelFor(model => model.Title)
+                        @Html.TextBoxFor(model => model.Title, new { data_bind = "value: Title" })
+                        @Html.ValidationMessageFor(model => model.Title)
+                        @Html.HiddenFor(model => model.DomainID, new { data_bind = "value: DomainID" })
+                        @Html.HiddenFor(model => model.CustomerID, new { data_bind = "value: CustomerID" })
+                    </div>
+                    <div>
+                        @Html.LabelFor(model => model.FirstName)
+                        @Html.TextBoxFor(model => model.FirstName, new { data_bind = "value: FirstName" })
+                        @Html.ValidationMessageFor(model => model.FirstName)
+                    </div>
+                    <div>
+                        @Html.LabelFor(model => model.Surname)
+                        @Html.TextBoxFor(model => model.Surname, new { data_bind = "value: Surname" })
+                        @Html.ValidationMessageFor(model => model.Surname)
+                    </div>
+                    <div>
+                        @Html.LabelFor(model => model.Email)
+                        @Html.TextBoxFor(model => model.Email, new { data_bind = "value: Email" })
+                        @Html.ValidationMessageFor(model => model.Email)
+                    </div>
+                    <div>
+                        @Html.LabelFor(model => model.Phone)
+                        @Html.TextBoxFor(model => model.Phone, new { data_bind = "value: Phone" })
+                        @Html.ValidationMessageFor(model => model.Phone)
+                    </div>
+                    <div>
+                        @Html.LabelFor(model => model.SubscribeNewsletter)
+                        @Html.CheckBoxFor(model => model.SubscribeNewsletter, new { data_bind = "checked: SubscribeNewsletter" })
+                    </div>
+                    <div>
+                        @Html.LabelFor(model => model.DetailsFor3rdParties)
+                        @Html.CheckBoxFor(model => model.DetailsFor3rdParties, new { data_bind = "checked: DetailsFor3rdParties" })
+                    </div>
+                    <div>
+                        @Html.LabelFor(model => model.Registered)
+                        <span data-bind="text: Registered() ? 'Yes' : 'No'"></span>
+                        @Html.HiddenFor(model => model.Registered, new { data_bind = "value: Registered() ? 'true' : 'false'" })
+                    </div>
+                    <div>
+                        @Html.LabelFor(model => model.adminNote)
+                        @Html.TextAreaFor(model => model.adminNote, new { data_bind = "value: adminNote", maxlength = "350" })
+                    </div>
+                    <div class="btnContainer">
+                        <input type="submit" value="Update Customer" class="btnGreen" />
+                        <input type="button" value="" class="" data-bind="value: $root.btnText, css: $root.btnClass, click: $root.onToggleDormant" />
+                    </div>
+                </form>
+            </div>
+            <div class="sectionWindow">
+                <div class="btnToggleSection">Addresses +</div>
+                <div class="sectionContent">
+                    <div class="tableContainer">
+                        <table id="AddressTable" class="hTable">
+                            <thead>
+                                <tr>
+                                    <td class="indexCol">ID</td>
+                                    <td class="editText" style="width: 4%">Title</td>
+                                    <td class="editText" style="width: 8%">Firstname</td>
+                                    <td class="editText" style="width: 8%">Surname</td>
+                                    <td class="editText" style="width: 5%">Phone</td>
+                                    <td class="editText" style="width: 10%">Address1</td>
+                                    <td class="editText" style="width: 10%">Address2</td>
+                                    <td class="editText" style="width: 10%">Address3</td>
+                                    <td class="editText" style="width: 13%">City</td>
+                                    <td class="editText" style="width: 10%">County</td>
+                                    <td class="editText" style="width: 5%">PostCode</td>
+                                    <td class="editList" style="width: 13%">Country</td>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div>Double click any part of the address above to edit.</div>
+                    <div>
+                        <input type="button" value="Add New Address" class="btnGrey" data-bind="click: toggleNewAddressForm" />
+                    </div>
+                    <form id="CustomerAddressForm" method="post" action="#" data-bind="submit: onAddAddress, visible: isNewAddress">
+                        @Html.Partial("/Views/Partials/CustomerAddress.cshtml")
+                        <div class="btnContainer">
+                            <input type="submit" value="Add Address" class="btnGreen" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="sectionWindow">
+                <div class="btnToggleSection">
+                    Order history +
+                </div>
+                <div class="sectionContent">
+                    <div data-bind="visible: noOrders">
+                        <span>No orders could be found</span>
+                    </div>
+                    <div data-bind="foreach: orders">
+                        <div class="ordersListItem" data-bind="if: ProductType == @((int)CMS.BL.ProductType.Donation)">
+                            <div>
+                                <b>Donation Date: </b><span data-bind="text: OrderDate"></span>
+                                <b>Amount: </b><span data-bind="text: Price"></span>
+                            </div>
+                            <div>
+                                <button class="btnGreen" data-bind="click: $root.onShowDonationDetails, attr: { 'data-orderID': OrderID }">
+                                    View Donation Details
+                                </button>
+                            </div>
+                        </div>
+                        <div class="ordersListItem" data-bind="if: ProductType != @((int)CMS.BL.ProductType.Donation)">
+                            <div>
+                                <span><b>Order Date: </b></span><span data-bind="text: OrderDate"></span>
+                                <span><b>Amount: </b></span><span data-bind="text: Price"></span>
+                            </div>
+                            <div class="tableContainer">
+                                <table class="hTable">
+                                    <thead>
+                                        <tr>
+                                            <td>
+                                                Product
+                                            </td>
+                                            <td>
+                                                Quantity
+                                            </td>
+                                            <td>
+                                                Price
+                                            </td>
+                                            <td>
+                                                Sub Total
+                                            </td>
+                                        </tr>
+                                    </thead>
+                                    <tbody data-bind="foreach: Products">
+                                        <tr>
+                                            <td data-bind="text: ProdName"></td>
+                                            <td data-bind="text: Amount"></td>
+                                            <td data-bind="text: ProdPrice"></td>
+                                            <td data-bind="text: TotalPrice"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div>
+                                <button class="btnGreen" data-bind="click: $root.onShowOrderDetails, attr: { 'data-orderID': OrderID }">
+                                    View Order Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <div class="hidden" id="OrderDetailsWindow">
+    </div>
+    <div id="SearchDialog" class="classicForm hidden">
+        <div>
+            <label for="ddlLetter">Select letter</label>
+            <select id="ddlLetter" data-bind="options: characters, optionsCaption: 'All letters', value: character"></select>
+        </div>
+        <div>
+            <label for="chbRegistered">Show registered</label>
+            <input id="chbRegistered" type="checkbox" data-bind="checked: showRegistered" />
+        </div>
+        <div>
+            <label for="chbUnRegistered">Show unregistered</label>
+            <input id="chbUnRegistered" type="checkbox" data-bind="checked: showUnRegistered" />
+        </div>
+        <div>
+            <label for="tbDormant">Show Dormant</label>
+            <input id="tbDormant" type="checkbox" data-bind="checked: isDormant" />
+        </div>
+        <div class="buttons">
+            <button class="btnGreen" id="btnSearch" data-bind="click: onSearchCustomers">Search</button>
+        </div>
+    </div>
+</div>

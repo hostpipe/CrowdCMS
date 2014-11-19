@@ -1,0 +1,42 @@
+﻿@model CMS.BL.Entity.tbl_EventTypes
+
+<div class="sectionHeader">Upload Image For @(Model != null ? Model.ET_Title : String.Empty)</div>
+<div class="sectionWindow">
+    <div class="btnToggleSection">Upload Image +</div>
+    <form id="ImagesUpload" class="sectionContent" action="@Url.Action("SaveEventTypeImage", "Admn")" method="post" enctype="multipart/form-data" >
+        <div>
+            <label>Image File</label>
+            <input type="file" name="file" accept="image/*" />
+            @Html.HiddenFor(m => m.EventTypeID)
+            <span class="fa fa-info-circle" title="You can upload only images."></span>
+        </div>
+        <div class="btnContainer">
+            <button type="submit" class="btnGreen" >Upload Image</button>
+        </div>
+    </form>
+</div>
+<div class="sectionWindow">
+    <div class="btnToggleSection">Image Uploaded +</div>
+    <div class="sectionContent">
+        @if (Model != null)
+        {
+        <div class="imagesGallery">
+        @if (!String.IsNullOrEmpty(Model.ET_ImagePath))
+        {
+            <span>
+                <img src="@Model.ET_ImagePath" alt="@Path.GetFileName(Model.ET_ImagePath)" />
+                <input type="button" value="Delete" class="btnRed" data-eventTypeID="@Model.EventTypeID" data-bind="click: onDeleteImage"/>
+            </span>
+        }
+        else
+        {
+            <span>No image have been uploaded.</span>
+        }
+        </div>
+        }
+    </div>
+</div>
+<div id="UploadWindow">
+    <div>Image is being uploaded.</div>
+    <div id="Progressbar"></div>
+</div>

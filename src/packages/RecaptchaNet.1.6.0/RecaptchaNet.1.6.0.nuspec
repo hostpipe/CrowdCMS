@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>RecaptchaNet</id>
+    <version>1.6.0</version>
+    <title>Recaptcha for .NET</title>
+    <authors>Tanveer Yousuf</authors>
+    <owners>Tanveer Yousuf</owners>
+    <licenseUrl>http://recaptchanet.codeplex.com/license</licenseUrl>
+    <projectUrl>http://recaptchanet.codeplex.com/</projectUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>Recaptcha for .NET allows a developer to easily integrate Google's Recaptcha service (the most popular captcha control) in an ASP.NET Web Forms or ASP.NET MVC web application.
+
+The primary features of the library are:
+* Renders recaptcha control with appropriate options.
+* Verifies user's answer to recaptcha's challenge.
+* Supports ASP.NET 4.0, 4.5, and 4.5.1.
+* Supports ASP.NET MVC 4 and 5.
+
+Recpatcha for .NET has the best and most up-to-date documentation available:
+http://recaptchanet.codeplex.com/documentation</description>
+    <summary>Quickly add Recaptcha (the most popular captcha service) in an ASP.NET Web Forms or ASP.NET MVC web application.</summary>
+    <releaseNotes>v1.6.0
+1. Bug fixes
+2. Optimized code
+
+v1.5.1
+1. Added support for HTTPS.
+2. Signed the assemblies
+
+v1.5
+1. Added legacy support for .NET 4.0 &amp; ASP.NET MVC 4.
+2. Added support for .NET 4.5.1.
+
+v1.4
+1. Minor bug fixes
+2. Replaced the direct reference to ASP.NET MVC assembly with a dependency on the ASP.NET MVC Nuget package.
+
+v1.3
+1. You can now verify a user's response to recpatcha challenge asynchronously using the new "await" keyword.
+2. By default, recpacha control uses the current UI culture's language. With this release, you can now set it manually if you want.
+3. The package adds the RecpatchaNet.ReadMe.txt file to your project to help you get started as quickly as possible.</releaseNotes>
+    <copyright>(C) Ejyle Technologies (P) Ltd. All rights reserved.</copyright>
+    <language>en-US</language>
+    <tags>recaptcha captcha  mvc captcha recpatcha</tags>
+    <dependencies>
+      <group targetFramework=".NETFramework4.0">
+        <dependency id="AspNetMvc" version="4.0.20710.0" />
+      </group>
+      <group targetFramework=".NETFramework4.5">
+        <dependency id="Microsoft.AspNet.Mvc" version="5.2.0" />
+      </group>
+      <group targetFramework=".NETFramework4.5.1">
+        <dependency id="Microsoft.AspNet.Mvc" version="5.2.0" />
+      </group>
+    </dependencies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.Configuration" targetFramework=".NETFramework4.0" />
+      <frameworkAssembly assemblyName="System.Configuration" targetFramework=".NETFramework4.5" />
+      <frameworkAssembly assemblyName="System.Configuration" targetFramework=".NETFramework4.5.1" />
+    </frameworkAssemblies>
+  </metadata>
+</package>

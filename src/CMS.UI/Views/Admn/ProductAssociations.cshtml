@@ -1,0 +1,71 @@
+﻿@model CMS.BL.Entity.tbl_Products
+
+<div class="sectionHeader">Associations for @Model.P_Title (@Model.P_ProductCode)</div>
+<div class="sectionWindow">
+    <div class="btnToggleSection">Add Association +</div>
+    <div class="sectionContent">
+        <div>
+            <label for="ddlProducts">Select item to associate:</label>
+            @Html.DropDownList("ddlProducts", ViewBag.Products as List<SelectListItem>)
+            <button class="btnGreyGreen" data-bind="click: onAddAssociation">Add</button>
+        </div>
+    </div>
+</div>
+<div class="sectionWindow">
+    <div class="btnToggleSection">Associations +</div>
+    <div class="sectionContent">
+        <h2>Associated products</h2>
+        <div>
+            @if (Model.tbl_ProdAss.Where(p => p.PAS_ProductID1 == Model.ProductID ? p.tbl_Products1.tbl_ProductTypes.PT_Name.Equals(CMS.BL.ProductType.Item.ToString()) : p.tbl_Products.tbl_ProductTypes.PT_Name.Equals(CMS.BL.ProductType.Item.ToString())).Count() == 0 &&
+                Model.tbl_ProdAss1.Where(p => p.PAS_ProductID1 == Model.ProductID ? p.tbl_Products1.tbl_ProductTypes.PT_Name.Equals(CMS.BL.ProductType.Item.ToString()) : p.tbl_Products.tbl_ProductTypes.PT_Name.Equals(CMS.BL.ProductType.Item.ToString())).Count() == 0)
+            {
+            <p>There are no associated products to display.</p>
+            }
+            <div class="checkBoxList withoutLabel">
+                @foreach (var prodAss in Model.tbl_ProdAss.Where(p => p.PAS_ProductID1 == Model.ProductID ? p.tbl_Products1.tbl_ProductTypes.PT_Name.Equals(CMS.BL.ProductType.Item.ToString()) : p.tbl_Products.tbl_ProductTypes.PT_Name.Equals(CMS.BL.ProductType.Item.ToString())))
+	            {
+                    var product = prodAss.PAS_ProductID1 == Model.ProductID ? prodAss.tbl_Products1 : prodAss.tbl_Products;
+                <span>
+                    <span>@product.P_Title</span>
+                    <span class="deleteLink" data-bind="click: onDeleteAssociation" data-productID="@product.ProductID"></span>
+                </span>
+                }
+                @foreach (var prodAss in Model.tbl_ProdAss1.Where(p => p.PAS_ProductID1 == Model.ProductID ? p.tbl_Products1.tbl_ProductTypes.PT_Name.Equals(CMS.BL.ProductType.Item.ToString()) : p.tbl_Products.tbl_ProductTypes.PT_Name.Equals(CMS.BL.ProductType.Item.ToString())))
+	            {
+                    var product = prodAss.PAS_ProductID1 == Model.ProductID ? prodAss.tbl_Products1 : prodAss.tbl_Products;
+                <span>
+                    <span>@product.P_Title</span>
+                    <span class="deleteLink" data-bind="click: onDeleteAssociation" data-productID="@product.ProductID"></span>
+                </span>
+                }
+            </div>
+        </div>
+        <hr />
+        <h2>Associated events</h2>
+        <div>
+            @if (Model.tbl_ProdAss.Where(p => p.PAS_ProductID1 == Model.ProductID ? p.tbl_Products1.tbl_ProductTypes.PT_Name.Equals(CMS.BL.ProductType.Event.ToString()) : p.tbl_Products.tbl_ProductTypes.PT_Name.Equals(CMS.BL.ProductType.Event.ToString())).Count() == 0 &&
+                Model.tbl_ProdAss1.Where(p => p.PAS_ProductID1 == Model.ProductID ? p.tbl_Products1.tbl_ProductTypes.PT_Name.Equals(CMS.BL.ProductType.Event.ToString()) : p.tbl_Products.tbl_ProductTypes.PT_Name.Equals(CMS.BL.ProductType.Event.ToString())).Count() == 0)
+            {
+            <p>There are no associated events to display.</p>
+            }
+            <div class="checkBoxList withoutLabel events">
+                @foreach (var prodAss in Model.tbl_ProdAss.Where(p => p.PAS_ProductID1 == Model.ProductID ? p.tbl_Products1.tbl_ProductTypes.PT_Name.Equals(CMS.BL.ProductType.Event.ToString()) : p.tbl_Products.tbl_ProductTypes.PT_Name.Equals(CMS.BL.ProductType.Event.ToString())))
+	            {
+                    var product = prodAss.PAS_ProductID1 == Model.ProductID ? prodAss.tbl_Products1 : prodAss.tbl_Products;
+                <span>
+                    <span>@product.P_Title</span>
+                    <span class="deleteLink" data-bind="click: onDeleteAssociation" data-productID="@product.ProductID"></span>
+                </span>
+                }
+                @foreach (var prodAss in Model.tbl_ProdAss1.Where(p => p.PAS_ProductID1 == Model.ProductID ? p.tbl_Products1.tbl_ProductTypes.PT_Name.Equals(CMS.BL.ProductType.Event.ToString()) : p.tbl_Products.tbl_ProductTypes.PT_Name.Equals(CMS.BL.ProductType.Event.ToString())))
+	            {
+                    var product = prodAss.PAS_ProductID1 == Model.ProductID ? prodAss.tbl_Products1 : prodAss.tbl_Products;
+                <span>
+                    <span>@product.P_Title</span>
+                    <span class="deleteLink" data-bind="click: onDeleteAssociation" data-productID="@product.ProductID"></span>
+                </span>
+                }
+            </div>
+        </div>
+    </div>
+</div>

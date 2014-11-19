@@ -1,0 +1,27 @@
+﻿@model List<CMS.BL.Entity.tbl_Products>
+<div id="EventsSummary" data-event-url="@Url.Action("GetAllEventsData", "Website")">
+    <div class="event-list">
+        <ul>
+            @if (Model != null && Model.Count() > 0)
+            {
+                foreach (CMS.BL.Entity.tbl_Products ProductItem in Model)
+                {
+                    <li>
+                        <a href="/@(ViewBag.ShopUrl + "/" + ProductItem.tbl_SiteMap.SM_URL.Trim('/'))" title="@ProductItem.P_Title.ToString()">
+                            <span class="event-title">@ProductItem.P_Title.ToString()</span><br />
+                            <span class="event-date">@ProductItem.tbl_ProductPrice.FirstOrDefault().PR_EventStartDate, @ProductItem.tbl_ProductPrice.LastOrDefault().PR_EventEndDate</span>
+                            @if (ProductItem.tbl_ProductImageLink.Count > 0)
+                            {
+                                <img class="img-responsive" alt="@ProductItem.P_Title.ToString()" src="@Html.ImageProvider(CMS.BL.ImageVersionName.eventlistThumb, ProductItem.tbl_ProductImageLink.FirstOrDefault().tbl_ProductImages.I_Name, String.Empty)" />
+                            }
+                        </a>
+                    </li>
+                }
+            }
+            else
+            {
+                <li>There are no upcoming events for the chosen month.</li>
+            }
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,27 @@
+﻿@model CMS.UI.Models.FormModel
+@using Recaptcha.Web.Mvc
+    <h1>@Model.Name</h1>
+    <form id="@("form" + @Model.FormID)" action="@Url.Action("SaveFormSubmission", "Website")" class="customForm" enctype="application/x-www-form-urlencoded" method="post">
+        <div class="form-group">
+            <p>* Required Fields</p>
+        </div>
+        <div class="col-sm-6">
+            <div class="row">
+                @CMSHelpers.FormItems(Model.FormItems)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Recaptcha(publicKey: Model.PublicKey, theme: Recaptcha.Web.RecaptchaTheme.Clean)
+            <span id="@("validationSummary" + @Model.FormID)" class="validation-summary-errors"></span>
+        </div>
+        <div class="form-group">
+                @Html.HiddenFor(m => m.FormID)
+                @Html.HiddenFor(m => m.RecipientEmail)
+                <button type="submit" value="Send" class="button">Send</button>
+                @*<input type="reset" value="Reset" />*@
+        </div>
+    </form>
+    <div id="@("emailSent" + @Model.FormID)" style="display: none;">
+        <h1>Contact @Model.CompanyName</h1>
+        <div>Your request was sent to our team.</div>
+    </div>

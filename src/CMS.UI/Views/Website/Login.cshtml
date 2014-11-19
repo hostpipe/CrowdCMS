@@ -1,0 +1,35 @@
+﻿@model CMS.UI.Models.LoginModel
+@{
+    ViewBag.Title = "Login";
+}
+@section metatags {
+    @{Html.RenderPartial("/Views/Partials/MetaTags.cshtml", new CMS.UI.Models.MetadataModel());}
+}
+@section sidebar {
+    @{
+        Html.RenderPartial("../Partials/SearchPanel");
+        Html.RenderAction("ContactUsPartial", "Website");
+    }
+}
+<form id="LoginForm" method="post" class="col-sm-6" >
+    <h1>Login</h1>
+    <div>
+        @Html.ValidationSummary(true)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email)
+        @Html.TextBoxFor(m => m.Email, new { autofocus = "autofocus", @class="form-control" })
+        @Html.ValidationMessageFor(m => m.Email)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Password)
+        @Html.PasswordFor(m => m.Password, new { @class="form-control" })
+        @Html.ValidationMessageFor(m => m.Password)
+    </div>
+    <div class="noLabel">
+        <button type="submit" class="btn btn-default">Login</button>
+    </div>
+    <div class="noLabel">
+        <a href="@Url.RouteUrl("PassReminder")">Reset Your Password</a>
+    </div>
+</form>

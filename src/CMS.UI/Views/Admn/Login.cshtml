@@ -1,0 +1,32 @@
+﻿@model CMS.UI.Models.LoginModel
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="sectionLogin">
+    <form method="POST">
+        <fieldset>
+            <legend class="sectionHeader">Content Management Login</legend>
+            <div class="formRow">
+                @Html.LabelFor(m => m.Email)
+                @Html.TextBoxFor(m => m.Email, new { autofocus = "autofocus" })
+            </div>
+            <div class="formRow">
+                @Html.LabelFor(m => m.Password)
+                @Html.PasswordFor(m => m.Password)
+            </div>
+            <div class="formRow">
+                <p>@Html.ValidationMessageFor(m => m.Email)</p>
+                <p>@Html.ValidationMessageFor(m => m.Password)</p>
+                <p>@Html.ValidationSummary(true)</p>
+            </div>
+            <div class="formRow">
+                <div class="btn"><span><input type="submit" value="Login" /></span></div>
+            </div>
+        </fieldset>
+    </form>
+    <div>
+        <a class="btnGrey" href="@Url.Action("ForgottenPassword", "Admn")">Forgotten Your Password?</a>
+    </div>
+</div>

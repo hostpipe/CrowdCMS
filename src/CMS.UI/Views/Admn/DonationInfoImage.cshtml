@@ -1,0 +1,41 @@
+﻿@model CMS.BL.Entity.tbl_DonationInfo
+
+<div class="sectionHeader">Upload Image For @(Model != null ? Model.DI_Title : String.Empty)</div>
+<div class="sectionWindow">
+    <div class="btnToggleSection">Upload Image +</div>
+    <form id="ImagesUpload" class="sectionContent" action="@Url.Action("SaveDonationInfoImage", "Admn")" method="post" enctype="multipart/form-data" >
+        <div>
+            <label>Image File</label>
+            <input type="file" name="file" />
+            @Html.HiddenFor(m => m.DonationInfoID)
+        </div>
+        <div class="btnContainer">
+            <button type="submit" class="btnGreen" >Upload Image</button>
+        </div>
+    </form>
+</div>
+<div class="sectionWindow">
+    <div class="btnToggleSection">Image Uploaded +</div>
+    <div class="sectionContent">
+        @if (Model != null)
+        {
+        <div class="imagesGallery">
+        @if (!String.IsNullOrEmpty(Model.DI_ImagePath))
+        {
+            <span>
+                <img src="@Model.DI_ImagePath" alt="@Path.GetFileName(Model.DI_ImagePath)" />
+                <input type="button" value="Delete" class="btnRed" data-donationInfoID="@Model.DonationInfoID" data-bind="click: onDeleteImage"/>
+            </span>
+        }
+        else
+        {
+            <span>No image have been uploaded.</span>
+        }
+        </div>
+        }
+    </div>
+</div>
+<div id="UploadWindow">
+    <div>Image is being uploaded.</div>
+    <div id="Progressbar"></div>
+</div>

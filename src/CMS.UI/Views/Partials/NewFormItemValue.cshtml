@@ -1,0 +1,16 @@
+﻿@model CMS.UI.Models.FormItemValueModel
+
+<form action="#">
+    @Html.LabelFor(m => m.Value, "Value", new { @class = "short" })
+    @Html.TextBoxFor(m => m.Value, new { @class = "tiny", id = "tbValue" })
+    @Html.LabelFor(m => m.Text, "Text", new { @class = "short" })
+    @Html.TextBoxFor(m => m.Text, new { id = "tbText" })
+    @Html.LabelFor(m => m.Selected, "Selected", new { @class = "short" })
+    @Html.CheckBoxFor(m => m.Selected, new { id = "chSelected" })
+    @Html.LabelFor(m => m.Order, "Order", new { @class = "short" })
+    @Html.TextBoxFor(m => m.Order, new { @class = "tiny", id = "tbOrder" })
+    <button class="btnGreyGreen" data-bind="click: onSaveFormItemValue">Save</button>
+    @Html.ValidationMessageFor(m => m.Value)
+    @Html.ValidationMessageFor(m => m.Selected)
+    @Html.ValidationMessageFor(m => m.Order)
+</form>

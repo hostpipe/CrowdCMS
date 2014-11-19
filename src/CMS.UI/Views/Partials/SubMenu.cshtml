@@ -1,0 +1,7 @@
+﻿@model List<CMS.UI.Models.WebsiteMenuModel>
+
+<div class="menu">
+    <ul>
+        @CMSHelpers.SubMenu(Model, Request.Url.AbsolutePath)
+    </ul>
+</div>

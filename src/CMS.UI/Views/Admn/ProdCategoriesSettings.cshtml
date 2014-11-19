@@ -1,0 +1,81 @@
+﻿@model CMS.BL.Entity.tbl_Content
+
+<div class="sectionHeader" data-bind="text: sectionHeader"></div>
+<div class="sectionWindow">
+    <div class="btnToggleSection">Category Details +</div>
+    <form id="DetailsForm" action="#" class="sectionContent">
+        <div>
+            @Html.Label("ddlDomain", "Domain")
+            @Html.DropDownListFor(m => m.tbl_SiteMap.SM_DomainID, ViewBag.Domains as SelectList, new { @class = "short", id = "ddlDomain", data_bind = "event: { change: onGetCategories }" })
+            @Html.HiddenFor(m => m.ContentID)
+            @Html.HiddenFor(m => m.tbl_SiteMap.SiteMapID)
+            @Html.HiddenFor(m => m.tbl_SiteMap.tbl_ProdCategories.CategoryID)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.tbl_SiteMap.tbl_ProdCategories.PC_ParentID, "Parent Category")
+            <select id="ddlParent" name="PC_ParentID" class="short" data-bind="foreach: categories, value: pCategoryID">
+                <option data-bind="value: Value, html: Text, attr: { selected: Selected }"></option>
+            </select>
+        </div>
+        <div>
+            @Html.LabelFor(m => m.tbl_SiteMap.tbl_ProdCategories.PC_TaxID, "Tax Rate")
+            @Html.DropDownListFor(m => m.tbl_SiteMap.tbl_ProdCategories.PC_TaxID, ViewBag.Taxes as List<SelectListItem>, new { @class = "short", id = "ddlTaxes" })
+            @Html.ValidationMessageFor(m => m.tbl_SiteMap.tbl_ProdCategories.PC_TaxID)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.tbl_SiteMap.tbl_ProdCategories.PC_Title, "Category Title")
+            @Html.TextBoxFor(m => m.tbl_SiteMap.tbl_ProdCategories.PC_Title, new { @class = "short", id = "tbTitle" })
+            @Html.ValidationMessageFor(m => m.tbl_SiteMap.tbl_ProdCategories.PC_Title)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.tbl_SiteMap.tbl_ProdCategories.PC_Live, "Live Status")
+            @Html.RadioButton("PC_Live", true, Model != null ? Model.tbl_SiteMap.tbl_ProdCategories.PC_Live : false, new { id = "radioLiveYes" })
+            @Html.Label("LabelYes", "On", new { @for = "radioLiveYes", @class = "checkboxLabel" })
+            @Html.RadioButton("PC_Live", false, Model != null ? !Model.tbl_SiteMap.tbl_ProdCategories.PC_Live : true, new { id = "radioLiveNo" })
+            @Html.Label("LabelNo", "Off", new { @for = "radioLiveNo", @class = "checkboxLabel" })
+        </div>
+        <div>
+            @Html.LabelFor(m => m.tbl_SiteMap.SM_Menu, "Show in menu")
+            @Html.RadioButton("rbMenu", true, Model != null ? Model.tbl_SiteMap.SM_Menu : false, new { id = "radioMenuYes" })
+            @Html.Label("LabelYes", "Yes", new { @for = "radioMenuYes", @class = "checkboxLabel" })
+            @Html.RadioButton("rbMenu", false, Model != null ? !Model.tbl_SiteMap.SM_Menu : true, new { id = "radioMenuNo" })
+            @Html.Label("LabelNo", "No", new { @for = "radioMenuNo", @class = "checkboxLabel" })
+            <span class="fa fa-info-circle" title="Show this page in the menu of the website."></span>
+        </div>
+        <div>
+            @Html.LabelFor(m => m.tbl_SiteMap.SM_MenuDisplayTypeID, "How to display in menu")
+            @Html.RadioButton("rbDisplayType", 1, Model != null ? Model.tbl_SiteMap.SM_MenuDisplayTypeID == 1 : true, new { id = "radioDisplayParent" })
+            @Html.Label("LabelParent", "Under parent", new { @for = "radioDisplayParent", @class = "checkboxLabel" })
+            @Html.RadioButton("rbDisplayType", 2, Model != null ? Model.tbl_SiteMap.SM_MenuDisplayTypeID == 2 : false, new { id = "radioDisplayDirect" })
+            @Html.Label("LabelDirect", "Directly", new { @for = "radioDisplayDirect", @class = "checkboxLabel" })
+            @Html.RadioButton("rbDisplayType", 3, Model != null ? Model.tbl_SiteMap.SM_MenuDisplayTypeID == 3 : false, new { id = "radioDisplayBoth" })
+            @Html.Label("LabelBoth", "Both", new { @for = "radioDisplayBoth", @class = "checkboxLabel" })
+            <span class="fa fa-info-circle" title="Choose how this page should be displayed in menu."></span>
+        </div>
+        <div>
+            @Html.LabelFor(m => m.tbl_SiteMap.tbl_ProdCategories.PC_Featured, "Featured category?")
+            @Html.RadioButton("PC_Featured", true, Model != null ? Model.tbl_SiteMap.tbl_ProdCategories.PC_Featured : false, new { id = "radioFeaturedYes" })
+            @Html.Label("LabelYes", "Yes", new { @for = "radioFeaturedYes", @class = "checkboxLabel" })
+            @Html.RadioButton("PC_Featured", false, Model != null ? !Model.tbl_SiteMap.tbl_ProdCategories.PC_Live : true, new { id = "radioFeaturedNo" })
+            @Html.Label("LabelNo", "No", new { @for = "radioFeaturedNo", @class = "checkboxLabel" })
+            <span class="fa fa-info-circle" title="Choose to display this category in the featured area of your webiste"></span>
+        </div>
+    </form>
+</div>
+@Html.Action("SEOCategoriesFields", "Admn", new { contentID = Model != null ? Model.ContentID : 0 })
+<div class="sectionWindow">
+    <div class="btnToggleSection">Page Content +</div>
+    <div class="sectionContent">
+        <div>
+            <textarea id="CategoriesContent" name="CategoriesContent" class="tinyMCEEditor" data-count="true" data-minwords="250">@(Model != null ? Model.C_Content : ViewBag.DefaultWyswigContent)</textarea>
+            <span data-for="CategoriesContent" class="counter"><span data-name="icon" title="Your Page Contents must be at least 250 words long, ideally approaching 400 words!"></span><span data-name="text"></span></span>
+        </div>
+    </div>
+</div>
+@Html.Action("CategoriesContentVersion", "Admn", new { sectionID = Model != null ? Model.tbl_SiteMap.SiteMapID : 0, contentID = Model != null ? Model.ContentID : 0 })
+<div>
+    <input type="button" id="btnNewCategory" name="NewCategory" class="btnGreen" value="Add category" data-bind="click: onSubmit, visible: !isEdit()" />
+    <input type="button" id="btnSaveCategory" name="SaveCategory" class="btnGreen" value="Update category" data-bind="click: onSubmit, visible: isEdit" />
+    <input type="button" id="btnApproveCategory" name="ApproveCategory" class="btnGrey" value="Approve Content" data-bind="click: onApprove, visible: isEdit" />
+    <input type="button" id="btnCancel" name="Cancel" class="btnRed" value="Cancel" data-bind="click: onNewCategory" />
+</div>

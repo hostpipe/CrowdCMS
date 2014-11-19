@@ -1,0 +1,23 @@
+﻿@model CMS.UI.Models.TimeWindowModel
+
+<form data-bind="submit: onUpdateTimeWindow">
+    <label for="@(Model.ProductPriceTimeWindowID + "Price")">Price</label>
+    @Html.TextBoxFor(m => m.Price, new { @class = "tiny", id = Model.ProductPriceTimeWindowID + "Price" })
+    <label class="short" for="@(Model.ProductPriceTimeWindowID + "SDate")">Start date</label>
+    @Html.TextBoxFor(m => m.StartDate, new { data_input_type = "dateTime", id = Model.ProductPriceTimeWindowID + "SDate" })
+    <label class="short" for="@(Model.ProductPriceTimeWindowID + "EDate")">End date</label>
+    @Html.TextBoxFor(m => m.EndDate, new { data_input_type = "dateTime", id = Model.ProductPriceTimeWindowID + "EDate" })
+    @Html.HiddenFor(m => m.ProductPriceTimeWindowID, new { id = Model.ProductPriceTimeWindowID + "pptwID" })
+    @Html.HiddenFor(m => m.ProductPriceID, new { id = Model.ProductPriceTimeWindowID + "ppID" })
+    @if (Model != null && Model.ProductPriceTimeWindowID > 0)
+    {
+    <input type="button" value="Save" class="btnGreyGreen" data-bind="click: onUpdateTimeWindow"/>
+    <input type="button" value="Delete" class="btnGreyRed" data-bind="click: onDeleteTimeWindow" />
+    }
+    else
+    {
+    <input type="button" value="Add" class="btnGreyGreen"  data-bind="click: onAddNewTimeWindow" />
+    }
+    @Html.ValidationMessageFor(m => m.Price)
+    @Html.ValidationMessageFor(m => m.StartDate)
+</form>

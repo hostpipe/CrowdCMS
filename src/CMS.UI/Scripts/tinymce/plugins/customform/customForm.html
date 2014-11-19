@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Custom form</title>
+	<script src="/Scripts/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="../../tiny_mce_popup.js"></script>
+    <script type="text/javascript" src="../../utils/form_utils.js"></script>
+    <script type="text/javascript" src="js/customForm.js"></script>
+</head>
+<body>
+    <form onsubmit="CustomForm.insert();return false;" action="#">
+	<table>
+		<tr>
+			<td><label for="email">Recipient email:</label></td>
+			<td><input id="email" name="email" type="text" class="text" /></td>
+		</tr>
+		<tr>
+			<td><label for="formID">Form list</label></td>
+			<td><select id="formID" name="formID"> </select></td>
+		</tr>
+	</table>
+	<div class="mceActionPanel">
+        <input type="submit" id="insert" name="insert" value="{#insert}" />
+        <input type="button" id="cancel" name="cancel" value="{#cancel}" onclick="tinyMCEPopup.close();" />
+    </div>
+    </form>
+</body>
+</html>

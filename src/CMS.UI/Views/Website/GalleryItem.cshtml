@@ -1,0 +1,58 @@
+﻿@model CMS.BL.Entity.tbl_Content
+@{
+    ViewBag.Title = Model != null ? Model.C_Title : String.Empty;
+    CMS.BL.Entity.tbl_Gallery gallery = Model.tbl_SiteMap.tbl_Gallery;
+}
+@section metatags {
+    @if (Model != null) { Html.Partial("/Views/Partials/MetaTags.cshtml", new CMS.UI.Models.MetadataModel(Model)); }
+}
+@section styles {
+    @Html.Raw(Model != null ? Model.tbl_SiteMap.SM_CSS : String.Empty)
+}
+@section scripts {
+   
+}
+@section sidebar {
+    @{
+        Html.RenderPartial("../Partials/SearchPanel");
+        Html.RenderAction("BasketSummary", "Website");
+        Html.RenderAction("ContactUsPartial", "Website");
+    }
+}
+<h1>@gallery.G_Title</h1>
+@Html.Raw(Model.C_Content)
+
+<div id="carousel-main" class="carousel slide carousel-fade" data-ride="carousel">
+    @{int i = 0;}
+    <div class="gallery-image">
+        @if (gallery.tbl_GalleryImage != null)
+        {
+            <div class="carousel-inner">
+            @foreach (var galleryImage in gallery.tbl_GalleryImage.OrderBy(gi => gi.GI_Order))
+            {
+                <div class="item@(i == 0 ? " active" : String.Empty)" data-interval="pause">
+                    <img src="@Html.ImageProvider(CMS.BL.ImageVersionName.gallery, galleryImage.tbl_Image.I_Thumb,String.Empty)" alt="@galleryImage.tbl_Image.I_Description" class="img-responsive"/>
+                </div>
+                i++;
+            }
+            </div>
+        }
+        <a class="left carousel-control" href="#carousel-main" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+        </a>
+        <a class="right carousel-control" href="#carousel-main" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+        </a>
+    </div>
+    @{i = 0;}
+    <div class="row gallery-images-list carousel-indicators">
+        @foreach (var galleryImage in gallery.tbl_GalleryImage.OrderBy(gi => gi.GI_Order))
+        {
+            <div data-target="#carousel-main" data-slide-to="@(i)" class="gallery-sub-thumb col-sm-2@(i == 0 ? " active" : String.Empty)">
+                <img src="@Html.ImageProvider(CMS.BL.ImageVersionName.galleryThumb, galleryImage.tbl_Image.I_Thumb,String.Empty)" alt="@galleryImage.tbl_Image.I_Description" class="img-responsive"/>
+            </div>
+            i++;
+        }
+        <div class="clear"></div>
+    </div>
+</div>

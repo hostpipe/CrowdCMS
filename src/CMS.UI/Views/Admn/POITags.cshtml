@@ -1,0 +1,44 @@
+﻿@model CMS.UI.Models.POITagModel
+@{
+    ViewBag.Title = "POI Tags";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@section scripts {
+    @Scripts.Render("~/bundles/poiTags")
+}
+
+<div id="POITagsContent"
+    data-addTag-url="@Url.Action("AddPOITag", "Admn")"
+    data-deleteTag-url="@Url.Action("DeletePOITag", "Admn")"
+    data-getTag-url="@Url.Action("GetPOITag", "Admn")"
+    data-updateTag-url="@Url.Action("UpdatePOITag", "Admn")"
+    >
+    <div class="leftMenuContainer twoBtns">
+        <div class="btnGreyMenu" data-bind="click: onNewTag">Add Tag</div>
+        @Html.Partial("~/Views/Partials/Loader.cshtml")
+    </div>
+    <div class="mainContainer">
+        <div class="sectionHeader" data-bind="text: sectionHeader"></div>
+        <div class="sectionWindow">
+            <div class="btnToggleSection">POI Tag Details +</div>
+            <form id="DetailsForm" action="#" class="sectionContent">
+                <div>
+                    @Html.LabelFor(m => m.Title)
+                    @Html.TextBoxFor(m => m.Title, new { data_bind = "value: title" })
+                    @Html.ValidationMessageFor(m => m.Title)
+                    @Html.HiddenFor(m => m.POITagID, new { data_bind = "value: poiTagID" })
+                </div>
+                <div>
+                    @Html.LabelFor(m => m.POITagsGroupID)
+                    @Html.DropDownListFor(m => m.POITagsGroupID, ViewBag.Groups as SelectList, new { data_bind = "value: poiTagsGroupID" })
+                    @Html.ValidationMessageFor(m => m.POITagsGroupID)
+                </div>
+                <div class="btnContainer">
+                    <input type="button" id="btnNewTag" name="NewTag" class="btnGreen" value="Add Tag" data-bind="click: onSubmit, visible: !isEdit()"/>
+                    <input type="button" id="btnSaveTag" name="SaveTag" class="btnGreen" value="Update Tag" data-bind="click: onSubmit, visible: isEdit"/>
+                    <input type="button" id="btnCancel" name="Cancel" class="btnRed" value="Cancel" data-bind="click: onNewTag" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<discovery xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/disco/">
+  <contractRef ref="http://oomphagency.gtml2.com/oomphagencylz/SDK.asmx?wsdl" docRef="http://oomphagency.gtml2.com/oomphagencylz/SDK.asmx" xmlns="http://schemas.xmlsoap.org/disco/scl/" />
+  <soap address="http://oomphagency.gtml2.com/oomphagencylz/SDK.asmx" xmlns:q1="http://tempuri.org/SDK/SDK" binding="q1:SDKSoap" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+  <soap address="http://oomphagency.gtml2.com/oomphagencylz/SDK.asmx" xmlns:q2="http://tempuri.org/SDK/SDK" binding="q2:SDKSoap12" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+</discovery>

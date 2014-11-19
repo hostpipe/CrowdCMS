@@ -1,0 +1,25 @@
+﻿@model IEnumerable<CMS.BL.Entity.tbl_ProdCategories>
+<div class="row">
+@foreach (var category in Model)
+{
+    <div class="categoryTile col-sm-4 col-xs-6">
+        <a href="@(ViewBag.ShopUrl + category.tbl_SiteMap.SM_URL.Trim('/'))">
+            <div class="catImage">
+                @if (category.PC_ImageID.HasValue)
+                {
+                <img alt="@category.tbl_ProductImages.I_View" src="@Html.ImageProvider(CMS.BL.ImageVersionName.category, category.tbl_ProductImages.I_Name, String.Empty)" />
+                }else{
+                    <div><span class="glyphicon glyphicon-picture"></span></div>
+                }
+            </div>
+            <div class="catInfo">
+                <div class="catTitle">@category.PC_Title</div>
+                <div class="catDesc">
+                    <div class="scrollContainer">@Html.Raw(category.tbl_SiteMap.tbl_Content.Where(c => c.C_Approved && !c.C_Deleted).OrderByDescending(c => c.C_ModificationDate).Select(c => c.C_Content).FirstOrDefault())</div>
+                </div> 
+            </div>
+        </a>
+    </div>
+}
+
+</div>

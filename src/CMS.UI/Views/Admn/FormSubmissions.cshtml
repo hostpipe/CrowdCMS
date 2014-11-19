@@ -1,0 +1,59 @@
+﻿@model List<CMS.UI.Models.FormSubmissionModel>
+<div class="sectionHeader" data-bind="text: sectionHeader"></div>
+
+@{
+    string style = "display: block;";
+    int previousColumn = 0;
+}
+@if (ViewBag.FormID == 0)
+{
+    <p class="form-nosubmission" style="@style">No form is selected at the moment.<br />Choose form which submissions shall be displayed!</p>
+}
+else
+{    
+    if (Model.Count > 0)
+    {
+        style = "display: none;";
+    }    
+    <p class="form-nosubmission" style="@style">No form submission!</p>
+}
+
+@if (Model.Count > 0)
+{
+<a href="#" class="btnGreen" data-bind="click: onDownloadAsCSV" title="Download CSV">Download CSV</a>
+<div class="submissionContainer">
+    <ul class="form-submissions transitions-enabled clearfix column">
+    @foreach (var fs in Model)
+    {
+        if (fs.Column != previousColumn)
+        {
+            if (previousColumn > -1)
+            {
+            @:</ul>
+            }
+            @:<ul class="form-submissions transitions-enabled clearfix">
+        }
+        previousColumn = fs.Column;
+        <li>
+            <div class="submissions input-background" data-itemID="@fs.FormSubmissionId" data-formID="@fs.FormId">
+                <div class="submission-content">
+                    <p><strong>Received: </strong>@fs.Received</p>
+                    <p><strong>Received by: </strong>@fs.Email</p>
+                    @foreach (var row in fs.MessageRows)
+                    {
+                        <p><strong>@row.Key: </strong>@row.Value</p>
+                    }
+                </div>
+                <div class="submission-buttons">
+                    @if (!fs.Read)
+                    {
+                        <a href="#" class="btnGreen" data-bind="click: onMarkAsRead" title="Mark as Read">Mark as Read</a>
+                    }
+                    <a href="#" class="btnRed" data-bind="click: onDeleteSubmission" title="Delete Submission">Delete Submission</a>
+                </div>
+            </div>
+        </li>        
+    }
+    </ul>
+</div>
+}

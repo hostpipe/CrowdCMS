@@ -1,0 +1,15 @@
+﻿@model List<object>
+@if (Model != null)
+{
+    foreach (object elem in Model)
+    {
+        if (elem.GetType() == typeof(string))
+        {
+            @Html.Raw((string)elem)
+        }
+        else if (elem.GetType() == typeof(CMS.UI.Models.FormModel))
+        {
+            @Html.Partial("../Partials/CustomForm", (CMS.UI.Models.FormModel)elem)
+        }
+    }
+}

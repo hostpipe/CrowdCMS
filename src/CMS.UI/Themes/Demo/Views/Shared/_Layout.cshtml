@@ -1,0 +1,106 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section metatags {
+    @RenderSection("metatags", true)
+}
+@section scripts {
+    @Scripts.Render("~/bundles/jquery/web", "~/bundles/jqueryUI", "~/bundles/jqueryVal","~/bundles/bootstrap", "~/bundles/web")
+    @RenderSection("scripts", false)
+    @if (!Request.IsAuthenticated && (ViewBag.SubscriptionEnabled ?? false))
+    {
+        @Scripts.Render("~/bundles/subscriptionManager")
+    }
+}
+@section analytics {
+    @if (ViewBag.IsGoogleAnalytics && !(bool)this.ViewBag.NoIndex)
+    {
+        <script type="text/javascript">
+            @Html.Raw(ViewBag.GoogleAnalytics)
+        </script>
+    }
+}
+
+@section styles {
+    @Styles.Render("~/Content/web.css", "~/Content/themes/base/ui.css", "~/Theme/Demo/css","~/Content/fonts/font-awesome.css")
+    @RenderSection("styles", false)
+}
+
+<header>
+    <div class="container">
+        <div class="col-xs-8 col-sm-4" id="logo">
+            <a href="/" title="Return to Home Page">CMS Template</a>
+        </div>
+        <div class="col-xs-4 visible-xs menu-icon">
+            <div class="navbar-default hidden-md">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    @{Html.RenderAction("Footer", "Website");}
+</header>
+<div class="container content">   
+    <div class="col-sm-9">
+        @Html.Action("Breadcrumbs", "Website")
+        <div class="row">
+            <div class="col-sm-12">
+                @Html.Action("SubMenu", "Website", new { sitemapID=ViewBag.PageID })
+                @Html.Action("FeaturedCategories", "Website")
+            </div>
+        </div>
+                <div class="row">
+            <div class="col-sm-12">
+                @Html.Action("GetAllSubCats", "Website")
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <h2>TWEET TWEET</h2>
+                @Html.Action("GetTweets","Website")
+            </div>
+        </div>
+        @RenderBody()
+        @Html.Action("FeaturedProducts", "Website")
+    </div>
+    <div class="col-sm-3">
+        @RenderSection("sidebar", false)
+        @if (!Request.IsAuthenticated && ViewBag.SubscriptionEnabled ?? false)
+        {
+            @Html.Partial("~/Views/Partials/Subscribe.cshtml")
+        }
+    </div>
+</div>
+<div class="container">
+    <div class="col-xs-12 col-sm-8">
+        <nav class="navbar-collapse collapse">
+            <div class="menu">
+                <ul>
+                    @Html.Action("Menu", "Website")
+                </ul>
+            </div>
+        </nav>
+    </div>
+</div>
+@RenderSection("slideshow", false)
+@*<div class="account col-sm-2">
+    @if (Request.IsAuthenticated)
+    {
+        <a href="@Url.RouteUrl("Account")">Your account</a>
+        <ul>
+            <li><a href="@Url.RouteUrl("EditMyDetails")">Edit My Details</a></li>
+            <li><a href="@Url.RouteUrl("OrderHistory")">Your order history</a></li>
+        </ul>
+        <a href="@Url.RouteUrl("Logout")">Logout</a>
+    }
+    else
+    {
+        <a href="@Url.RouteUrl("Login")">Login</a>
+        <a href="@Url.RouteUrl("Registration")">Register</a>
+    }
+</div> *@
+

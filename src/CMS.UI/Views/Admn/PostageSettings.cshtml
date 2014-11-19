@@ -1,0 +1,44 @@
+﻿@model CMS.UI.Models.PostageModel
+
+<div class="sectionHeader" data-bind="text: sectionHeader">
+</div>
+<div class="sectionWindow">
+    <div class="btnToggleSection">
+        Add Postage +</div>
+    <form id="PostageForm" action="#" class="sectionContent">
+        @Html.HiddenFor(m => m.PostageID, new { data_bind = "value: postageID" })
+        <div>
+            @Html.LabelFor(m=>m.PST_Description)
+            @Html.TextBoxFor(m => m.PST_Description,new { data_bind = "value: description" })
+            @Html.ValidationMessageFor(m=>m.PST_Description)
+        </div>
+        <div>
+            @Html.LabelFor(m=>m.PST_Amount)
+            @Html.TextBoxFor(m => m.PST_Amount, new { data_bind = "value: amount" })
+            @Html.ValidationMessageFor(m=>m.PST_Amount)
+        </div>
+        <div>
+            @Html.LabelFor(m=>m.PST_DomainID)
+            @Html.DropDownListFor(m => m.PST_DomainID, ViewBag.Domains as SelectList, new { data_bind = "value: domainID, event: { change: onDomainChange }" })
+            @Html.ValidationMessageFor(m=>m.PST_DomainID)
+        </div>
+        <div>
+            @Html.LabelFor(m=>m.PST_PostageWeight)
+            <select data-bind="options:postageWeights, optionsText: 'Text', optionsValue: 'Value', optionsCaption: 'Select Weight', value: weightID" name="PST_PostageWeight" id ="PST_PostageWeight"></select>
+        </div>
+        <div>
+            @Html.LabelFor(m=>m.PST_PostageBand)
+                <select data-bind="options:postageBands, optionsText: 'Text', optionsValue: 'Value', optionsCaption: 'Select Band', value: bandID"  name="PST_PostageBand" id ="PST_PostageBand"></select>
+        </div>
+        <div>
+            @Html.LabelFor(m=>m.PST_PostageZone)
+                <select data-val="true" data-val-required="Select Postage Zone First" data-bind="options:postageZones, optionsText: 'Text', optionsValue: 'Value', optionsCaption: 'Select Zone', value: zoneID" class="valid" name="PST_PostageZone" id ="PST_PostageZone"></select>
+            @Html.ValidationMessageFor(m=>m.PST_PostageZone)
+        </div>
+        <div class="btnContainer">
+            <input type="button" class="btnGreen" data-bind="click: onSavePostage, visible: isNewPostage" value="Add Postage" />       
+            <input type="button" class="btnGreen" data-bind="click: onSavePostage, visible: !isNewPostage()" value="Update Postage" />
+            <input type="button" class="btnRed" data-bind="click: onNewPostage" value="Cancel" />
+        </div>
+    </form>
+</div>

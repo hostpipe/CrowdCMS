@@ -1,0 +1,5 @@
+﻿    @Scripts.Render("~/bundles/jquery/web", "~/bundles/jqueryUI", "~/bundles/jqueryVal", "~/bundles/bootstrap", "~/bundles/web", String.Format("~/Theme/{0}/js", (string)this.ViewBag.Theme))
+    @if (!Request.IsAuthenticated && (ViewBag.SubscriptionEnabled ?? false))
+    {
+        @Scripts.Render("~/bundles/subscriptionManager")
+    }

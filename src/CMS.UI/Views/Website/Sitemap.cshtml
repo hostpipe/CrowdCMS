@@ -1,0 +1,24 @@
+﻿@model List<CMS.UI.Models.WebsiteMenuModel>
+@{
+    ViewBag.Title = "Sitemap";
+    CMS.BL.Entity.tbl_Content SitemapPage = ViewBag.SitemapPage as CMS.BL.Entity.tbl_Content;
+}
+@section metatags {
+    @{ Html.RenderPartial("/Views/Partials/MetaTags.cshtml", new CMS.UI.Models.MetadataModel(SitemapPage)); }
+}
+@section styles {
+    @Html.Raw(SitemapPage != null ? SitemapPage.tbl_SiteMap.SM_CSS : String.Empty)
+}
+@section sidebar {
+    @{
+        Html.RenderPartial("../Partials/SearchPanel");
+        Html.RenderAction("ContactUsPartial", "Website");
+    }
+}
+<div class="sitemap">
+    <h1>
+        @(SitemapPage != null ? SitemapPage.tbl_SiteMap.tbl_Domains.DO_CompanyName : String.Empty)
+        Sitemap
+    </h1>
+    @CMSHelpers.WebsiteMenu(Model, Request.Url.AbsolutePath)
+</div>

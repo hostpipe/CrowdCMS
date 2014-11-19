@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "Donation Info";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@section scripts {  
+    @Scripts.Render("~/bundles/donationInfo")
+}
+<div id="DonationInfoContent"
+    data-getDonationInfo-url="@Url.Action("DonationInfoSettings", "Admn")"
+    data-getDonationInfoData-url="@Url.Action("GetDonationInfoData", "Admn")"
+    data-getDonationInfoImage-url="@Url.Action("DonationInfoImage", "Admn")"
+    data-deleteDonationInfo-url="@Url.Action("DeleteDonationInfo", "Admn")"
+    data-deleteDonationInfoImage-url="@Url.Action("DeleteDonationInfoImage", "Admn")"
+    data-saveDonationInfo-url="@Url.Action("SaveDonationInfo", "Admn")"
+    data-getDomainsList-url="@Url.Action("GetDomainsList", "Admn")"
+    ><div class="leftMenuContainer">
+    <div class="btnGreyMenu short" data-bind="click: onNewDonationInfo">
+        Add Donation Info</div>
+        <select data-bind="options: domains, optionsText: 'Text', optionsValue: 'Value', optionsCaption: 'All domains', value: lDomainID, event: {change: onLDomainChange}">
+        </select>
+    </div>
+    <div class="mainContainer">
+        @Html.Action("DonationInfoSettings", "Admn")
+    </div>
+</div>

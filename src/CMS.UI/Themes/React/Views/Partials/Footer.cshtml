@@ -1,0 +1,42 @@
+﻿@model CMS.UI.Models.FooterModel
+
+<div id="footer-white" class="@((bool)ViewBag.IsHomePage ? String.Empty : "footer-dark")">
+	<div class="container">
+		<div class="row">
+            @if (Model.UseTemplate)
+            {
+            <div class="col-sm-4">
+                @Html.Raw(Model.FooterContent)
+            </div>
+            }
+			<div class="col-sm-3 menu">
+				<h3>Menu</h3>
+				<ul>
+                    @CMSHelpers.WebsiteMenu(Model.WebsiteMenu, Request.Url.AbsolutePath)
+				</ul>
+			</div>
+			<div class="col-sm-3 menu">
+				<h3>Other</h3>
+				<ul>
+                    <li><a href="http://validator.w3.org/check?uri=referer" title="Validate HTML5" rel="external">HTML5</a></li>
+                    <li class="last"><a href="http://www.hostpipe.co.uk" title="Website Design Gloucestershire" rel="external">Website Design Gloucestershire</a></li>
+	      		</ul>
+			</div>
+			<div class="col-sm-4 menu col-md-offset-2">
+@*                @if (!Request.IsAuthenticated && ViewBag.SubscriptionEnabled ?? false)
+                {
+                    @Html.Partial("Subscribe")
+                }*@
+                <h3>Stay Connected</h3>
+				<a href="#" title="Twitter"><img src="/Themes/React/img/social/tw.png" alt="twitter" /></a>
+				<a href="#" title="Facebook"><img src="/Themes/React/img/social/fb.png" alt="Facebook" /></a>
+				<a href="#" title="Google +"><img src="/Themes/React/img/social/gp.png" alt="Google +" /></a>
+			</div>
+		</div>
+		<div class="row credits">
+			<div class="col-md-12">
+				Copyright @CMSHelpers.Copyright((int)ViewBag.LaunchYear) @ViewBag.CompanyName
+			</div>
+		</div>
+	</div>
+</div>

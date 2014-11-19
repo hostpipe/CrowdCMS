@@ -1,0 +1,94 @@
+﻿@model CMS.UI.Models.EditCustomerAdminModel
+
+<div class="sectionHeader">Add New Customer</div>
+<div class="sectionWindow">
+    <div class="btnToggleSection">Customer Details +</div>
+    <form id="CustomerForm" class="sectionContent" method="post" action="#" data-bind="submit: onAddCustomer">
+        <div>
+            @Html.LabelFor(model => model.DomainID)
+            @Html.DropDownListFor(model => model.DomainID, ViewBag.Domains as SelectList, new { data_bind = "event: { change: onDomainChangedForCustomer }" })
+            @Html.ValidationMessageFor(model => model.DomainID)
+        </div>
+        <div>
+            @Html.LabelFor(model => model.Title)
+            @Html.TextBoxFor(model => model.Title)
+            @Html.ValidationMessageFor(model => model.Title)
+        </div>
+        <div>
+            @Html.LabelFor(model => model.FirstName)
+            @Html.TextBoxFor(model => model.FirstName)
+            @Html.ValidationMessageFor(model => model.FirstName)
+        </div>
+        <div>
+            @Html.LabelFor(model => model.Surname)
+            @Html.TextBoxFor(model => model.Surname)
+            @Html.ValidationMessageFor(model => model.Surname)
+        </div>
+        <div>
+            @Html.LabelFor(model => model.Email)
+            @Html.TextBoxFor(model => model.Email)
+            @Html.ValidationMessageFor(model => model.Email)
+        </div>
+        <div>
+            @Html.LabelFor(model=>model.Phone)
+            @Html.TextBoxFor(model => model.Phone)
+            @Html.ValidationMessageFor(model => model.Phone)
+        </div>
+        <div>
+            @Html.LabelFor(model => model.Password)
+            @Html.PasswordFor(model => model.Password)
+            @Html.ValidationMessageFor(model => model.Password)
+        </div>
+        <div>
+            @Html.LabelFor(model => model.ConfirmPassword)
+            @Html.PasswordFor(model => model.ConfirmPassword)
+            @Html.ValidationMessageFor(model => model.ConfirmPassword)
+        </div>
+        <div>
+            @Html.LabelFor(model => model.SubscribeNewsletter)
+            @Html.EditorFor(model=>model.SubscribeNewsletter)
+        </div>
+        <div>
+            @Html.LabelFor(model => model.DetailsFor3rdParties)
+            @Html.EditorFor(model=>model.DetailsFor3rdParties)
+        </div>
+        <div>
+            @Html.LabelFor(model => model.Address.Address1)
+            @Html.TextBoxFor(model => model.Address.Address1)
+            @Html.ValidationMessageFor(model => model.Address.Address1)
+        </div>
+        <div>
+            @Html.LabelFor(model => model.Address.Address2)
+            @Html.TextBoxFor(model => model.Address.Address2)
+            @Html.ValidationMessageFor(model => model.Address.Address2)
+        </div>
+        <div>
+            @Html.LabelFor(model => model.Address.Address3)
+            @Html.TextBoxFor(model => model.Address.Address3)
+            @Html.ValidationMessageFor(model => model.Address.Address3)
+        </div>
+        <div>
+            @Html.LabelFor(model => model.Address.Town)
+            @Html.TextBoxFor(model => model.Address.Town)
+            @Html.ValidationMessageFor(model => model.Address.Town)
+        </div>
+        <div>
+            @Html.LabelFor(model => model.Address.Postcode)
+            @Html.TextBoxFor(model => model.Address.Postcode)
+            @Html.ValidationMessageFor(model => model.Address.Postcode)
+        </div>
+        <div>
+            @Html.LabelFor(model => model.Address.County)
+            @Html.TextBoxFor(model => model.Address.County)
+            @Html.ValidationMessageFor(model => model.Address.County)
+        </div>
+        <div>
+            @Html.LabelFor(model => model.Address.CountryID)
+            @Html.DropDownListFor(model => model.Address.CountryID, new List<SelectListItem>(), new { data_bind = "options: countries, optionsText: 'Text', optionsValue: 'Value', optionsCaption: 'Select Country'" })
+            @Html.ValidationMessageFor(model => model.Address.CountryID)
+        </div>
+        <div class="btnContainer">
+            <input type="submit" value="Add Customer" class="btnGreen" />
+        </div>
+    </form>
+</div>

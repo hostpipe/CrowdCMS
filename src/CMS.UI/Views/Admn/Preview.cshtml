@@ -1,0 +1,20 @@
+﻿@model CMS.BL.Entity.tbl_Content
+@{
+    ViewBag.Title = Model != null ? Model.C_Title : String.Empty;
+}
+
+@section metatags {
+    @Html.Partial("/Views/Partials/MetaTags.cshtml", Model)
+}
+
+@section styles {
+    @Html.Raw(Model != null ? Model.tbl_SiteMap.SM_CSS : String.Empty)
+}
+
+@section sidebar {
+    @Html.Partial("../Partials/SearchPanel")
+    @Html.Action("TestimonialsPartial", "Website")
+    @Html.Partial("../Partials/ContactUs")
+}
+test
+@Html.Raw(Model != null ? Model.C_Content : String.Empty)

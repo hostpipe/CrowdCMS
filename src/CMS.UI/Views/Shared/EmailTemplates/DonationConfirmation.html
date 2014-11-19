@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style>
+        table 
+        {
+            border: 1px solid #000;
+        }
+        
+        table tbody,
+        table thead, 
+        table tfoot,
+        table tr
+        {
+            border: 0px;
+        }
+        
+        table td,
+        table th
+        {
+            padding: 4px;
+            border: 1px solid #000;
+        }
+        
+        table thead,
+        table td.color
+        {
+            background: #EEEEEE;
+            font-weight: bold;
+        }
+        
+        .noHborder
+        {
+            border-bottom: 0px;
+            border-top: 0px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Dear $BNAME</h2>
+    <h3>Thank you very much for your donation.</h3>
+    <br />
+    <table cellspacing="0" cellpadding="0">
+        <tbody>
+            <tr>
+                <td class="color">Donation Date</td>
+                <td>$ORDERDATE</td>
+            </tr>
+            <tr>
+                <td class="color">Donation Amount</td>
+                <td>$TOTALAMOUNT</td>
+            </tr>
+            <tr>
+                <td class="color">Order Reference</td>
+                <td>$ORDERID</td>
+            </tr>
+        </tbody>
+    </table>
+    <br />
+    <table cellspacing="0" cellpadding="0">
+        <thead>
+            <tr>
+                <th>Billing Address</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="noHborder">$BNAME</td>
+            </tr>
+            <tr>
+                <td class="noHborder">$BADDRESS1</td>
+            </tr>
+            <tr>
+                <td class="noHborder">$BADDRESS2</td>
+            </tr>
+            <tr>
+                <td class="noHborder">$BADDRESS3</td>
+            </tr>
+            <tr>
+                <td class="noHborder">$BTOWN</td>
+            </tr>
+            <tr>
+                <td class="noHborder">$BPOSTCODE</td>
+            </tr>
+            <tr>
+                <td class="noHborder">$BCOUNTY</td>
+            </tr>
+            <tr>
+                <td class="noHborder">$BCOUNTRY</td>
+            </tr>
+            <tr>
+                <td class="noHborder">$BPHONE</td>
+            </tr>
+        </tbody>
+    </table>
+    <br />
+    <h3>
+        If you have any questions about this donation, please contact us and we will be happy to help.
+    </h3>
+    <br />
+    <h2>Kind Regards</h2>
+    <br />
+    <h2>HostPipe CMS Support Team</h2>
+</body>
+</html>

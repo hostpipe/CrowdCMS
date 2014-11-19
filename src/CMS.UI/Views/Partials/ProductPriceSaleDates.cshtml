@@ -1,0 +1,11 @@
+﻿@model CMS.BL.Entity.tbl_ProductPrice
+
+<div>
+    <div id="TimeWindows" data-priceID="@(Model != null ? Model.PriceID : 0)">
+    @foreach (var price in Model.tbl_ProductPriceTimeWindow)
+    {
+        @Html.Action("GetTimeWindow", "Admn", new { productPriceTimeWindowID = price.ProductPriceTimeWindowID, productPriceID = price.TW_ProductPriceID })
+    }
+    </div>
+    <input type="button" class="btnGreen" value="Add new price" data-bind="click: onAddNewSalePrice" />
+</div>

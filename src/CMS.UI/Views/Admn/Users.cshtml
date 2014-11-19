@@ -1,0 +1,65 @@
+﻿@model CMS.UI.Models.UserModel
+@{
+    ViewBag.Title = "Users";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@section scripts {
+    @Scripts.Render("~/bundles/adminuser")
+}
+
+<div id="UserContent" 
+    data-addUser-url="@Url.Action("AddUser", "Admn")"
+    data-deleteUser-url="@Url.Action("DeleteUser", "Admn")"
+    data-getPassword-url="@Url.Action("GetPassword", "Admn")"
+    data-getUser-url="@Url.Action("GetUser", "Admn")"
+    data-updateUser-url="@Url.Action("UpdateUser", "Admn")"
+    >
+    <div class="leftMenuContainer">
+        @if ((User as CMS.Utils.CustomPrincipal).HasPermission(CMS.BL.Permission.AddUser))
+        {
+        <div class="btnGreyMenu" data-bind="click: onNewUser">Add New User</div>    
+        }
+        @Html.Action("LeftMenu", "Admn")
+    </div>
+    <div class="mainContainer">
+        <div class="sectionHeader" data-bind="text: sectionHeader"></div>
+        <div class="sectionWindow">
+            <div class="btnToggleSection" data-bind="text: sectionButton"></div>
+            <form id="FormUser" class="sectionContent" action="#" method="post" data-bind="submit: onSubmit">
+                <div>
+                    @Html.LabelFor(m => m.UserName)
+                    @Html.TextBoxFor(m => m.UserName, new { data_bind="value: userName" })
+                    @Html.ValidationMessageFor(m => m.UserName)
+                    @Html.HiddenFor(m => m.UserID, new { data_bind = "value: userID" })
+                </div>
+                <div>
+                    @Html.LabelFor(m => m.Email)
+                    @Html.TextBoxFor(m => m.Email, new { data_bind="value: email" })
+                    @Html.ValidationMessageFor(m => m.Email)
+                </div>
+                <div>
+                    @Html.LabelFor(m => m.Password)
+                    @Html.TextBoxFor(m => m.Password, new { data_bind="value: password", @class="hidden" })
+                    <span id="btnPassword" class="glyphicon glyphicon-flash" title="Generate Password" data-bind="click: onGetPassword"></span>
+                    @Html.ValidationMessageFor(m => m.Password)
+                </div>
+                <div>
+                    @Html.LabelFor(m => m.UserGroupID)
+                    @Html.DropDownListFor(m => m.UserGroupID, this.ViewBag.UserGroups as SelectList, new { data_bind="value: selectedGroupID" })
+                    @Html.ValidationMessageFor(m => m.UserGroupID)
+                </div>
+                <div class="btnContainer">
+                    @if ((User as CMS.Utils.CustomPrincipal).HasPermission(CMS.BL.Permission.AddUser))
+                    {
+                    <button type="submit" class="btnGreen" data-bind="visible: isNewUser">Add New User</button>
+                    }
+                    @if ((User as CMS.Utils.CustomPrincipal).HasPermission(CMS.BL.Permission.EditUser))
+                    {
+                    <button type="submit" class="btnGreen" data-bind="visible: !isNewUser()">Update User</button>
+                    }
+                    <button type="button" class="btnRed" data-bind="click: onNewUser">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

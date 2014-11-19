@@ -1,0 +1,138 @@
+﻿@model CMS.BL.Entity.tbl_SiteMap
+
+<div class="sectionHeader">@(!(bool)ViewBag.OnlyOneImage && Model != null ? "Upload Page Images For " + Model.SM_Name : "Add Image")</div>
+<div class="sectionWindow">
+    <div class="btnToggleSection">Upload Images +</div>
+    <form id="ImagesUpload" class="sectionContent" action="@ViewBag.UploadAction" method="post" enctype="multipart/form-data" >
+        <div>
+            <label>Upload Images</label>
+            <span class="info">
+                @(!(bool)ViewBag.OnlyOneImage ? 
+                    "You can upload up to 3 images at a time. More than 3 images can be associated with a page. 1 images wil be selected at random for display on site with each visit." :
+                    "You can only upload 1 image for this page. The image will be displayed at the top of the page.")
+                    <br /><br /><strong>You can upload only images.</strong>
+            </span>
+        </div>
+        <div class="form-group">
+            @Html.HiddenFor(m => m.SiteMapID)
+            <label for="heading1">Heading</label>
+            <input id="heading1" name="heading1" /><br />
+
+            <label for="description1">Caption</label>
+            <input id="description1" name="description1" /><br />
+
+            <label for="linkID1">Page Link</label>
+            <select name="linkID1" id="linkID1">
+                <option value="0">Select Page</option>
+                @{
+                    foreach(var sitemap in ViewBag.SitemapList as IEnumerable<SelectListItem>) {
+                        <option value="@sitemap.Value">@sitemap.Text</option>
+                    }
+                }
+            </select><br />
+
+            <label></label>
+            <input type="file" name="file1" /><br />
+        </div>
+        @if (!(bool)ViewBag.OnlyOneImage)
+        {
+        <div class="form-group">
+            <label for="heading2">Heading</label>
+            <input id="heading2" name="heading2" /><br />
+
+            <label for="description2">Caption</label>
+            <input id="description2" name="description2" /><br />
+
+            <label for="linkID2">Page Link</label>
+            <select name="linkID2" id="linkID2">
+                <option value="0">Select Page</option>
+                @{
+                    foreach(var sitemap in ViewBag.SitemapList as IEnumerable<SelectListItem>) {
+                        <option value="@sitemap.Value">@sitemap.Text</option>
+                    }
+                }
+            </select><br />
+
+            <label></label>
+            <input type="file" name="file2" /><br />
+
+        </div>
+        <div class="form-group">
+            <label for="heading3">Heading</label>
+            <input id="heading3" name="heading3" /><br />
+
+            <label for="description3">Caption</label>
+            <input id="description3" name="description3" /><br />
+
+            <label for="linkID3">Page Link</label>
+            <select name="linkID3" id="linkID3">
+                <option value="0">Select Page</option>
+                @{
+                    foreach(var sitemap in ViewBag.SitemapList as IEnumerable<SelectListItem>) {
+                        <option value="@sitemap.Value">@sitemap.Text</option>
+                    }
+                }
+            </select><br />
+            <label></label>
+            <input type="file" name="file3" /><br />
+        </div>
+        }
+        <div class="btnContainer">
+            @if ((bool)this.ViewBag.CanUploadImages)
+            {
+            <button type="submit" class="btnGreen" >Upload Images</button>
+            }
+        </div>
+    </form>
+</div>
+<div class="sectionWindow">
+    <div class="btnToggleSection">Images Uploaded +</div>
+    <div class="sectionContent">
+        @if (Model != null)
+        {
+        <div class="imagesGallery">
+        @if (Model.tbl_Image1.Count > 0)
+        {
+            foreach (var image in Model.tbl_Image1)
+            {
+            <div class="form-group">
+                <div class="btnContainer">
+                    <img src="@(image.I_Path + image.I_Thumb)" alt="@image.I_Thumb" /><br />
+                </div>
+                <label>Heading</label>
+                <input id="imageHeading-@image.ImageID" value="@image.I_Heading" /><br />
+
+                <label>Caption</label>
+                <input id="imageCaption-@image.ImageID" value="@image.I_Description" /><br />
+
+                <label>Page Link</label>
+                <select id="linkID-@image.ImageID">
+                        <option value="0">[none]</option>
+                @{
+                    foreach(var sitemap in ViewBag.SitemapList as IEnumerable<SelectListItem>) {
+                        <option value="@sitemap.Value"@(Int32.Parse(sitemap.Value) == (image.I_LinkID ?? 0) ? " selected=\"selected\"" : String.Empty)>@sitemap.Text</option>
+                    }
+                }
+                </select><br />
+                <div class="btnContainer">
+                    <input type="button" class="btnGrey" value="Update Caption" data-imageID="@image.ImageID" data-bind="click: onUpdateCaption"></input>
+                    @if ((bool)this.ViewBag.CanDeleteImage)
+                    {
+                    <input type="button" value="Delete" class="btnRed" data-imageID="@image.ImageID" data-bind="click: onDeleteImage"/>
+                    }
+                </div>
+            </div>
+            }
+        }
+        else
+        {
+            <span>No images have been uploaded.</span>
+        }
+        </div>
+        }
+    </div>
+</div>
+<div id="UploadWindow">
+    <div>@((bool)ViewBag.OnlyOneImage ? "Image is" : "Images are") being uploaded.</div>
+    <div id="Progressbar"></div>
+</div>

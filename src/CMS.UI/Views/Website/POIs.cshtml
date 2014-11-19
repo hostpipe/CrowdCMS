@@ -1,0 +1,87 @@
+﻿@model CMS.UI.Models.ContentModel
+@section metatags {
+    @{Html.RenderPartial("/Views/Partials/MetaTags.cshtml", new CMS.UI.Models.MetadataModel(Model.Content));}
+}
+@section styles {
+    @Styles.Render("~/Content/bootstrap/base")
+    @Html.Raw(Model != null ? Model.CSS : String.Empty)
+}
+@section scripts {
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpcV4f7W9jiiZsPODUvGhzg2yFbBKeLaw&sensor=false"></script>
+    @Scripts.Render("~/bundles/otherLibs")
+    @Scripts.Render("~/bundles/poisWebManager")
+}
+@section sidebar {
+    @{
+        Html.RenderPartial("../Partials/SearchPanel");
+        Html.RenderAction("ContactUsPartial", "Website");
+    }
+}
+
+<div id="POIsContainer"
+     data-getpoi-url="@Url.Action("GetPOI", "Website")"
+     data-gettags-url="@Url.Action("GetPOITags", "Website")"
+     data-searchpois-url="@Url.Action("POIsSearch", "Website")">
+    <div class="panel panel-default">
+        <div class="panel-heading">Points Of Interest Filter</div>
+        <div class="panel-body container">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="tbSearch" placeholder="Search by name, town or county" data-bind="value: search" />
+                        </div>
+                        <div class="col-sm-6">
+                            <select class="form-control" id="ddlCategories" data-bind="options: categories, optionsValue: 'Value', optionsText: 'Text', value: categoryID"></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <!-- ko foreach: tagGroups -->
+                    <div class="row">
+                        <div class="col-sm-6 multiSelect" data-bind="visible: IsColumn1, with: Column1">
+                            <label data-bind="text: Label"></label>
+                            <ul data-bind="foreach: Tags">
+                                <li class="checkbox">
+                                    <input data-bind="attr: { id: 'Tag' + Value, name: Value }, value: Value" type="checkbox" />
+                                    <label class="checkboxLabel" data-bind="attr: { 'for': 'Tag' + Value }, text: Text"></label>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-6 multiSelect" data-bind="visible: IsColumn2, with: Column2">
+                            <label data-bind="text: Label"></label>
+                            <ul data-bind="foreach: Tags">
+                                <li class="checkbox">
+                                    <input data-bind="attr: { id: 'Tag' + Value, name: Value }, value: Value" type="checkbox" />
+                                    <label class="checkboxLabel" data-bind="attr: { 'for': 'Tag' + Value }, text: Text"></label>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /ko -->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2 col-sm-offset-8">
+                    <button class="btn btn-default pull-right" data-bind="click: onReset">Reset</button>
+                </div>
+                <div class="col-sm-2">
+                    <button class="btn btn-default pull-right" data-bind="click: onSearch">Search <span class="glyphicon glyphicon-search"></span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Points Of Interest Map</div>
+        <div class="panel-body">
+            <div id="MapContainer"></div>
+        </div>
+    </div>
+</div>
+
+@if (Model != null)
+{
+    @Html.Partial("~/Views/Partials/ContentPartial.cshtml", Model.HtmlElements)
+}

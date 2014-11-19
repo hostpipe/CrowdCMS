@@ -1,0 +1,20 @@
+﻿@using CMS.UI.Common;
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/themes/base/ui.css", "~/Content/admin/admin.css", "~/Content/admin/loader.css", "~/Content/font-awesome.css")
+    @Scripts.Render("~/bundles/jquery", "~/bundles/jqueryUI", "~/bundles/jqueryVal", "~/bundles/otherLibs", "~/bundles/cms")
+    @RenderSection("scripts", false)
+</head>
+<body>
+    @if (Request.IsAuthenticated)
+    {
+        <div><a class="poweredby" title="Back To Home" href="~/Admn/Home"></a></div>
+        @Html.Action("Menu", "Admn")
+    }
+    @RenderBody()
+</body>
+</html>

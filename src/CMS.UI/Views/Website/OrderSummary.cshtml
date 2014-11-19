@@ -1,0 +1,326 @@
+﻿@model CMS.UI.Models.CheckoutModel
+@{
+    ViewBag.Title = "Summary";
+}
+@section metatags {
+    @{Html.RenderPartial("/Views/Partials/MetaTags.cshtml", new CMS.UI.Models.MetadataModel());}
+}
+@section styles {
+    @Styles.Render("~/Content/themes/base/ui.css")
+}
+@section scripts {
+    @Scripts.Render("~/bundles/jqueryUI")
+    @Scripts.Render("~/bundles/checkout")
+}
+@section sidebar {
+    @{
+        Html.RenderPartial("../Partials/SearchPanel");
+        Html.RenderAction("ContactUsPartial", "Website");
+    }
+}
+
+<h1>Confirmation</h1>
+@if (Model == null || Model.Basket == null || Model.Basket.tbl_BasketContent.Count == 0)
+{
+    <div>Your basket is currently empty</div>
+}
+else
+{
+    bool isDiscount = Model.Basket.B_DiscountID.HasValue && Model.Basket.B_DiscountID.Value > 0;
+    string promotionalCodeFormat = isDiscount ? Model.Basket.tbl_Discount.D_IsPercentage ? "{0} ({1}%)" : "{0} ({1}:C)" : String.Empty;
+    string promotionalCode = isDiscount ? String.Format(promotionalCodeFormat, Model.Basket.tbl_Discount.D_Title, Model.Basket.tbl_Discount.D_Value) : String.Empty;
+
+    <div id="Summary" 
+         data-adddiscount-url="@Url.Action("AddDiscount", "Website")"
+         data-addorder-url="@Url.Action("OrderSummary", "Website")"
+         data-removediscount-url="@Url.Action("RemoveDiscount", "Website")"
+         data-isdirect="@ViewBag.IsDirect"
+         data-sagepay="@ViewBag.SagePay"
+         data-promotionalcode="@promotionalCode">
+        <p>Please check you are happy with the details of your order below. Please enter your credit card details and click <b>Place Order</b> to proceed.</p>
+        @if (!ViewBag.SagePay3DSecure)
+        {
+            @Html.Partial("~/Views/Partials/PromotionalCode.cshtml")
+        }
+        <div class="basket">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Product </th>
+                        <th>Item </th>
+                        <th>Price </th>
+                        @if (ViewBag.DisplayTax)
+                        {
+                            <th>VAT </th>
+                        }
+                        <th class="border">Quantity </th>
+                        <th>Sub Total </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var content in Model.Basket.tbl_BasketContent)
+                    {
+                        <tr data-bcontentid="@content.BaskContentID">
+                            <td>
+                                @content.tbl_ProductPrice.tbl_Products.tbl_ProdCategories.PC_Title
+                            </td>
+                            <td>
+                                @content.tbl_ProductPrice.tbl_Products.P_Title
+                                <br />
+                                @foreach (var attr in content.tbl_ProductPrice.tbl_ProdPriceAttributes.Select(ppa => ppa.tbl_ProdAttValue))
+                                {
+                                    @:@attr.tbl_ProdAttributes.A_Title: @attr.AV_Value
+                                    <br />
+                                }
+                            </td>
+                            <td>
+                                @content.tbl_ProductPrice.GetPriceString(1, true)
+                            </td>
+                            @if (ViewBag.DisplayTax)
+                            {
+                                <td>
+                                    @content.GetTaxValueString()
+                                </td>
+                            }
+                            <td class="border">
+                                @content.BC_Quantity
+                            </td>
+                            <td>
+                                @content.GetPriceString(true)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    @if (Model.Basket.tbl_Discount != null)
+                    {
+                        <tr>
+
+                            <td class="border text-right" colspan="@(ViewBag.DisplayTax ? "5" : "4")"><b>Discount</b> </td>
+                            <td colspan="2">- @Model.Basket.GetDiscountAmountString()
+                            </td>
+                        </tr>
+                    }
+                    @if (Model.IsDeliverable && Model.Basket.tbl_Postage != null)
+                    {
+                        <tr>
+                            <td class="border text-right" colspan="@(ViewBag.DisplayTax ? "5" : "4")">
+                                <b>Postage: @Model.Basket.tbl_Postage.PST_Description</b>
+                            </td>
+                            <td colspan="2">
+                                @Model.Basket.GetDeliveryAmountString(true)
+                            </td>
+                        </tr>
+                    }
+                    <tr>
+
+                        <td class="border text-right" colspan="@(ViewBag.DisplayTax ? "5" : "4")"><b>EU Member</b> </td>
+                        <td colspan="2">
+                            @Model.Basket.B_VATNumber
+                        </td>
+                    </tr>
+                    <tr>
+
+                        <td class="border text-right" colspan="@(ViewBag.DisplayTax ? "5" : "4")"><b>Total Tax</b> </td>
+                        <td colspan="2">@Model.Basket.GetTaxAmountString()</td>
+                    </tr>
+                    <tr>
+
+                        <td class="border text-right" colspan="@(ViewBag.DisplayTax ? "5" : "4")">
+                            <p class="h3">Total</p>
+                        </td>
+                        <td>
+                            <p class="h3">@Model.Basket.GetPrice(true).ToString("C")</p>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <form id="orderSummaryForm" method="post">
+            <div>
+                <h2>Gift Aid</h2>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <label for="DonationAmount">You can enter your amount of donation here</label>
+                            <span class="currencySign">@CultureInfo.CurrentCulture.NumberFormat.CurrencySymbol</span>
+                            @*@Html.TextBoxFor(m => m.DonationAmount, ViewBag.SagePay3DSecure ? new { disabled = "disabled", @class="form-control" } : null)*@
+                            @Html.TextBoxFor(m => m.DonationAmount, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.DonationAmount)
+                        </div>
+                    </div>
+                </div>
+                <p>
+                    <b>If you are a UK taxpayer, the value of your gift can be increased by 25% under the
+                        Gift Aid scheme at no extra cost to you.
+                    </b>
+                </p>
+                <div class="checkbox">
+                    <label for="GiftAid" class="checkboxLabel">
+                        @Html.CheckBoxFor(m => m.GiftAid, ViewBag.SagePay3DSecure ? new { disabled = "disabled" } : null)
+                        Yes, I am a UK taxpayer and I would like
+                        Oxfam to treat all the donations I make from 1 April 2009, until I notify you otherwise,
+                        as Gift Aid donations.
+                    </label>
+                </div>
+                <p>
+                    Your donations are eligible for the scheme if you pay enough income tax and/or capital
+                    gains tax to cover the amount of tax that all charities and Community Amateur Sports
+                    Clubs you donate to will reclaim for each tax year (6 April to 5 April). Council
+                    tax and VAT do not count.
+                </p>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-sm-4">
+                    <h2>Billing Address</h2>
+                    @if (Model.BillingAddressTheSame && Model.IsDeliverable)
+                    {
+                        <p>
+                            @(Model.DeliveryTitle)
+                            @(Model.DeliveryFirstName)
+                            @(Model.DeliverySurname)
+                        </p>
+                        <p>
+                            @(Model.DeliveryAddress1)
+                            @(Model.DeliveryAddress2)
+                            @(Model.DeliveryAddress3)
+                        </p>
+                        <p>
+                            @(Model.DeliveryCity)
+                        </p>
+                        <p>
+                            @(Model.DeliveryState)
+                        </p>
+                        <p>
+                            @(Model.DeliveryPostcode)
+                        </p>
+                        <p>
+                            @(Model.DeliveryCountry)
+                        </p>
+                        <p>
+                            Tel: @(Model.DeliveryPhone)
+                        </p>
+                    }
+                    else
+                    {
+                        <p>
+                            @(Model.BillingTitle)
+                            @(Model.BillingFirstName)
+                            @(Model.BillingSurname)
+                        </p>
+                        <p>
+                            @(Model.BillingAddress1)
+                            @(Model.BillingAddress2)
+                            @(Model.BillingAddress3)
+                        </p>
+                        <p>
+                            @(Model.BillingCity)
+                        </p>
+                        <p>
+                            @(Model.BillingState)
+                        </p>
+                        <p>
+                            @(Model.BillingPostcode)
+                        </p>
+                        <p>
+                            @(Model.BillingCountry)
+                        </p>
+                        <p>
+                            Tel: @(Model.BillingPhone)
+                        </p>
+                    }
+                    <p>
+                        Email: @(Model.Email)
+                    </p>
+                </div>
+                @if (Model.IsDeliverable)
+                {
+                    <div class="col-sm-4">
+                        <h2>Delivery Address</h2>
+                        <p>
+                            @(Model.DeliveryTitle)
+                            @(Model.DeliveryFirstName)
+                            @(Model.DeliverySurname)
+                        </p>
+                        <p>
+                            @(Model.DeliveryAddress1)
+                            @(Model.DeliveryAddress2)
+                            @(Model.DeliveryAddress3)
+                        </p>
+                        <p>
+                            @(Model.DeliveryCity)
+                        </p>
+                        <p>
+                            @(Model.DeliveryState)
+                        </p>
+                        <p>
+                            @(Model.DeliveryPostcode)
+                        </p>
+                        <p>
+                            @(Model.DeliveryCountry)
+                        </p>
+                        <p>
+                            Tel: @(Model.DeliveryPhone)
+                        </p>
+                    </div>
+                }
+                <div class="col-sm-4">
+                    <h2>Payment Type</h2>
+                    <div>
+                        @Html.LabelFor(m => m.PaymentDomainID, "Payment Type")
+                        @if ((ViewBag.PaymentTypes as List<SelectListItem>).Count == 1)
+                        {
+                            <span><b>@((ViewBag.PaymentTypes as List<SelectListItem>).First().Text)</b></span>
+                            <input type="hidden" id="PaymentDomainID" name="PaymentDomainID" value="@((ViewBag.PaymentTypes as List<SelectListItem>).First().Value)" data-bind="value: paymentOption" />
+                        }
+                        else
+                        {
+                            if (!ViewBag.SagePay3DSecure)
+                            {
+                            @Html.DropDownListFor(m => m.PaymentDomainID, ViewBag.PaymentTypes as List<SelectListItem>, new { @class = "short", data_bind = "value: paymentOption" })
+                            }
+                            else
+                            {
+                            @Html.DropDownListFor(m => m.PaymentDomainID, ViewBag.PaymentTypes as List<SelectListItem>, new { @class = "short", data_bind = "value: paymentOption", disabled = "disabled" })
+                            }
+                        }
+                        @Html.ValidationMessageFor(m => m.PaymentDomainID)
+                    </div>
+                    @if (!ViewBag.SagePay3DSecure)
+                    {
+                        if ((bool)ViewBag.IsDirect)
+                        {
+                        <div class="formGroup" data-bind="visible: isCreditCard">
+                            @Html.Partial("~/Views/Partials/CreditCardView.cshtml", new CMS.UI.Models.CreditCardModel())
+                        </div>
+                        }
+                        <div class="checkbox">
+                            <label for="TermsAndConditionsConfirmed">
+                                @Html.CheckBoxFor(m => m.TermsAndConditionsConfirmed, new { id = "chbTandC", @class = "checkboxLabel" })
+                                I have read and agree to the terms and conditions</label>
+
+                            @*                            @Html.LabelFor(m => m.TermsAndConditionsConfirmed, "I have read and agree to the terms and conditions", new { @class = "sr-only", @for = "chbTandC" })*@
+                            @Html.ValidationMessageFor(m => m.TermsAndConditionsConfirmed)
+                        </div>
+                        <div>
+                            @Html.ValidationSummary(true)
+                        </div>
+                        <div class="noLabel">
+                            @Html.HiddenFor(m => m.BasketID)
+                            @Html.HiddenFor(m => m.IsCheckoutStep)
+                            @Html.HiddenFor(m => m.TermsAndConditionsConfirmationExpected)
+                            <input id="btnAddOrder" type="submit" class="btn btn-warning" value="Place Order" />
+                        </div>
+                    }
+                    else
+                    {
+                        <div>
+                            <iframe src="@Url.Action("ThreeDSecureForm", "SagePay", new { md = ViewBag.MD, pareq = ViewBag.PaReq, vendorTxCode = ViewBag.VendorTxCode, ACSURL = ViewBag.ACSURL })" name="3DIFrame" width="500" height="500"></iframe>
+                        </div>
+                    }
+                </div>
+            </div>
+        </form>
+    </div>
+}

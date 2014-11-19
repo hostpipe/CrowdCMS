@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "Countries";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section scripts {
+    @Scripts.Render("~/bundles/countries")
+}
+
+<div id="CountriesContent"    
+    data-addCountry-url="@Url.Action("AddCountry", "Admn")"
+    data-deleteCountry-url="@Url.Action("DeleteCountry", "Admn")"
+    data-getCountryImport-url="@Url.Action("GetCountryImport", "Admn")"
+    data-getCountry-url="@Url.Action("CountrySettings", "Admn")"
+    data-getCountryData-url="@Url.Action("GetCountryData", "Admn")"
+    data-getCountriesSelectors-url="@Url.Action("GetCountrySelectors", "Admn")"
+    data-getDomainsList-url="@Url.Action("GetDomainsList", "Admn")"
+    data-getImportCountries-url="@Url.Action("CountryImport", "Admn")"
+    data-saveOrder-url="@Url.Action("SaveCountriesOrder", "Admn")"
+    data-updateCountry-url="@Url.Action("UpdateCountry", "Admn")"
+    data-importCountries-url="@Url.Action("ImportCountries", "Admn")"
+    >
+    <div class="leftMenuContainer fourBtns">
+        <div class="btnGreyMenu short" data-bind="click: onNewCountry">Add Country</div>
+        <div class="btnGreyMenu short" data-bind="click: onSaveOrder"><span id="orderIndicator" class="icon-ok"></span>Save Sort Order</div>
+        <div class="btnGreyMenu short" data-bind="click: onImportCountries">Import countries</div>
+        <select data-bind="options: domains, optionsText: 'Text', optionsValue: 'Value', optionsCaption: 'All domains', value: lDomainID, event: {change: onLDomainChange}"></select>
+        @Html.Partial("~/Views/Partials/Loader.cshtml")
+    </div>
+    <div class="mainContainer">
+        @Html.Action("CountrySettings", "Admn")      
+    </div>
+</div>

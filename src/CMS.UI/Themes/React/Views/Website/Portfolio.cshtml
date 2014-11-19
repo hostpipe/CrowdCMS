@@ -1,0 +1,59 @@
+﻿@model List<CMS.BL.Entity.tbl_Portfolio>
+@{
+    ViewBag.Title = "Portfolio";
+    CMS.BL.Entity.tbl_Content portfolioPage = ViewBag.PortfolioPage as CMS.BL.Entity.tbl_Content;
+}
+@section metatags {
+    @{ Html.RenderPartial("MetaTags", new CMS.UI.Models.MetadataModel(portfolioPage)); }
+}
+@section styles {
+    @Html.Raw(portfolioPage != null ? portfolioPage.tbl_SiteMap.SM_CSS : String.Empty)
+}
+@section sidebar {
+    @{
+    //Html.RenderPartial("../Partials/SearchPanel");
+    //Html.RenderAction("BasketSummary", "Website");
+    //Html.RenderAction("ContactUsPartial", "Website");
+    }
+}
+<div id="portfolio">
+    <div id="showcase">
+
+        @if (portfolioPage != null && ViewBag.Content != null)
+        {
+            <div class="row header">
+                @Html.Partial("~/Views/Partials/ContentPartial.cshtml", ViewBag.Content.HtmlElements as List<object>)
+            </div>
+        }
+        @{string lastPortfolioCatTitle = "";}
+
+        @foreach (var portfolio in Model)
+        {
+            <div class="project">
+                <h3>@portfolio.PO_Title                 
+                @if (portfolio.tbl_PortfolioCategory.POC_Title != lastPortfolioCatTitle)
+                {
+                    @:- @portfolio.tbl_PortfolioCategory.POC_Title
+                }
+                </h3>
+                <div class="screen">
+                    @if (portfolio.tbl_PortfolioImage != null)
+                    {
+                        foreach (var portfolioImage in portfolio.tbl_PortfolioImage.OrderBy(pi => pi.PI_Order).Take(1))
+                        {
+                        <img src="@Html.ImageProvider(CMS.BL.ImageVersionName.portfolio, portfolioImage.tbl_Image.I_Thumb, String.Empty)" alt="@portfolio.PO_Title"  />
+                        }
+                    }
+                </div>
+                <p class="description">@portfolio.PO_Desc</p>
+                <div class="divider"></div>
+                <div class="visit">
+                    <a class="button" href="@(ViewBag.PortfolioUrl + portfolio.tbl_SiteMap.SM_URL)" title="@portfolio.PO_Title">Visit @portfolio.PO_Title
+                    </a>
+                </div>
+            </div>
+                lastPortfolioCatTitle = portfolio.tbl_PortfolioCategory.POC_Title;
+        }
+
+    </div>
+</div>

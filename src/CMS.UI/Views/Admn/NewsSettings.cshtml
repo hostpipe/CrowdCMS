@@ -1,0 +1,110 @@
+﻿@model CMS.BL.Entity.tbl_Content
+
+<div class="sectionHeader" data-bind="text: sectionHeader"></div>
+<div class="sectionWindow">
+    <div class="btnToggleSection">Page Details +</div>
+    <form id="DetailsForm" action="#" class="sectionContent">
+        <div>
+            @Html.Label("ddlDomain", "Domain")
+            @Html.DropDownListFor(m => m.tbl_SiteMap.SM_DomainID, this.ViewBag.Domains as SelectList, new { @class = "short", id = "ddlDomain" })
+            @Html.HiddenFor(m => m.ContentID)
+            @Html.HiddenFor(m => m.tbl_SiteMap.SiteMapID, new { id = "SiteMapID" })
+        </div>
+        <hr />
+        <h2>Date Of The Blog Entry</h2>
+        <div>
+                <label for="BlogDate">Date/Time</label>
+                <input id="BlogDate" name="blogDate" type="text" data-input-type="dateTime" value="@((Model != null ? Model.tbl_SiteMap.SM_Date.GetValueOrDefault(DateTime.Now) : DateTime.Now).ToCustomDateTimeString())" />
+            <span>dd/mm/yyyy hh:mm</span>
+            <span class="fa fa-info-circle" title="Date the blog post, this date will be shown on the front end."></span>
+        </div>
+        <h2>Future Publish Date (leave blank to publish immediately - you will still need to set the article to live)</h2>
+        <div>
+                <label for="PublishDate">Publish Date/Time</label>
+                <input id="PublishDate" name="publishDate" type="text" data-input-type="dateTime" value="@((Model != null ? (Model.tbl_SiteMap.SM_PublishDate != null ? DateTime.Parse(Model.tbl_SiteMap.SM_PublishDate.ToString()).ToCustomDateTimeString() : String.Empty) : String.Empty))" />
+            <span>dd/mm/yyyy hh:mm</span>
+            <span class="fa fa-info-circle" title="You can pre-load articles to only be shown after this date."></span>
+        </div>
+    </form>
+</div>
+@Html.Action("SEONewsFields", "Admn", new { contentID = Model != null ? Model.ContentID : 0 })
+<div class="sectionWindow">
+    <div class="btnToggleSection">Page Content +</div>
+    <div class="sectionContent">
+        <div>
+            <textarea id="BlogContent" name="BlogContent" class="tinyMCEEditor" data-count="true" data-minwords="250">@(Model != null ? Model.C_Content : ViewBag.DefaultWyswigContent)</textarea>
+            <span data-for="BlogContent" class="counter"><span data-name="icon" title="Your Page Contents must be at least 250 words long, ideally approaching 400 words!"></span><span data-name="text"></span></span>
+        </div>
+    </div>
+</div>
+<div id="Options" class="sectionWindow">
+    <div class="btnToggleSection">Options +</div>
+    <div class="sectionContent">
+        <h2>Update your Twitter</h2>
+        <div>
+            @if (ViewBag.IsTwitterOn)
+            {
+                @Html.LabelFor(m => m.SUB_Tweet, "Your Tweet")
+                @Html.TextBoxFor(m => m.SUB_Tweet, new { id = "tbTweet", @class = "long", data_count = "true", data_minChars = "1", data_maxChars = "116", maxlength = "116" })
+                <span class="fa fa-info-circle" title="When the article is first published, the above will be tweeted."></span>
+                <span data-for="SUB_Tweet" class="counter"><span data-name="icon" title="The Tweet field can contain up to 116 characters, the URL will be appended to the end!"></span><span data-name="text"></span></span>
+            }
+            else
+            {
+                <div>Twitter link is currently disabled.</div>
+            }
+        </div>
+        <hr />
+        <h2>Add Tags/Categories To Your Blog Entry</h2>
+        <div data-bind="visible: isEdit">
+            <label for="tbTag">Tags</label>
+            @if ((User as CMS.Utils.CustomPrincipal).HasPermission(CMS.BL.Permission.EditNews))
+            {
+                <input id="tbTag" name="tag" type="text" />
+                <input type="button" class="btnGreyGreen" value="Add" title="Add Tags" data-bind="click: onAddTag" />
+                <span class="fa fa-info-circle" title="Add a tag so you can link different blog posts together."></span>
+            }
+        </div>
+        <div data-bind="visible: isEdit">
+            <div class="checkBoxList" data-bind="foreach: tags">
+                <span>
+                    <span class="deleteLink" data-bind="click: $parent.onDeleteTag, attr: { 'data-tagID': Value }, text: Text"></span>
+                </span>
+            </div>
+        </div>
+        <hr data-bind="visible: isEdit" />
+        <div>
+            <label for="tbCategory">Categories</label>
+            @if ((User as CMS.Utils.CustomPrincipal).HasPermission(CMS.BL.Permission.EditNews))
+            {
+                <input id="tbCategory" name="category" type="text" />
+                <input type="button" class="btnGreyGreen" value="Add" title="Add Categories" data-bind="click: onAddCategory" />
+            }
+        </div>
+        <div>
+            <div class="checkBoxList" data-bind="foreach: categories">
+                <span>
+                    <input type="checkbox" name="category" data-bind="click: $parent.onSaveNewsCategory, value: Value, checked: Selected, attr: { id: 'cat' + Value }" />
+                    <label data-bind="text: Text, attr: { 'for': 'cat' + Value }"></label>
+                    <span class="deleteLink" data-bind="click: $parent.onDeleteCategory, attr: { 'data-categoryID': Value, title: 'Delete ' + Text }"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.Action("BlogContentVersion", "Admn", new { sectionID = Model != null ? Model.tbl_SiteMap.SiteMapID : 0, contentID = Model != null ? Model.ContentID : 0 })
+<div>
+    @if ((User as CMS.Utils.CustomPrincipal).HasPermission(CMS.BL.Permission.AddNews))
+    {
+        <input type="button" id="btnNewPage" name="NewPage" class="btnGreen" value="Add News" data-bind="click: onSubmit, visible: !isEdit()" />
+    }
+    @if ((User as CMS.Utils.CustomPrincipal).HasPermission(CMS.BL.Permission.EditNews))
+    {
+        <input type="button" id="btnSavePage" name="SavePage" class="btnGreen" value="Update News" data-bind="click: onSubmit, visible: isEdit" />
+    }
+    @if ((User as CMS.Utils.CustomPrincipal).HasPermission(CMS.BL.Permission.ApproveContent))
+    {
+        <input type="button" id="btnApprovePage" name="ApprovePage" class="btnGrey" value="Approve Content" data-bind="click: onApprove, visible: isEdit" />
+    }
+    <input type="button" id="btnCancel" name="Cancel" class="btnRed" value="Cancel" data-bind="click: onNewArticle" />
+</div>
